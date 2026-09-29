@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHALFA SMART LOANS - KM KY Series</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{background:#0a1e4a;color:white}
+.gold{color:#d4af37}
+.bg-gold{background:#d4af37}
+</style>
+</head>
+<body class="pb-24">
+<div class="p-4 flex justify-between items-center sticky top-0 bg-[#0a1e4a] z-10">
+<h1 class="font-bold gold">⭐ KHALFA SMART LOANS</h1>
+<span class="bg-white/10 px-3 py-1 rounded-full text-xs">0785****451</span>
+</div>
+
+<div class="m-4 bg-gradient-to-br from-white/20 to-white/5 rounded-[20px] p-6 border border-yellow-500/40">
+<p class="text-xs opacity-60">Account Balance</p>
+<p class="text-3xl font-bold gold" id="bal">UGX 0</p>
+<p class="text-xs mt-1" id="reBal">Recharge: 0 | MTN: 0785344451</p>
+<div class="flex gap-2 mt-4">
+<button onclick="showPage('recharge')" class="flex-1 bg-gold text-[#0a1e4a] py-3 rounded-xl font-bold text-sm">Recharge (19k min)</button>
+<button onclick="showPage('withdraw')" class="flex-1 bg-white text-[#0a1e4a] py-3 rounded-xl font-bold text-sm">Withdraw (5k min)</button>
+</div>
+</div>
+
+<div class="flex gap-2 px-4 mb-3">
+<button id="tabKM" onclick="setTab('KM')" class="flex-1 py-3 rounded-xl font-bold text-sm bg-gold text-[#0a1e4a]">KM Series (5%)</button>
+<button id="tabKY" onclick="setTab('KY')" class="flex-1 py-3 rounded-xl font-bold text-sm bg-white/10">KY Series (8%)</button>
+</div>
+
+<div id="products" class="p-4 space-y-3"></div>
+
+<!-- PAGES -->
+<div id="rechargePage" class="hidden fixed inset-0 bg-gray-50 text-black p-4 z-20 overflow-auto">
+<button onclick="showPage('home')" class="bg-[#0a1e4a] text-white px-4 py-2 rounded-xl">← Back</button>
+<div class="bg-white rounded-2xl p-6 mt-4">
+<h2 class="font-bold text-xl">Recharge to 0785344451</h2>
+<p class="text-sm opacity-60">Min 19,000 UGX</p>
+<div class="grid grid-cols-3 gap-2 mt-4" id="rechBtns"></div>
+<input id="rechAmount" type="number" value="19000" class="w-full border-2 rounded-xl p-4 mt-4 font-bold">
+<button onclick="doRecharge()" class="w-full bg-[#0a1e4a] text-[#d4af37] py-4 rounded-xl font-bold mt-4" id="payBtn">Pay UGX 19,000 Now</button>
+<p class="text-xs mt-3 text-center">MTN: 0785344451 | Wait for prompt. If no prompt, top up MoMo first.</p>
+</div>
+</div>
+
+<div id="withdrawPage" class="hidden fixed inset-0 bg-gray-50 text-black p-4 z-20">
+<button onclick="showPage('home')" class="bg-[#0a1e4a] text-white px-4 py-2 rounded-xl">← Back</button>
+<div class="bg-white rounded-2xl p-6 mt-4">
+<h2 class="font-bold text-xl">Withdraw from 0785344451</h2>
+<p class="text-sm" id="withBal">Balance: 0 • Min 5k</p>
+<input id="withAmount" type="number" value="5000" class="w-full border-2 rounded-xl p-4 mt-4 font-bold">
+<button onclick="doWithdraw()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold mt-4">Withdraw Now</button>
+</div>
+</div>
+
+<div id="myPage" class="hidden fixed inset-0 bg-[#0a1e4a] p-4 z-20 overflow-auto pb-24">
+<button onclick="showPage('home')" class="bg-white text-[#0a1e4a] px-4 py-2 rounded-xl font-bold">← Back</button>
+<h2 class="text-white font-bold text-xl mt-4">My Loans <span id="myCount">(0)</span></h2>
+<div id="myList" class="space-y-3 mt-4"></div>
+</div>
+
+<div class="fixed bottom-0 left-0 right-0 bg-white text-[#0a1e4a] flex justify-around py-3 border-t z-10">
+<button onclick="showPage('home')" class="flex flex-col items-center text-xs font-bold">🏠<span>Home</span></button>
+<button onclick="showPage('my')" class="flex flex-col items-center text-xs">📦<span>My Loans</span></button>
+<button onclick="showPage('recharge')" class="flex flex-col items-center text-xs">💰<span>Recharge</span></button>
+<button onclick="alert('KHALFA SMART LOANS\nMTN 0785344451\nRecharge 19k min\nWithdraw 5k min')" class="flex flex-col items-center text-xs">👤<span>Profile</span></button>
+</div>
+
+<script>
+let balance=Number(localStorage.getItem('k_bal')||0)
+let reBal=Number(localStorage.getItem('k_rebal')||0)
+let myProducts=JSON.parse(localStorage.getItem('k_my')||'[]')
+let tab='KM'
+const km=[
+{code:'KM-30',days:15,price:20000,daily:1400,total:21000},
+{code:'KM-35',days:17,price:45000,daily:2780,total:47250},
+{code:'KM-40',days:19,price:50000,daily:2763,total:52500},
+{code:'KM-45',days:20,price:75000,daily:3937,total:78750},
+{code:'KM-50',days:24,price:100000,daily:4375,total:105000},
+{code:'KM-55',days:25,price:150000,daily:6300,total:157500},
+{code:'KM-60',days:30,price:200000,daily:7000,total:210000},
+]
+const ky=[
+{code:'KY-30',days:30,price:300000,daily:10800,total:324000},
+{code:'KY-35',days:35,price:500000,daily:15428,total:540000},
+{code:'KY-40',days:40,price:750000,daily:20250,total:810000},
+{code:'KY-45',days:45,price:1000000,daily:24000,total:1080000},
+{code:'KY-50',days:50,price:1500000,daily:32400,total:1620000},
+{code:'KY-55',days:55,price:2000000,daily:39272,total:2160000},
+{code:'KY-60',days:60,price:3000000,daily:54000,total:3240000},
+]
+function save(){localStorage.setItem('k_bal',balance);localStorage.setItem('k_rebal',reBal);localStorage.setItem('k_my',JSON.stringify(myProducts));updateBal()}
+function updateBal(){document.getElementById('bal').innerText='UGX '+balance.toLocaleString();document.getElementById('reBal').innerText='Recharge: '+reBal.toLocaleString()+' | MTN: 0785344451';document.getElementById('withBal').innerText='Balance: '+balance.toLocaleString()+' • Min 5k';document.getElementById('myCount').innerText='('+myProducts.length+')'}
+function renderProducts(){
+const list=tab==='KM'?km:ky
+document.getElementById('products').innerHTML=list.map(p=>`
+<div class="bg-white text-[#0a1e4a] rounded-2xl p-4">
+<div class="flex justify-between items-center">
+<div><p class="font-bold text-sm">${p.code} • ${p.days} Days • ${tab==='KM'?'5%':'8%'} Low Interest</p>
+<p class="text-xs">Price ${p.price.toLocaleString()} → Total ${p.total.toLocaleString()}</p>
+<p class="text-xs text-green-600 font-bold">Daily: ${p.daily.toLocaleString()} UGX</p></div>
+<button onclick="applyProd('${p.code}')" class="bg-[#0a1e4a] text-[#d4af37] px-5 py-2 rounded-xl text-xs font-bold">Apply Now</button>
+</div></div>`).join('')
+}
+function setTab(t){tab=t;document.getElementById('tabKM').className=t==='KM'?'flex-1 py-3 rounded-xl font-bold text-sm bg-gold text-[#0a1e4a]':'flex-1 py-3 rounded-xl font-bold text-sm bg-white/10';document.getElementById('tabKY').className=t==='KY'?'flex-1 py-3 rounded-xl font-bold text-sm bg-gold text-[#0a1e4a]':'flex-1 py-3 rounded-xl font-bold text-sm bg-white/10';renderProducts()}
+function applyProd(code){
+const all=[...km,...ky];const p=all.find(x=>x.code===code)
+if(balance<p.price){alert('Insufficient! You have '+balance+' UGX. Recharge min 19k to 0785344451');showPage('recharge');return}
+myProducts.push({...p,id:Date.now(),hoursLeft:24});balance-=p.price;save();renderMy();alert(code+' Approved! 24hr countdown started');showPage('my')
+}
+function renderMy(){
+if(myProducts.length===0){document.getElementById('myList').innerHTML='<div class="bg-white rounded-2xl p-8 text-center text-black"><p>No loans yet</p><button onclick="showPage(\'home\')" class="mt-4 bg-[#d4af37] px-6 py-2 rounded-xl font-bold">Apply Now</button></div>';return}
+document.getElementById('myList').innerHTML=myProducts.map(p=>`
+<div class="bg-white rounded-2xl p-4 text-black">
+<p class="font-bold">${p.code} - ${p.days} Days</p>
+<p class="text-xs">Expires: ${Math.floor(p.hoursLeft)}h ${Math.floor((p.hoursLeft%1)*60)}m left</p>
+<div class="w-full bg-gray-200 h-2 rounded-full mt-2"><div class="bg-green-600 h-2 rounded-full" style="width:${((24-p.hoursLeft)/24)*100}%"></div></div>
+<button onclick="alert('Daily ${p.daily.toLocaleString()} UGX claimed!')" class="w-full bg-green-600 text-white py-2 rounded-xl text-sm mt-3">Claim Daily ${p.daily.toLocaleString()}</button>
+</div>`).join('')
+}
+function showPage(p){
+document.getElementById('rechargePage').classList.add('hidden')
+document.getElementById('withdrawPage').classList.add('hidden')
+document.getElementById('myPage').classList.add('hidden')
+if(p==='recharge')document.getElementById('rechargePage').classList.remove('hidden')
+if(p==='withdraw')document.getElementById('withdrawPage').classList.remove('hidden')
+if(p==='my'){renderMy();document.getElementById('myPage').classList.remove('hidden')}
+}
+const rechVals=[19000,50000,100000,200000,500000,1000000]
+document.getElementById('rechBtns').innerHTML=rechVals.map(v=>`<button onclick="setRech(${v})" class="py-3 rounded-xl border-2 font-bold text-sm">${v>=1000?v/1000+'k':v}</button>`).join('')
+function setRech(v){document.getElementById('rechAmount').value=v;document.getElementById('payBtn').innerText='Pay UGX '+v.toLocaleString()+' Now'}
+document.getElementById('rechAmount').addEventListener('input',e=>{document.getElementById('payBtn').innerText='Pay UGX '+Number(e.target.value).toLocaleString()+' Now'})
+function doRecharge(){
+let a=Number(document.getElementById('rechAmount').value)
+if(a<19000){alert('Min 19k');return}
+alert('Deposit Initiated to 0785344451 for '+a.toLocaleString()+' UGX. Approve on phone. If no prompt, top up MoMo.')
+setTimeout(()=>{balance+=a;reBal+=a;save();alert('Recharge Successful! '+a.toLocaleString()+' added');showPage('home')},3000)
+}
+function doWithdraw(){
+let a=Number(document.getElementById('withAmount').value)
+if(a<5000){alert('Min 5k');return}
+if(a>balance){alert('Insufficient');return}
+balance-=a;save();alert('Withdraw Initiated: '+a.toLocaleString()+' UGX from 0785344451 to your MoMo. Wait 1 min.')
+}
+setInterval(()=>{myProducts=myProducts.map(p=>({...p,hoursLeft:Math.max(0,p.hoursLeft-1/3600)}));if(document.getElementById('myPage').classList.contains('hidden')===false)renderMy()},1000)
+updateBal();renderProducts()
+</script>
+</body>
+  </html>
