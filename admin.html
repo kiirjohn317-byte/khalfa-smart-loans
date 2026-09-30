@@ -1,15 +1,70 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KHALFA ADMIN</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:sans-serif;background:#020617;color:#fff;padding:10px}.h{display:none!important}.i{width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;margin:5px 0;color:#000}.b{width:100%;padding:10px;border:0;border-radius:6px;font-weight:800;cursor:pointer}.c{background:#1e293b;padding:10px;border-radius:8px;margin:6px 0}</style></head><body>
-<div id="login"><h2 style="text-align:center;color:#fbbf24;margin-top:60px">KHALFA ADMIN</h2><div style="background:#fff;border-radius:10px;padding:15px;margin-top:15px"><input id="pw" type="password" class="i" placeholder="Enter Password"><button onclick="doLogin()" class="b" style="background:#fbbf24">LOGIN</button><p id="msg" style="color:red;text-align:center;font-size:12px"></p></div></div>
-<div id="panel" class="h"><div style="display:flex;justify-content:space-between"><b style="color:#fbbf24">ADMIN PANEL - BALANCES</b><button onclick="location.reload()" style="padding:5px 10px;background:red;color:#fff;border:0;border-radius:5px">Logout</button></div><div id="stats" style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:10px 0"></div><div class="c"><b>💰 Add Balance</b><input id="aP" class="i" placeholder="Phone 2567..."><input id="aA" type="number" class="i" placeholder="Amount 30000"><button onclick="addB()" class="b" style="background:#22c55e;color:#fff">Add Balance</button><div id="aR" style="font-size:11px;margin-top:5px;color:#22c55e"></div></div><div style="display:flex;gap:5px;margin:8px 0"><button onclick="t='dep';L()" class="b" style="flex:1;background:#fbbf24;color:#000">Deposits</button><button onclick="t='with';L()" class="b" style="flex:1;background:#fff;color:#000">Withdraw</button><button onclick="t='users';L()" class="b" style="flex:1;background:#fff;color:#000">Users</button></div><div id="list"></div></div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADMIN</title>
+<style>
+body{background:#020617;color:white;font-family:Arial;padding:10px}
+.card{background:#1e293b;padding:10px;border-radius:10px;margin:8px 0}
+input{width:100%;padding:12px;border-radius:8px;border:0;margin:6px 0;color:#000}
+button{padding:10px 15px;border:0;border-radius:8px;font-weight:bold;margin:4px}
+.h{display:none}
+</style>
+</head>
+<body>
+
+<div id="loginBox">
+<h2 style="text-align:center;color:#fbbf24">KHALFA ADMIN</h2>
+<div style="background:white;padding:15px;border-radius:10px;margin-top:20px">
+<input type="password" id="pw" placeholder="Password">
+<button onclick="login()" style="width:100%;background:#fbbf24">LOGIN</button>
+<p id="err" style="color:red"></p>
+</div>
+</div>
+
+<div id="panel" class="h">
+<h3>ADMIN PANEL</h3>
+<button onclick="location.reload()" style="background:red;color:white">Logout</button>
+<div id="stats"></div>
+<div id="lists"></div>
+</div>
+
 <script>
-let t='dep';const PASS="KHALFA2026";
-function doLogin(){let v=document.getElementById('pw').value;if(v===PASS){document.getElementById('login').classList.add('h');document.getElementById('panel').classList.remove('h');L()}else{document.getElementById('msg').innerText="Wrong! Use KHALFA2026";}}
-function G(k){try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}}function S(k,v){localStorage.setItem(k,JSON.stringify(v))}
-function GB(ph){let u=G('ku');let f=u.find(x=>x.p==ph);return f?f.b:0}
-function L(){let u=G('ku'),d=G('kd'),w=G('kw');document.getElementById('stats').innerHTML=`<div class=c>Users: ${u.length}</div><div class=c>Pend Dep: ${d.filter(x=>x.s=='pending').length}</div><div class=c>Pend With: ${w.filter(x=>x.s=='pending').length}</div><div class=c>Total Bal: ${u.reduce((s,x)=>s+x.b,0).toLocaleString()}</div>`;let h='';if(t=='dep'){let rev=d.slice().reverse();h=rev.map((o,idx)=>{let ri=d.length-1-idx;let bal=GB(o.ph);return `<div class=c><b>${o.a} UGX - ${o.s}</b><div style="font-size:11px">User:${o.ph} | Bal:${bal.toLocaleString()} | TX:${o.tx}</div>${o.s=='pending'?`<div style="display:flex;gap:5px;margin-top:6px"><button onclick="AD(${ri},'approved')" class=b style="background:#22c55e;color:#fff;flex:1">Approve +${o.a}<br>Bal ${bal}→${bal+o.a}</button><button onclick="AD(${ri},'rejected')" class=b style="background:red;color:#fff;flex:1">Reject</button></div>`:''}</div>`}).join('')||'<div class=c>No Deposits</div>'}
-if(t=='with'){let rev=w.slice().reverse();h=rev.map((o,idx)=>{let ri=w.length-1-idx;let bal=GB(o.ph);return `<div class=c><b>${o.a} UGX - ${o.s}</b><div style="font-size:11px">User:${o.ph} | Bal:${bal} | To:${o.to}</div>${o.s=='pending'?`<div style="display:flex;gap:5px;margin-top:6px"><button onclick="AW(${ri},'approved')" class=b style="background:#22c55e;flex:1">Approve</button><button onclick="AW(${ri},'rejected')" class=b style="background:red;flex:1">Reject & Refund</button></div>`:''}</div>`}).join('')||'<div class=c>No With</div>'}
-if(t=='users'){h=u.slice().reverse().map(o=>`<div class=c><b>${o.p}</b><br><span style="color:#22c55e;font-weight:900">BALANCE: ${o.b.toLocaleString()} UGX</span><br><small>${new Date(o.t).toLocaleString()}</small><br><button onclick="document.getElementById('aP').value='${o.p}';window.scrollTo(0,0)" style="padding:4px 10px;background:#fbbf24;border:0;border-radius:4px;margin-top:4px">Add Balance</button></div>`).join('')||'<div class=c>No Users</div>'}document.getElementById('list').innerHTML=h}
-function AD(i,st){let d=G('kd');let o=d[i];if(!o)return;if(st=='approved'&&o.s!='approved'){o.s='approved';let u=G('ku');let fu=u.find(x=>x.p==o.ph);if(fu){fu.b+=o.a;S('ku',u)}}else{o.s=st}S('kd',d);L();alert(st+' '+o.a)}
-function AW(i,st){let w=G('kw');let o=w[i];if(!o)return;if(st=='rejected'&&o.s=='pending'){let u=G('ku');let fu=u.find(x=>x.p==o.ph);if(fu){fu.b+=o.a;S('ku',u)}}o.s=st;S('kw',w);L();alert(st)}
-function addB(){let ph=document.getElementById('aP').value.trim(),am=parseInt(document.getElementById('aA').value);if(!ph||!am){alert('Enter phone & amount');return}let u=G('ku');let fu=u.find(x=>x.p==ph);if(!fu){alert('User not found '+ph);return}fu.b+=am;S('ku',u);document.getElementById('aR').innerText='Added '+am+' to '+ph+' New Bal:'+fu.b;L()}
-</script></body></html>
+const PASS="KHALFA2026";
+function login(){
+ let v=document.getElementById('pw').value;
+ if(v===PASS){
+  document.getElementById('loginBox').classList.add('h');
+  document.getElementById('panel').classList.remove('h');
+  load();
+ }else{
+  document.getElementById('err').innerText="Wrong! Use KHALFA2026";
+ }
+}
+function get(k){return JSON.parse(localStorage.getItem(k)||'[]')}
+function load(){
+ let u=get('ku'),d=get('kd'),w=get('kw');
+ document.getElementById('stats').innerHTML=`<div class=card>Users:${u.length} | Dep Pending:${d.filter(x=>x.s=='pending').length} | With Pending:${w.filter(x=>x.s=='pending').length}</div>`;
+ let html="";
+ html+="<div class=card><h4>Deposits</h4>";
+ d.slice().reverse().forEach((o,i)=>{
+  let idx=d.length-1-i;
+  html+=`<div>📱${o.ph} 💰${o.a} ${o.s} ${o.s=='pending'?`<button onclick="approveD(${idx})" style="background:green;color:white">Approve</button>`:''}</div>`;
+ });
+ html+="</div><div class=card><h4>Users + Balance</h4>";
+ u.forEach(o=>{html+=`<div>${o.p} - BALANCE: ${o.b} UGX</div>`});
+ html+="</div>";
+ document.getElementById('lists').innerHTML=html;
+}
+function approveD(i){
+ let d=get('kd'); let o=d[i]; if(o.s!='pending'){return}
+ o.s='approved';
+ let u=get('ku'); let f=u.find(x=>x.p==o.ph); if(f){f.b+=o.a}
+ localStorage.setItem('kd',JSON.stringify(d));
+ localStorage.setItem('ku',JSON.stringify(u));
+ load(); alert("Approved "+o.a);
+}
+</script>
+</body>
+</html>
