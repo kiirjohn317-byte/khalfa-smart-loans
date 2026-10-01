@@ -1,472 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KHALFA SMART LOANS</title>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs, addDoc, doc, updateDoc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyBGnvj0KnpXcmRo63WlbISS0HyeUTbbTsg",authDomain:"khalfa-smart-loans.firebaseapp.com",projectId:"khalfa-smart-loans",storageBucket:"khalfa-smart-loans.firebasestorage.app",messagingSenderId:"13720870393",appId:"1:13720870393:web:11628a5d12c66c42c53128"};
-const app=initializeApp(firebaseConfig); const db=getFirestore(app);
-
-// GLOBAL
-window.page=(p)=>{
-  document.querySelectorAll('.page').forEach(e=>e.style.display='none');
-  document.getElementById(p).style.display='block';
-  document.querySelectorAll('.bottom a').forEach(e=>e.classList.remove('active'));
-  const map={home:'bHome',products:'bProd',referral:'bRef',revenue:'bRev',mine:'bMine',recharge:'bHome',withdraw:'bHome'};
-  if(document.getElementById(map[p])) document.getElementById(map[p]).classList.add('active');
-  if(p=='products') showTab('km');
-  if(p=='revenue') loadRevenue();
-  if(p=='referral') loadRef();
-  if(p=='mine' || p=='home') loadUser();
-}
-window.showTab=(t)=>{
-  document.getElementById('kmList').style.display=t=='km'?'block':'none';
-  document.getElementById('kyList').style.display=t=='ky'?'block':'none';
-  document.getElementById('btnKm').className=t=='km'?'activeTab':''; document.getElementById('btnKy').className=t=='ky'?'activeTab':'';
-}
-
-window.onload=()=>{
-  const phone=localStorage.getItem("khalfa_phone");
-  if(phone){ document.getElementById('auth').style.display='none'; document.getElementById('app').style.display='block'; loadUser(); page('home'); }
-  const c=new URLSearchParams(location.search).get('code'); if(c){ document.getElementById('refInput').value=c; document.getElementById('refBox').style.display='block'; }
-}
-
-window.register=async()=>{
-  const phone=document.getElementById('rPhone').value.trim(); const pass=document.getElementById('rPass').value.trim(); const ref=document.getElementById('refInput').value.trim();
-  if(phone.length<10||pass.length<4){ alert('Phone 10 digits & pass min 4'); return; }
-  const b=document.getElementById('rBtn'); b.innerText='Creating...'; b.disabled=true;
-  try{
-    const s=await getDocs(query(collection(db,"users"),where("phone","==",phone)));
-    if(!s.empty){ alert('Already exists, login'); b.innerText='Register'; b.disabled=false; return; }
-    const myCode=Math.floor(100000+Math.random()*900000).toString();
-    await addDoc(collection(db,"users"),{phone,password:pass,wallet:0,balance:0,myCode,referredBy:ref||null,createdAt:serverTimestamp()});
-    localStorage.setItem("khalfa_phone",phone); localStorage.setItem("khalfa_code",myCode);
-    document.getElementById('auth').style.display='none'; document.getElementById('app').style.display='block'; loadUser(); page('home');
-  }catch(e){ alert(e.message); b.innerText='Register'; b.disabled=false; }
-}
-
-window.login=async()=>{
-  const phone=document.getElementById('lPhone').value.trim(); const pass=document.getElementById('lPass').value.trim();
-  const b=document.getElementById('lBtn'); b.innerText='Checking...'; b.disabled=true;
-  try{
-    const s=await getDocs(query(collection(db,"users"),where("phone","==",phone),where("password","==",pass)));
-    if(s.empty){ alert('Wrong phone or pass'); b.innerText='Login'; b.disabled=false; return; }
-    localStorage.setItem("khalfa_phone",phone); localStorage.setItem("khalfa_code",s.docs[0].data().myCode);
-    document.getElementById('auth').style.display='none'; document.getElementById('app').style.display='block'; loadUser(); page('home');
-  }catch(e){ alert(e.message); b.innerText='Login'; b.disabled=false; }
-}
-
-async function loadUser(){
-  const phone=localStorage.getItem("khalfa_phone"); if(!phone) return;
-  document.getElementById('myPhone').innerText=phone; document.getElementById('myPhone2').innerText=phone;
-  const code=localStorage.getItem("khalfa_code")||"268917";
-  const link=`https://khalfa-smart-loans.firebaseapp.com/?code=${code}`;
-  document.getElementById('linkTxt').innerText=link; document.getElementById('linkTxt2').innerText=link; document.getElementById('myCodeTxt').innerText='Code: '+code;
-  try{
-    const s=await getDocs(query(collection(db,"users"),where("phone","==",phone)));
-    if(!s.empty){ const d=s.docs[0].data(); document.getElementById('wallet').innerText=(d.wallet||0).toLocaleString(); document.getElementById('bal').innerText=(d.balance||0).toLocaleString(); document.getElementById('wallet2').innerText=(d.wallet||0).toLocaleString(); document.getElementById('bal2').innerText=(d.balance||0).toLocaleString(); document.getElementById('earn').innerText=(d.balance||0).toLocaleString(); }
-    const s2=await getDocs(query(collection(db,"transactions"),where("phone","==",phone)));
-    document.getElementById('tCount').innerText=s2.size;
-  }catch(e){}
-}
-
-window.copyLink=()=>{ const t=document.getElementById('linkTxt').innerText; navigator.clipboard.writeText(t); alert('Link copied: '+t); }
-window.copyNum=()=>{ navigator.clipboard.writeText('0785344451'); document.getElementById('copyTxt').innerText='Copied ✓'; setTimeout(()=>document.getElementById('copyTxt').innerText='Copy',1500); }
-
-window.deposit=async()=>{
-  const amt=parseInt(document.getElementById('depAmt').value); if(!amt||amt<19000){ alert('Min deposit 19,000'); return; }
-  const b=document.getElementById('depBtn'); b.innerText='Submitting...'; b.disabled=true;
-  await addDoc(collection(db,"transactions"),{phone:localStorage.getItem("khalfa_phone"),type:"deposit",amount:amt,status:"pending",createdAt:serverTimestamp(),date:new Date().toLocaleString()});
-  alert('Deposit PENDING. Pay to 0785344451 then wait admin approval. Money goes to WALLET (not withdrawable).'); b.innerText='Proceed to Recharge'; b.disabled=false; page('home');
-}
-window.withdraw=async()=>{
-  const amt=parseInt(document.getElementById('withAmt').value); const num=document.getElementById('withNum').value; const name=document.getElementById('withName').value;
-  if(!amt||amt<5000){ alert('Min withdraw 5000'); return; } if(!num||!name){ alert('Enter details'); return; }
-  const b=document.getElementById('withBtn'); b.innerText='Sending...'; b.disabled=true;
-  await addDoc(collection(db,"transactions"),{phone:localStorage.getItem("khalfa_phone"),type:"withdraw",amount:amt,withdrawTo:num,withdrawName:name,status:"pending",createdAt:serverTimestamp()});
-  alert('Withdraw PENDING admin approval.'); b.innerText='Proceed to Withdraw'; b.disabled=false; page('home');
-}
-window.buy=async(n,p,d,t,dy)=>{
-  if(!confirm(`Rent ${n}? Price UGX ${p.toLocaleString()} Daily ${d.toLocaleString()} Total ${t.toLocaleString()} ${dy} days\nDeduct from WALLET, counting every 24h, money to BALANCE after done.`)) return;
-  await addDoc(collection(db,"transactions"),{phone:localStorage.getItem("khalfa_phone"),type:"product",product:n,amount:p,daily:d,total:t,days:dy,status:"pending",createdAt:serverTimestamp()});
-  alert(`${n} PENDING approval. After admin approve, days count every 24h.`);
-}
-async function loadRevenue(){
-  const list=document.getElementById('revList'); list.innerHTML='Loading...'; const phone=localStorage.getItem("khalfa_phone");
-  try{
-    const snap=await getDocs(query(collection(db,"transactions"),where("phone","==",phone),where("type","==","product")));
-    if(snap.empty){ list.innerHTML=`<div style="text-align:center;padding:60px 20px"><div style="width:56px;height:56px;background:#f1f5ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px">📦</div><b>No Products Available</b><br><small>Your machines will appear here.</small><br><br><button onclick="page('products')" style="background:#0b5fff;color:#fff;border:none;padding:10px 18px;border-radius:10px">Go Buy Machine</button></div>`; document.getElementById('myProdCount').innerText='0'; document.getElementById('revTotal').innerText='UGX 0'; return; }
-    let count=0; let html=''; let totalRev=0;
-    snap.forEach(d=>{
-      const p=d.data(); count++;
-      const days=p.days||15; const daily=p.daily||0; const total=p.total||0; const price=p.amount||0;
-      const created=p.approvedAt?.toDate? p.approvedAt.toDate(): (p.createdAt?.toDate? p.createdAt.toDate(): new Date());
-      const diff=Math.floor((new Date()-created)/(1000*60*60*24)); const dayNow=Math.min(diff+1,days); const isDone=diff>=days; const prog=Math.min(dayNow/days*100,100);
-      if(isDone) totalRev+=total;
-      if(p.status!=='approved' && p.status!=='completed'){
-        html+=`<div class="p-card"><div style="display:flex;justify-content:space-between"><b>${p.product}</b><span class="badge" style="background:#fff3cd;color:#856404">Pending</span></div><small>Waiting admin approval. Days start after approval every 24h.</small></div>`;
-      }else if(isDone && p.status!=='completed'){
-        html+=`<div class="p-card"><div style="display:flex;justify-content:space-between"><b>${p.product}</b><span class="badge" style="background:#d4edda;color:#0a8a30">Completed</span></div><div class="meta"><span>Price</span><span class="price">UGX ${price.toLocaleString()}</span><span>Total</span><span class="v">UGX ${total.toLocaleString()}</span></div><div class="progress"><div class="fill" style="width:100%"></div></div><small>Day ${days}/${days} Circle Done</small><button class="btn" style="background:#0a8a30" onclick="claim('${d.id}',${total})">💰 Claim to Balance - Withdrawable Now</button></div>`;
-      }else if(p.status==='completed'){
-        html+=`<div class="p-card"><div style="display:flex;justify-content:space-between"><b>${p.product}</b><span class="badge" style="background:#e8f0ff;color:#6b7a99">Claimed</span></div><small>Money in BALANCE</small></div>`;
-      }else{
-        html+=`<div class="p-card"><div style="display:flex;justify-content:space-between"><b>${p.product}</b><span class="badge" style="background:#dbe6ff;color:#0b5fff">Day ${dayNow}/${days}</span></div><div class="meta"><span>Daily</span><span class="v">UGX ${daily.toLocaleString()}</span><span>Total</span><span class="v">UGX ${total.toLocaleString()}</span><span>Price</span><span class="price">UGX ${price.toLocaleString()}</span></div><div class="progress"><div class="fill" style="width:${prog}%"></div></div><div style="font-size:11px;color:#6b7a99;display:flex;justify-content:space-between;margin-top:6px"><span>Started ${created.toLocaleDateString()}</span><span>Ends ${new Date(created.getTime()+days*24*60*60*1000).toLocaleDateString()}</span></div><div style="background:#e6f8eb;padding:8px;border-radius:8px;margin-top:8px;font-size:12px;color:#0a8a30">🔄 Counting every 24h - Withdrawable after circle done</div></div>`;
-      }
-    });
-    document.getElementById('myProdCount').innerText=count; document.getElementById('revTotal').innerText='UGX '+totalRev.toLocaleString(); list.innerHTML=html;
-  }catch(e){ list.innerHTML=e.message; }
-}
-window.claim=async(id,total)=>{
-  if(!confirm(`Claim UGX ${total.toLocaleString()} to BALANCE?`)) return;
-  try{
-    const phone=localStorage.getItem("khalfa_phone");
-    await updateDoc(doc(db,"transactions",id),{status:"completed"});
-    await addDoc(collection(db,"transactions"),{phone,type:"earning",amount:total,status:"approved",createdAt:serverTimestamp()});
-    // update user balance
-    const s=await getDocs(query(collection(db,"users"),where("phone","==",phone)));
-    if(!s.empty){ const u=s.docs[0]; const d=u.data(); await updateDoc(u.ref,{balance:(d.balance||0)+total}); }
-    alert(`UGX ${total.toLocaleString()} added to BALANCE withdrawable!`); loadRevenue(); loadUser();
-  }catch(e){ alert(e.message); }
-}
-async function loadRef(){
-  const phone=localStorage.getItem("khalfa_phone"); const code=localStorage.getItem("khalfa_code")||"";
-  document.getElementById('myCodeTxt').innerText='Code: '+code; document.getElementById('linkTxt2').innerText=`https://khalfa-smart-loans.firebaseapp.com/?code=${code}`;
-  try{ const snap=await getDocs(query(collection(db,"users"),where("referredBy","==",code))); document.getElementById('lv1Count').innerText=snap.size+' People'; }catch(e){}
-}
-window.logout=()=>{ if(confirm('Logout?')){ localStorage.clear(); location.reload(); } }
-window.showLogin=(t)=>{ document.getElementById('loginBox').style.display=t=='login'?'block':'none'; document.getElementById('regBox').style.display=t=='reg'?'block':'none'; }
-</script>
 <style>
-*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#eef2f9;padding-bottom:90px}
-.authWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:15px;background:linear-gradient(135deg,#0b5fff,#093bb0)}
-.authCard{background:#fff;width:100%;max-width:380px;border-radius:22px;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
-.input{width:100%;padding:13px;border:1px solid #e1e8f0;background:#f6f8fc;border-radius:11px;outline:none;margin-top:6px}
-.btn{width:100%;margin-top:12px;background:linear-gradient(135deg,#0b5fff,#1e73ff);color:#fff;border:none;padding:13px;border-radius:11px;font-weight:bold;cursor:pointer}
-.header{position:sticky;top:0;z-index:10;background:#fff;padding:12px 15px;display:flex;justify-content:space-between;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.wallets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px}
-.w-card{border-radius:16px;padding:16px;color:#fff}
-.link-card{margin:0 15px;background:#f1f5ff;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;border:1px solid #dbe6ff}
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:15px}
-.stat{background:#fff;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);border-left:4px solid #ccc}
-.quick{background:#fff;margin:15px;border-radius:16px;padding:15px;box-shadow:0 4px 18px rgba(0,0,0,.05)}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;text-align:center;margin-top:12px}
-.ic{width:44px;height:44px;background:#f1f5ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
-.tabs{margin:12px 15px;display:flex;gap:8px}.tabs button{padding:9px 18px;border-radius:20px;border:1px solid #dbe6ff;background:#fff;font-weight:bold}.activeTab{background:linear-gradient(135deg,#0b5fff,#093bb0);color:#fff}
-.p-card{background:#fff;margin:0 15px 12px;padding:14px;border-radius:16px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
-.meta{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#f8fbff;padding:10px;border-radius:10px;margin-top:8px;font-size:13px}
-.v{color:#0a8a30;font-weight:bold;text-align:right}.price{color:#0b5fff;font-weight:bold;text-align:right}
-.badge{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:bold}
-.progress{height:8px;background:#eef2f9;border-radius:20px;margin-top:10px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#0b5fff,#0abf53)}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#0f172a;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 0;text-align:center;font-size:11px;z-index:99}
-.bottom a{color:#94a3b8;text-decoration:none;cursor:pointer}.bottom.active{color:#fff!important}
-.copy{background:linear-gradient(135deg,#0b5fff,#1e73ff);color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
-.page{display:none}
-</style>
-</head>
-<body>
+:root{--navy:#0A1931;--gold:#D4AF37;--gold2:#B8962E;--green:#00C896;--bg:#F5F7FB}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);padding-bottom:80px}
+.h{background:var(--navy);color:var(--gold);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;font-weight:800;letter-spacing:.3px}
+.c{background:#fff;margin:12px;border-radius:18px;padding:14px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.bm{text-align:center;padding:22px;background:linear-gradient(135deg,#0A1931,#162A4A);color:#fff;border-radius:20px;margin:12px}
+.inp{border:1px solid #CBD5E1;border-radius:12px;display:flex;align-items:center;background:#F8FAFC;overflow:hidden;margin-top:8px}
+.inp b{background:#E2E8F0;padding:13px 14px;font-size:12px}.inp input{border:0;background:transparent;width:100%;padding:14px;outline:none;font-weight:600}
+.btnG{width:100%;padding:14px;border-radius:12px;border:0;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;font-weight:800}
+.btnN{width:100%;padding:14px;border-radius:12px;border:0;background:var(--navy);color:#fff;font-weight:800}
+.copy{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;border:0;border-radius:8px;padding:8px 12px;margin-right:6px;font-weight:800}
+.nav{position:fixed;bottom:0;width:100%;background:var(--navy);display:flex;justify-content:space-around;padding:10px 0;z-index:99}
+.nav button{border:0;background:none;color:#8892A6;font-size:11px}.nav button.active{color:var(--gold);font-weight:800}
+.hide{display:none}.prod{display:flex;gap:10px;background:#fff;margin:10px 12px;border-radius:16px;padding:12px}
+.r2{display:flex;gap:10px;margin:12px}.r2 div{flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;border:1px solid #E2E8F0}
+.tab{padding:8px 16px;border-radius:20px;border:1px solid #CBD5E1;font-size:12px;font-weight:700}.tab.a{background:#0A1931;color:#D4AF37}
+</style></head><body>
+<div class="h"><span>KHALFA SMART LOANS</span><span id="uShow" style="font-size:10px;color:#8892A6"></span></div>
 
-<!-- AUTH -->
-<div id="auth" class="authWrap">
-<div class="authCard">
-<div style="text-align:center"><div style="width:64px;height:64px;background:linear-gradient(135deg,#0b5fff,#1e73ff);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:#fff;font-size:28px;font-weight:bold">K</div><b style="color:#0b5fff">KHALFA</b> SMART LOANS<br><small>Smart Investment</small></div>
-<div style="display:flex;background:#eef2f9;border-radius:12px;padding:4px;margin:16px 0"><button onclick="showLogin('login')" style="flex:1;padding:9px;border:none;border-radius:8px;background:#0b5fff;color:#fff;font-weight:bold">Login</button><button onclick="showLogin('reg')" style="flex:1;padding:9px;border:none;background:transparent;font-weight:bold">Register</button></div>
-<div id="loginBox"><label style="font-size:12px;font-weight:bold">Phone</label><input id="lPhone" class="input" placeholder="0785344451"><label style="font-size:12px;font-weight:bold;margin-top:8px;display:block">Password</label><input id="lPass" type="password" class="input" placeholder="••••"><button id="lBtn" class="btn" onclick="login()">Login</button></div>
-<div id="regBox" style="display:none"><div id="refBox" style="background:#fff8e1;border:1px dashed #ffb84d;border-radius:10px;padding:10px;font-size:12px;display:none">Referral Code Detected</div><label style="font-size:12px;font-weight:bold">Phone</label><input id="rPhone" class="input" placeholder="0785344451"><label style="font-size:12px;font-weight:bold;margin-top:8px;display:block">Password</label><input id="rPass" type="password" class="input" placeholder="Min 4"><label style="font-size:12px;font-weight:bold;margin-top:8px;display:block">Referral Code (optional)</label><input id="refInput" class="input" placeholder="268917"><button id="rBtn" class="btn" onclick="register()">Register</button></div>
-<div style="text-align:center;margin-top:12px;font-size:11px;color:#6b7a99">Min Deposit 19,000 | Min Withdraw 5,000</div>
-</div>
+<div id="p-register"><div class="c" style="margin-top:28px;text-align:center">
+<h2 style="color:#0A1931;margin:0">Create Account</h2><small style="color:#666">KHALFA SMART LOANS</small>
+<div style="text-align:left;margin-top:18px">
+<label style="font-size:12px;font-weight:700">Phone</label><div class="inp"><span style="padding:0 10px">📱</span><input id="rPhone" placeholder="078..."></div>
+<label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Password</label><div class="inp"><span style="padding:0 10px">🔒</span><input id="rPass" type="password" placeholder="Password"></div>
+<label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Invite Code</label><div class="inp"><span style="padding:0 10px">🎟️</span><input id="rInv" placeholder="Optional"></div>
+<button class="btnG" style="margin-top:18px" onclick="doRegister()">Register</button>
+<p style="font-size:12px">Have account? <span onclick="show('login')" style="color:#2563EB;font-weight:800">Login</span></p>
+</div></div></div>
+
+<div id="p-login" class="hide"><div class="c" style="margin-top:28px;text-align:center">
+<h2 style="color:#0A1931">Welcome Back</h2>
+<div style="text-align:left;margin-top:18px">
+<label style="font-size:12px;font-weight:700">Phone</label><div class="inp"><span style="padding:0 10px">📱</span><input id="lPhone"></div>
+<label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Password</label><div class="inp"><span style="padding:0 10px">🔒</span><input id="lPass" type="password"></div>
+<button class="btnN" style="margin-top:18px" onclick="doLogin()">Login</button>
+<p style="font-size:12px">No account? <span onclick="show('register')" style="color:#D4AF37;font-weight:800">Register</span></p>
+</div></div></div>
+
+<div id="p-home" class="hide">
+<div class="bm"><small style="color:#8892A6;letter-spacing:1px">WALLET</small><h2 id="wallet" style="margin:6px 0">UGX 0</h2><div style="height:1px;background:#1E3A5F;margin:14px 0"></div><small style="color:#8892A6;letter-spacing:1px">BALANCE</small><h2 id="balance" style="margin:6px 0">UGX 0</h2></div>
+<div class="r2"><div onclick="show('deposit')">💳<br><small>Recharge</small></div><div onclick="show('withdraw')">🏧<br><small>Withdraw</small></div><div onclick="show('products')">📦<br><small>Products</small></div><div onclick="show('invite')">👥<br><small>Invite</small></div></div>
+<div class="c"><b>Transactions</b><div id="transList" style="font-size:12px;margin-top:8px;color:#666">No transactions</div></div>
 </div>
 
-<!-- APP -->
-<div id="app" style="display:none">
-<div class="header"><div>☰</div><div><b style="color:#0b5fff">KHALFA</b> SMART LOANS</div><div onclick="page('mine')">👤</div></div>
+<div id="p-deposit" class="hide"><div class="c">
+<h3 style="margin:0">Recharge</h3><small style="color:#666">Min UGX 19,000</small>
+<label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Amount</label><div class="inp"><b>UGX</b><input id="depAmt" type="number" value="19000"></div>
+<label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Number</label><div class="inp"><input id="payNum" value="+256785344451" readonly><button class="copy" onclick="navigator.clipboard.writeText('+256785344451');this.innerText='✓'">📋 Copy</button></div>
+<div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px;margin-top:12px;font-size:12px">
+<b>MTN Mobile Money</b><br>1. Dial <b>*165#</b> → Send Money<br>2. Enter <b>+256785344451</b><br>3. Amount<br>4. PIN → Copy Transaction ID
+</div>
+<input id="depTid" placeholder="Transaction ID" style="width:100%;padding:14px;border-radius:12px;border:1px solid #CBD5E1;margin-top:12px">
+<button class="btnG" style="margin-top:12px" onclick="submitDep()">Submit</button><p id="depMsg" style="font-size:12px;color:#00B67A"></p>
+</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="show('home')">Back</button></div>
 
-<!-- HOME -->
-<div id="home" class="page" style="display:block">
-<div class="wallets">
-<div class="w-card" style="background:linear-gradient(135deg,#0b5fff,#093bb0)"><small>👛 WALLET</small><h2 id="wallet">0</h2><small id="myPhone">Loading</small><br><small style="font-size:10px">Not withdrawable - for renting</small></div>
-<div class="w-card" style="background:linear-gradient(135deg,#0a8a30,#0abf53)"><small>💰 BALANCE</small><h2 id="bal">0</h2><small>Withdrawable</small><br><small style="font-size:10px">After circle done</small></div>
-</div>
-<div class="link-card"><div><small>🔗 Invitation Code</small><br><b id="linkTxt" style="font-size:11px;color:#0b5fff;word-break:break-all">Loading...</b></div><button class="copy" onclick="copyLink()">📋</button></div>
-<div class="stats"><div class="stat" style="border-color:#0b5fff"><small>Records</small><br><b id="tCount">0</b></div><div class="stat" style="border-color:#0abf53"><small>Earnings</small><br><b id="earn">0</b></div><div class="stat" style="border-color:#ff4d4d"><small>Withdraws</small><br><b>0</b></div></div>
-<div class="quick"><b>⚡ Quick Actions</b><div class="grid"><div onclick="page('recharge')"><div class="ic">💰</div>Recharge</div><div onclick="page('withdraw')"><div class="ic">🏧</div>Withdraw</div><div onclick="page('products')"><div class="ic">📦</div>Products</div><div onclick="page('revenue')"><div class="ic">📊</div>Revenue</div></div></div>
-<div class="quick"><b>🎧 Support</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><div onclick="window.open('https://wa.me/256785344451')" style="background:#f8fbff;padding:10px;border-radius:10px;font-size:12px">💚 WHATSAPP 1</div><div onclick="window.open('https://wa.me/256785344451')" style="background:#f8fbff;padding:10px;border-radius:10px;font-size:12px">🎧 SUPPORT</div></div></div>
-</div>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KHALFA SMART LOANS</title>
+<div id="p-withdraw" class="hide"><div class="c">
+<h3 style="margin:0">Withdraw</h3><small style="color:#666">Min UGX 5,000</small>
+<label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Amount</label><div class="inp"><b>UGX</b><input id="wdAmt" type="number" placeholder="5000"></div>
+<label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Phone Number</label><div class="inp"><span style="padding:0 10px">📱</span><input id="wdPhone" placeholder="078..."></div>
+<button class="btnG" style="margin-top:14px" onclick="submitWd()">Submit</button><p id="wdMsg" style="font-size:12px;color:#00B67A"></p>
+</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="show('home')">Back</button></div>
+
+<div id="p-products" class="hide">
+<div style="padding:12px"><b>Investment Plans</b></div>
+<div style="display:flex;gap:8px;padding:0 12px"><div id="tK" class="tab a" onclick="showK()">KM Series</div><div id="tL" class="tab" onclick="showL()">KY Series</div></div>
+<div id="listK"></div><div id="listL" class="hide"></div>
+<button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="show('home')">Back</button></div>
+
+<div id="p-revenue" class="hide">
+<div style="background:#0A1931;color:#fff;margin:12px;border-radius:20px;display:flex"><div style="flex:1;padding:16px;text-align:center;border-right:1px solid #1A2A4A"><small style="color:#8892A6">My Products</small><br><b id="myCount">0</b></div><div style="flex:1;padding:16px;text-align:center"><small style="color:#8892A6">Total Revenue</small><br><b id="totRev">UGX 0</b></div></div>
+<div id="activeWrap"></div>
+<div id="empty" style="text-align:center;margin-top:40px"><div style="background:#EEF2FF;width:60px;height:60px;border-radius:16px;display:flex;justify-content:center;align-items:center;margin:0 auto">📦</div><h4>No Products Available</h4><small style="color:#888">Your products will appear here</small></div>
+<button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="show('home')">Back</button></div>
+
+<div id="p-invite" class="hide"><div class="c">
+<div style="display:flex;justify-content:space-between;align-items:center;background:#F1F5F9;padding:12px;border-radius:12px"><a id="invLink" style="font-size:11px;color:#2563EB;word-break:break-all"></a><button class="copy" onclick="navigator.clipboard.writeText(invLink.innerText)">Copy</button></div>
+<div style="margin-top:14px"><b>Referral Levels</b></div>
+<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV1 12%</span><span>0</span></div>
+<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV2 4%</span><span>0</span></div>
+<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV3 2%</span><span>0</span></div>
+<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV4 1%</span><span>0</span></div>
+</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="show('home')">Back</button></div>
+
+<div id="bottomNav" class="nav hide"><button id="nH" class="active" onclick="show('home')">🏠<br>Home</button><button onclick="show('products')">📦<br>Products</button><button onclick="show('invite')">👥<br>Invite</button><button id="nR" onclick="show('revenue')">📊<br>Revenue</button><button onclick="show('deposit')">👤<br>Mine</button></div>
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs, addDoc, doc, updateDoc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyBGnvj0KnpXcmRo63WlbISS0HyeUTbbTsg",authDomain:"khalfa-smart-loans.firebaseapp.com",projectId:"khalfa-smart-loans",storageBucket:"khalfa-smart-loans.firebasestorage.app",messagingSenderId:"13720870393",appId:"1:13720870393:web:11628a5d12c66c42c53128"};
-const app=initializeApp(firebaseConfig); const db=getFirestore(app);
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, updateDoc, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+const firebaseConfig={apiKey:"YOUR_API_KEY",authDomain:"khalfa-smart-loans.firebaseapp.com",projectId:"khalfa-smart-loans",storageBucket:"khalfa-smart-loans.appspot.com",appId:"YOUR_APP_ID"};
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);
+let uid=localStorage.getItem('k_uid');
+window.show=(p)=>{
+ if(p==='register'||p==='login'){['register','login'].forEach(x=>document.getElementById('p-'+x).classList.add('hide'));document.getElementById('p-'+p).classList.remove('hide');bottomNav.classList.add('hide');return;}
+ if(!uid){show('register');return;}
+ ['register','login','home','deposit','products','revenue','withdraw','invite'].forEach(x=>document.getElementById('p-'+x)?.classList.add('hide'));
+ document.getElementById('p-'+p).classList.remove('hide');bottomNav.classList.remove('hide');
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+ if(p==='home') nH.classList.add('active'); if(p==='revenue') nR.classList.add('active');
+ if(p==='home'||p==='revenue') load();
+};
+window.showK=()=>{listK.classList.remove('hide');listL.classList.add('hide');tK.classList.add('a');tL.classList.remove('a')};
+window.showL=()=>{listL.classList.remove('hide');listK.classList.add('hide');tL.classList.add('a');tK.classList.remove('a')};
 
-// GLOBAL
-window.page=(p)=>{
-  document.querySelectorAll('.page').forEach(e=>e.style.display='none');
-  document.getElementById(p).style.display='block';
-  document.querySelectorAll('.bottom a').forEach(e=>e.classList.remove('active'));
-  const map={home:'bHome',products:'bProd',referral:'bRef',revenue:'bRev',mine:'bMine',recharge:'bHome',withdraw:'bHome'};
-  if(document.getElementById(map[p])) document.getElementById(map[p]).classList.add('active');
-  if(p=='products') showTab('km');
-  if(p=='revenue') loadRevenue();
-  if(p=='referral') loadRef();
-  if(p=='mine' || p=='home') loadUser();
+const KM=[{n:"KM-15",days:15,price:19000,total:30000},{n:"KM-30",days:17,price:3000,total:48000},{n:"KM-50",days:18,price:95000,total:195000},{n:"KM-70",days:30,price:280000,total:450000},{n:"KM-80",days:30,price:350000,total:520000},{n:"KM-90",days:40,price:450000,total:720000},{n:"KM-100",days:25,price:520000,total:835000},{n:"KM-16",days:28,price:900000,total:1300000}];
+const KY=[{n:"KY-20",days:15,price:5000000,total:7000000},{n:"KY-30",days:20,price:1000000,total:1500000},{n:"KY-40",days:25,price:3000000,total:5000000},{n:"KY-50",days:15,price:19000000,total:35000000},{n:"KY-60",days:28,price:10000000,total:15000000},{n:"KY-70",days:10,price:35000000,total:45000000},{n:"KY-80",days:30,price:700000,total:1000000}];
+function card(p){let d=Math.round(p.total/p.days);return `<div class="prod"><div style="width:80px;height:80px;background:#F8FAFC;border-radius:12px;display:flex;align-items:center;justify-content:center">🏭</div><div style="flex:1"><div style="display:flex;justify-content:space-between"><b>${p.n}</b><span style="background:#D4AF37;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px">VIP</span></div><small>🕒 ${p.days} Days</small><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:4px;font-size:11px"><span>Price</span><b>UGX ${p.price.toLocaleString()}</b></div><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:2px;font-size:11px"><span>Daily</span><b style="color:#00B67A">UGX ${d.toLocaleString()}</b></div><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:2px;font-size:11px"><span>Total</span><b style="color:#00B67A">UGX ${p.total.toLocaleString()}</b></div><button onclick="rent('${p.n}',${p.price},${p.days},${p.total})" style="width:100%;margin-top:8px;padding:10px;border:0;background:#00B67A;color:#fff;border-radius:8px;font-weight:800">Rent / Buy</button></div></div>`}
+listK.innerHTML=KM.map(card).join('');listL.innerHTML=KY.map(card).join('');
+
+async function load(){
+ if(!uid) return;
+ let u=await getDoc(doc(db,"users",uid));let w=0,b=0;if(u.exists()){w=u.data().wallet||0;b=u.data().balance||0;}
+ wallet.innerText="UGX "+w.toLocaleString();balance.innerText="UGX "+b.toLocaleString();
+ uShow.innerText=uid;invLink.innerText="https://khalfasmartloans.com/registration?code="+uid;
+ let snap=await getDocs(collection(db,"active_machines"));let my=[];snap.forEach(d=>{let x=d.data();if(x.userId===uid)my.push({...x,id:d.id});});
+ let active=my.filter(m=>m.status==="ACTIVE");
+ if(active.length===0){empty.style.display="block";activeWrap.innerHTML="";myCount.innerText="0";totRev.innerText="UGX 0";}else{empty.style.display="none";myCount.innerText=active.length;let tot=0;active.forEach(m=>tot+=m.totalProfit);totRev.innerText="UGX "+tot.toLocaleString();activeWrap.innerHTML=active.map(m=>{let daily=Math.round(m.totalProfit/m.days);let pct=Math.round(((m.days-m.daysLeft)/m.days)*100);return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#D1FAE5;padding:4px 8px;border-radius:20px;font-size:10px">DAILY • ACTIVE</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Duration</small><br><b>${m.days} Days</b></div><div><small>Total</small><br><b>UGX ${m.totalProfit.toLocaleString()}</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#00C896;width:${pct}%"></div></div><small>Day ${m.days-m.daysLeft}/${m.days} • Next payout Tomorrow 09:00</small></div>`}).join('');}
+ let tr="";snap.forEach(d=>{let x=d.data();if(x.userId===uid)tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>${x.name} - ${x.daysLeft}d</span><span>${x.status}</span></div>`});
+ let dep=await getDocs(collection(db,"deposits"));dep.forEach(d=>{let x=d.data();if(x.userId===uid)tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>Recharge UGX ${x.amount}</span><span>${x.status}</span></div>`});
+ let wd=await getDocs(collection(db,"withdraws"));wd.forEach(d=>{let x=d.data();if(x.userId===uid)tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>Withdraw UGX ${x.amount}</span><span>${x.status}</span></div>`});
+ transList.innerHTML=tr||"No transactions";
+ for(let m of my){if(m.status!=="ACTIVE")continue;if(Date.now()-m.lastCount>86400000&&m.daysLeft>0){let nl=m.daysLeft-1;if(nl===0){await updateDoc(doc(db,"users",uid),{balance:increment(m.totalProfit)});await updateDoc(doc(db,"active_machines",m.id),{daysLeft:0,status:"COMPLETED",lastCount:Date.now()});}else{await updateDoc(doc(db,"active_machines",m.id),{daysLeft:nl,lastCount:Date.now()});}}}
 }
-window.showTab=(t)=>{
-  document.getElementById('kmList').style.display=t=='km'?'block':'none';
-  document.getElementById('kyList').style.display=t=='ky'?'block':'none';
-  document.getElementById('btnKm').className=t=='km'?'activeTab':''; document.getElementById('btnKy').className=t=='ky'?'activeTab':'';
-}
-
-window.onload=()=>{
-  const phone=localStorage.getItem("khalfa_phone");
-  if(phone){ document.getElementById('auth').style.display='none'; document.getElementById('app').style.display='block'; loadUser(); page('home'); }
-  const c=new URLSearchParams(location.search).get('code'); if(c){ document.getElementById('refInput').value=c; document.getElementById('refBox').style.display='block'; }
-}
-
-window.register=async()=>{
-  const phone=document.getElementById('rPhone').value.trim(); const pass=document.getElementById('rPass').value.trim(); const ref=document.getElementById('refInput').value.trim();
-  if(phone.length<10||pass.length<4){ alert('Phone 10 digits & pass min 4'); return; }
-  const b=document.getElementById('rBtn'); b.innerText='Creating...'; b.disabled=true;
-  try{
-    const s=await getDocs(query(collection(db,"users"),where("phone","==",phone)));
-    if(!s.empty){ alert('Already exists, login'); b.innerText='Register'; b.disabled=false; return; }
-    const myCode=Math.floor(100000+Math.random()*900000).toString();
-    await addDoc(collection(db,"users"),{phone,password:pass,wallet:0,balance:0,myCode,referredBy:ref||null,createdAt:serverTimestamp()});
-    localStorage.setItem("khalfa_phone",phone); localStorage.setItem("khalfa_code",myCode);
-    document.getElementById('auth').style.display='none'; document.getElementById('app').style.display='block'; loadUser(); page('home');
-  }catch(e){ alert(e.message); b.innerText='Register'; b.disabled=false; }
-}
-
-window.login=async()=>{
-  const phone=document.getElementById('lPhone').value.trim(); const pass=document.getElementById('lPass').value.trim();
-  const b=document.getElementById('lBtn'); b.innerText='Checking...'; b.disabled=true;
-  try{
-    const s=await getDocs(query(collection(db,"users"),where("phone","==",phone),where("password","==",pass)));
-    if(s.empty){ alert('Wrong phone or pass'); b.innerText='Login'; b.disabled=false; return; }
-    localStorage.setItem("khalfa_phone",phone); localStorage.setItem("khalfa_code",s.docs[0].data().myCode);
-    document.getElementById('auth').style.display='none'; document.getElementById('app').style.display='block'; loadUser(); page('home');
-  }catch(e){ alert(e.message); b.innerText='Login'; b.disabled=false; }
-}
-
-async function loadUser(){
-  const phone=localStorage.getItem("khalfa_phone"); if(!phone) return;
-  document.getElementById('myPhone').innerText=phone; document.getElementById('myPhone2').innerText=phone;
-  const code=localStorage.getItem("khalfa_code")||"268917";
-  const link=`https://khalfa-smart-loans.firebaseapp.com/?code=${code}`;
-  document.getElementById('linkTxt').innerText=link; document.getElementById('linkTxt2').innerText=link; document.getElementById('myCodeTxt').innerText='Code: '+code;
-  try{
-    const s=await getDocs(query(collection(db,"users"),where("phone","==",phone)));
-    if(!s.empty){ const d=s.docs[0].data(); document.getElementById('wallet').innerText=(d.wallet||0).toLocaleString(); document.getElementById('bal').innerText=(d.balance||0).toLocaleString(); document.getElementById('wallet2').innerText=(d.wallet||0).toLocaleString(); document.getElementById('bal2').innerText=(d.balance||0).toLocaleString(); document.getElementById('earn').innerText=(d.balance||0).toLocaleString(); }
-    const s2=await getDocs(query(collection(db,"transactions"),where("phone","==",phone)));
-    document.getElementById('tCount').innerText=s2.size;
-  }catch(e){}
-}
-
-window.copyLink=()=>{ const t=document.getElementById('linkTxt').innerText; navigator.clipboard.writeText(t); alert('Link copied: '+t); }
-window.copyNum=()=>{ navigator.clipboard.writeText('0785344451'); document.getElementById('copyTxt').innerText='Copied ✓'; setTimeout(()=>document.getElementById('copyTxt').innerText='Copy',1500); }
-
-window.deposit=async()=>{
-  const amt=parseInt(document.getElementById('depAmt').value); if(!amt||amt<19000){ alert('Min deposit 19,000'); return; }
-  const b=document.getElementById('depBtn'); b.innerText='Submitting...'; b.disabled=true;
-  await addDoc(collection(db,"transactions"),{phone:localStorage.getItem("khalfa_phone"),type:"deposit",amount:amt,status:"pending",createdAt:serverTimestamp(),date:new Date().toLocaleString()});
-  alert('Deposit PENDING. Pay to 0785344451 then wait admin approval. Money goes to WALLET (not withdrawable).'); b.innerText='Proceed to Recharge'; b.disabled=false; page('home');
-}
-window.withdraw=async()=>{
-  const amt=parseInt(document.getElementById('withAmt').value); const num=document.getElementById('withNum').value; const name=document.getElementById('withName').value;
-  if(!amt||amt<5000){ alert('Min withdraw 5000'); return; } if(!num||!name){ alert('Enter details'); return; }
-  const b=document.getElementById('withBtn'); b.innerText='Sending...'; b.disabled=true;
-  await addDoc(collection(db,"transactions"),{phone:localStorage.getItem("khalfa_phone"),type:"withdraw",amount:amt,withdrawTo:num,withdrawName:name,status:"pending",createdAt:serverTimestamp()});
-  alert('Withdraw PENDING admin approval.'); b.innerText='Proceed to Withdraw'; b.disabled=false; page('home');
-}
-window.buy=async(n,p,d,t,dy)=>{
-  if(!confirm(`Rent ${n}? Price UGX ${p.toLocaleString()} Daily ${d.toLocaleString()} Total ${t.toLocaleString()} ${dy} days\nDeduct from WALLET, counting every 24h, money to BALANCE after done.`)) return;
-  await addDoc(collection(db,"transactions"),{phone:localStorage.getItem("khalfa_phone"),type:"product",product:n,amount:p,daily:d,total:t,days:dy,status:"pending",createdAt:serverTimestamp()});
-  alert(`${n} PENDING approval. After admin approve, days count every 24h.`);
-}
-async function loadRevenue(){
-  const list=document.getElementById('revList'); list.innerHTML='Loading...'; const phone=localStorage.getItem("khalfa_phone");
-  try{
-    const snap=await getDocs(query(collection(db,"transactions"),where("phone","==",phone),where("type","==","product")));
-    if(snap.empty){ list.innerHTML=`<div style="text-align:center;padding:60px 20px"><div style="width:56px;height:56px;background:#f1f5ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px">📦</div><b>No Products Available</b><br><small>Your machines will appear here.</small><br><br><button onclick="page('products')" style="background:#0b5fff;color:#fff;border:none;padding:10px 18px;border-radius:10px">Go Buy Machine</button></div>`; document.getElementById('myProdCount').innerText='0'; document.getElementById('revTotal').innerText='UGX 0'; return; }
-    let count=0; let html=''; let totalRev=0;
-    snap.forEach(d=>{
-      const p=d.data(); count++;
-      const days=p.days||15; const daily=p.daily||0; const total=p.total||0; const price=p.amount||0;
-      const created=p.approvedAt?.toDate? p.approvedAt.toDate(): (p.createdAt?.toDate? p.createdAt.toDate(): new Date());
-      const diff=Math.floor((new Date()-created)/(1000*60*60*24)); const dayNow=Math.min(diff+1,days); const isDone=diff>=days; const prog=Math.min(dayNow/days*100,100);
-      if(isDone) totalRev+=total;
-      if(p.status!=='approved' && p.status!=='completed'){
-        html+=`<div class="p-card"><div style="display:flex;justify-content:space-between"><b>${p.product}</b><span class="badge" style="background:#fff3cd;color:#856404">Pending</span></div><small>Waiting admin approval. Days start after approval every 24h.</small></div>`;
-      }else if(isDone && p.status!=='completed'){
-        html+=`<div class="p-card"><div style="display:flex;justify-content:space-between"><b>${p.product}</b><span class="badge" style="background:#d4edda;color:#0a8a30">Completed</span></div><div class="meta"><span>Price</span><span class="price">UGX ${price.toLocaleString()}</span><span>Total</span><span class="v">UGX ${total.toLocaleString()}</span></div><div class="progress"><div class="fill" style="width:100%"></div></div><small>Day ${days}/${days} Circle Done</small><button class="btn" style="background:#0a8a30" onclick="claim('${d.id}',${total})">💰 Claim to Balance - Withdrawable Now</button></div>`;
-      }else if(p.status==='completed'){
-        html+=`<div class="p-card"><div style="display:flex;justify-content:space-between"><b>${p.product}</b><span class="badge" style="background:#e8f0ff;color:#6b7a99">Claimed</span></div><small>Money in BALANCE</small></div>`;
-      }else{
-        html+=`<div class="p-card"><div style="display:flex;justify-content:space-between"><b>${p.product}</b><span class="badge" style="background:#dbe6ff;color:#0b5fff">Day ${dayNow}/${days}</span></div><div class="meta"><span>Daily</span><span class="v">UGX ${daily.toLocaleString()}</span><span>Total</span><span class="v">UGX ${total.toLocaleString()}</span><span>Price</span><span class="price">UGX ${price.toLocaleString()}</span></div><div class="progress"><div class="fill" style="width:${prog}%"></div></div><div style="font-size:11px;color:#6b7a99;display:flex;justify-content:space-between;margin-top:6px"><span>Started ${created.toLocaleDateString()}</span><span>Ends ${new Date(created.getTime()+days*24*60*60*1000).toLocaleDateString()}</span></div><div style="background:#e6f8eb;padding:8px;border-radius:8px;margin-top:8px;font-size:12px;color:#0a8a30">🔄 Counting every 24h - Withdrawable after circle done</div></div>`;
-      }
-    });
-    document.getElementById('myProdCount').innerText=count; document.getElementById('revTotal').innerText='UGX '+totalRev.toLocaleString(); list.innerHTML=html;
-  }catch(e){ list.innerHTML=e.message; }
-}
-window.claim=async(id,total)=>{
-  if(!confirm(`Claim UGX ${total.toLocaleString()} to BALANCE?`)) return;
-  try{
-    const phone=localStorage.getItem("khalfa_phone");
-    await updateDoc(doc(db,"transactions",id),{status:"completed"});
-    await addDoc(collection(db,"transactions"),{phone,type:"earning",amount:total,status:"approved",createdAt:serverTimestamp()});
-    // update user balance
-    const s=await getDocs(query(collection(db,"users"),where("phone","==",phone)));
-    if(!s.empty){ const u=s.docs[0]; const d=u.data(); await updateDoc(u.ref,{balance:(d.balance||0)+total}); }
-    alert(`UGX ${total.toLocaleString()} added to BALANCE withdrawable!`); loadRevenue(); loadUser();
-  }catch(e){ alert(e.message); }
-}
-async function loadRef(){
-  const phone=localStorage.getItem("khalfa_phone"); const code=localStorage.getItem("khalfa_code")||"";
-  document.getElementById('myCodeTxt').innerText='Code: '+code; document.getElementById('linkTxt2').innerText=`https://khalfa-smart-loans.firebaseapp.com/?code=${code}`;
-  try{ const snap=await getDocs(query(collection(db,"users"),where("referredBy","==",code))); document.getElementById('lv1Count').innerText=snap.size+' People'; }catch(e){}
-}
-window.logout=()=>{ if(confirm('Logout?')){ localStorage.clear(); location.reload(); } }
-window.showLogin=(t)=>{ document.getElementById('loginBox').style.display=t=='login'?'block':'none'; document.getElementById('regBox').style.display=t=='reg'?'block':'none'; }
-</script>
-<style>
-*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#eef2f9;padding-bottom:90px}
-.authWrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:15px;background:linear-gradient(135deg,#0b5fff,#093bb0)}
-.authCard{background:#fff;width:100%;max-width:380px;border-radius:22px;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
-.input{width:100%;padding:13px;border:1px solid #e1e8f0;background:#f6f8fc;border-radius:11px;outline:none;margin-top:6px}
-.btn{width:100%;margin-top:12px;background:linear-gradient(135deg,#0b5fff,#1e73ff);color:#fff;border:none;padding:13px;border-radius:11px;font-weight:bold;cursor:pointer}
-.header{position:sticky;top:0;z-index:10;background:#fff;padding:12px 15px;display:flex;justify-content:space-between;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.wallets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px}
-.w-card{border-radius:16px;padding:16px;color:#fff}
-.link-card{margin:0 15px;background:#f1f5ff;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;border:1px solid #dbe6ff}
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:15px}
-.stat{background:#fff;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);border-left:4px solid #ccc}
-.quick{background:#fff;margin:15px;border-radius:16px;padding:15px;box-shadow:0 4px 18px rgba(0,0,0,.05)}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;text-align:center;margin-top:12px}
-.ic{width:44px;height:44px;background:#f1f5ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
-.tabs{margin:12px 15px;display:flex;gap:8px}.tabs button{padding:9px 18px;border-radius:20px;border:1px solid #dbe6ff;background:#fff;font-weight:bold}.activeTab{background:linear-gradient(135deg,#0b5fff,#093bb0);color:#fff}
-.p-card{background:#fff;margin:0 15px 12px;padding:14px;border-radius:16px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
-.meta{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#f8fbff;padding:10px;border-radius:10px;margin-top:8px;font-size:13px}
-.v{color:#0a8a30;font-weight:bold;text-align:right}.price{color:#0b5fff;font-weight:bold;text-align:right}
-.badge{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:bold}
-.progress{height:8px;background:#eef2f9;border-radius:20px;margin-top:10px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#0b5fff,#0abf53)}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#0f172a;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 0;text-align:center;font-size:11px;z-index:99}
-.bottom a{color:#94a3b8;text-decoration:none;cursor:pointer}.bottom.active{color:#fff!important}
-.copy{background:linear-gradient(135deg,#0b5fff,#1e73ff);color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
-.page{display:none}
-</style>
-</head>
-<body>
-
-<!-- AUTH -->
-<div id="auth" class="authWrap">
-<div class="authCard">
-<div style="text-align:center"><div style="width:64px;height:64px;background:linear-gradient(135deg,#0b5fff,#1e73ff);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:#fff;font-size:28px;font-weight:bold">K</div><b style="color:#0b5fff">KHALFA</b> SMART LOANS<br><small>Smart Investment</small></div>
-<div style="display:flex;background:#eef2f9;border-radius:12px;padding:4px;margin:16px 0"><button onclick="showLogin('login')" style="flex:1;padding:9px;border:none;border-radius:8px;background:#0b5fff;color:#fff;font-weight:bold">Login</button><button onclick="showLogin('reg')" style="flex:1;padding:9px;border:none;background:transparent;font-weight:bold">Register</button></div>
-<div id="loginBox"><label style="font-size:12px;font-weight:bold">Phone</label><input id="lPhone" class="input" placeholder="0785344451"><label style="font-size:12px;font-weight:bold;margin-top:8px;display:block">Password</label><input id="lPass" type="password" class="input" placeholder="••••"><button id="lBtn" class="btn" onclick="login()">Login</button></div>
-<div id="regBox" style="display:none"><div id="refBox" style="background:#fff8e1;border:1px dashed #ffb84d;border-radius:10px;padding:10px;font-size:12px;display:none">Referral Code Detected</div><label style="font-size:12px;font-weight:bold">Phone</label><input id="rPhone" class="input" placeholder="0785344451"><label style="font-size:12px;font-weight:bold;margin-top:8px;display:block">Password</label><input id="rPass" type="password" class="input" placeholder="Min 4"><label style="font-size:12px;font-weight:bold;margin-top:8px;display:block">Referral Code (optional)</label><input id="refInput" class="input" placeholder="268917"><button id="rBtn" class="btn" onclick="register()">Register</button></div>
-<div style="text-align:center;margin-top:12px;font-size:11px;color:#6b7a99">Min Deposit 19,000 | Min Withdraw 5,000</div>
-</div>
-</div>
-
-<!-- APP -->
-<div id="app" style="display:none">
-<div class="header"><div>☰</div><div><b style="color:#0b5fff">KHALFA</b> SMART LOANS</div><div onclick="page('mine')">👤</div></div>
-
-<!-- HOME -->
-<div id="home" class="page" style="display:block">
-<div class="wallets">
-<div class="w-card" style="background:linear-gradient(135deg,#0b5fff,#093bb0)"><small>👛 WALLET</small><h2 id="wallet">0</h2><small id="myPhone">Loading</small><br><small style="font-size:10px">Not withdrawable - for renting</small></div>
-<div class="w-card" style="background:linear-gradient(135deg,#0a8a30,#0abf53)"><small>💰 BALANCE</small><h2 id="bal">0</h2><small>Withdrawable</small><br><small style="font-size:10px">After circle done</small></div>
-</div>
-<div class="link-card"><div><small>🔗 Invitation Code</small><br><b id="linkTxt" style="font-size:11px;color:#0b5fff;word-break:break-all">Loading...</b></div><button class="copy" onclick="copyLink()">📋</button></div>
-<div class="stats"><div class="stat" style="border-color:#0b5fff"><small>Records</small><br><b id="tCount">0</b></div><div class="stat" style="border-color:#0abf53"><small>Earnings</small><br><b id="earn">0</b></div><div class="stat" style="border-color:#ff4d4d"><small>Withdraws</small><br><b>0</b></div></div>
-<div class="quick"><b>⚡ Quick Actions</b><div class="grid"><div onclick="page('recharge')"><div class="ic">💰</div>Recharge</div><div onclick="page('withdraw')"><div class="ic">🏧</div>Withdraw</div><div onclick="page('products')"><div class="ic">📦</div>Products</div><div onclick="page('revenue')"><div class="ic">📊</div>Revenue</div></div></div>
-<div class="quick"><b>🎧 Support</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><div onclick="window.open('https://wa.me/256785344451')" style="background:#f8fbff;padding:10px;border-radius:10px;font-size:12px">💚 WHATSAPP 1</div><div onclick="window.open('https://wa.me/256785344451')" style="background:#f8fbff;padding:10px;border-radius:10px;font-size:12px">🎧 SUPPORT</div></div></div>
-</div>
-
-<!-- PRODUCTS -->
-<div id="products" class="page">
-<div style="margin:12px 15px;background:#fff;padding:12px;border-radius:12px;font-weight:bold">📦 Investment Plans</div>
-<div class="tabs"><button id="btnKm" class="activeTab" onclick="showTab('km')">KM Series</button><button id="btnKy" onclick="showTab('ky')">KY Series</button></div>
-<div id="kmList">
-<div class="p-card"><b>KM-30</b> <small>17 Days</small><div class="meta"><span>Price</span><span class="price">UGX 3,000</span><span>Daily</span><span class="v">2,823</span><span>Total</span><span class="v">48,000</span></div><button class="btn" onclick="buy('KM-30',3000,2823,48000,17)">Rent / Buy</button></div>
-<div class="p-card"><b>KM-50</b> <small>18 Days</small><div class="meta"><span>Price</span><span class="price">UGX 95,000</span><span>Daily</span><span class="v">10,833</span><span>Total</span><span class="v">195,000</span></div><button class="btn" onclick="buy('KM-50',95000,10833,195000,18)">Rent / Buy</button></div>
-<div class="p-card"><b>KM-70</b> <small>30 Days</small><div class="meta"><span>Price</span><span class="price">UGX 280,000</span><span>Daily</span><span class="v">15,000</span><span>Total</span><span class="v">450,000</span></div><button class="btn" onclick="buy('KM-70',280000,15000,450000,30)">Rent / Buy</button></div>
-<div class="p-card"><b>KM-80</b> <small>30 Days</small><div class="meta"><span>Price</span><span class="price">UGX 350,000</span><span>Daily</span><span class="v">17,333</span><span>Total</span><span class="v">520,000</span></div><button class="btn" onclick="buy('KM-80',350000,17333,520000,30)">Rent / Buy</button></div>
-<div class="p-card"><b>KM-90</b> <small>40 Days</small><div class="meta"><span>Price</span><span class="price">UGX 450,000</span><span>Daily</span><span class="v">18,000</span><span>Total</span><span class="v">720,000</span></div><button class="btn" onclick="buy('KM-90',450000,18000,720000,40)">Rent / Buy</button></div>
-<div class="p-card"><b>KM-100</b> <small>25 Days</small><div class="meta"><span>Price</span><span class="price">UGX 520,000</span><span>Daily</span><span class="v">33,400</span><span>Total</span><span class="v">835,000</span></div><button class="btn" onclick="buy('KM-100',520000,33400,835000,25)">Rent / Buy</button></div>
-<div class="p-card"><b>KM-16</b> <small>28 Days</small><div class="meta"><span>Price</span><span class="price">UGX 900,000</span><span>Daily</span><span class="v">46,428</span><span>Total</span><span class="v">1,300,000</span></div><button class="btn" onclick="buy('KM-16',900000,46428,1300000,28)">Rent / Buy</button></div>
-</div>
-<div id="kyList" style="display:none">
-<div class="p-card"><b>KY-20</b> <small>15 Days</small><div class="meta"><span>Price</span><span class="price">UGX 5,000,000</span><span>Daily</span><span class="v">466,666</span><span>Total</span><span class="v">7,000,000</span></div><button class="btn" onclick="buy('KY-20',5000000,466666,7000000,15)">Rent / Buy</button></div>
-<div class="p-card"><b>KY-30</b> <small>20 Days</small><div class="meta"><span>Price</span><span class="price">UGX 1,000,000</span><span>Daily</span><span class="v">75,000</span><span>Total</span><span class="v">1,500,000</span></div><button class="btn" onclick="buy('KY-30',1000000,75000,1500000,20)">Rent / Buy</button></div>
-<div class="p-card"><b>KY-40</b> <small>25 Days</small><div class="meta"><span>Price</span><span class="price">UGX 3,000,000</span><span>Daily</span><span class="v">200,000</span><span>Total</span><span class="v">5,000,000</span></div><button class="btn" onclick="buy('KY-40',3000000,200000,5000000,25)">Rent / Buy</button></div>
-<div class="p-card"><b>KY-50</b> <small>15 Days</small><div class="meta"><span>Price</span><span class="price">UGX 19,000,000</span><span>Daily</span><span class="v">2,333,333</span><span>Total</span><span class="v">35,000,000</span></div><button class="btn" onclick="buy('KY-50',19000000,2333333,35000000,15)">Rent / Buy</button></div>
-<div class="p-card"><b>KY-60</b> <small>28 Days</small><div class="meta"><span>Price</span><span class="price">UGX 10,000,000</span><span>Daily</span><span class="v">535,714</span><span>Total</span><span class="v">15,000,000</span></div><button class="btn" onclick="buy('KY-60',10000000,535714,15000000,28)">Rent / Buy</button></div>
-<div class="p-card"><b>KY-70</b> <small>10 Days</small><div class="meta"><span>Price</span><span class="price">UGX 35,000,000</span><span>Daily</span><span class="v">4,500,000</span><span>Total</span><span class="v">45,000,000</span></div><button class="btn" onclick="buy('KY-70',35000000,4500000,45000000,10)">Rent / Buy</button></div>
-<div class="p-card"><b>KY-80</b> <small>30 Days</small><div class="meta"><span>Price</span><span class="price">UGX 700,000</span><span>Daily</span><span class="v">33,333</span><span>Total</span><span class="v">1,000,000</span></div><button class="btn" onclick="buy('KY-80',700000,33333,1000000,30)">Rent / Buy</button></div>
-</div>
-</div>
-
-<!-- REFERRAL -->
-<div id="referral" class="page">
-<div class="p-card" style="display:flex;justify-content:space-between;align-items:center"><div><small>🔗 Invitation Code</small><br><b id="linkTxt2" style="font-size:11px;color:#0b5fff;word-break:break-all">Loading</b><br><small id="myCodeTxt">Code: </small></div><button class="copy" onclick="copyLink()">📋</button></div>
-<div class="p-card"><div style="display:flex;justify-content:space-between"><b>Referral Levels</b><small style="background:#ff4d4d;color:#fff;padding:4px 8px;border-radius:12px;font-size:10px">Referral Earnings</small></div>
-<div style="margin-top:12px"><div style="display:flex;align-items:center;gap:10px;background:#f8fbff;padding:10px;border-radius:10px;margin-bottom:8px"><div style="width:36px;height:36px;background:#0a8a30;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff">1</div><b>LV1</b> <span style="background:#d4edda;color:#0a8a30;padding:2px 6px;border-radius:6px;font-size:11px">12%</span><div style="margin-left:auto;text-align:right"><b id="lv1Count">0 People</b><br><small style="color:#0a8a30">UGX 0</small></div></div>
-<div style="display:flex;align-items:center;gap:10px;background:#f8fbff;padding:10px;border-radius:10px;margin-bottom:8px"><div style="width:36px;height:36px;background:#0b5fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff">2</div><b>LV2</b> <span style="background:#dbe6ff;color:#0b5fff;padding:2px 6px;border-radius:6px;font-size:11px">4%</span><div style="margin-left:auto;text-align:right"><b>0 People</b><br><small>UGX 0</small></div></div>
-<div style="display:flex;align-items:center;gap:10px;background:#f8fbff;padding:10px;border-radius:10px;margin-bottom:8px"><div style="width:36px;height:36px;background:#ff9a00;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff">3</div><b>LV3</b> <span style="background:#fff3cd;color:#a67c00;padding:2px 6px;border-radius:6px;font-size:11px">2%</span><div style="margin-left:auto;text-align:right"><b>0 People</b><br><small>UGX 0</small></div></div>
-<div style="display:flex;align-items:center;gap:10px;background:#f8fbff;padding:10px;border-radius:10px"><div style="width:36px;height:36px;background:#ff4d4d;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff">4</div><b>LV4</b> <span style="background:#f8d7da;color:#c0392b;padding:2px 6px;border-radius:6px;font-size:11px">1%</span><div style="margin-left:auto;text-align:right"><b>0 People</b><br><small>UGX 0</small></div></div>
-</div></div>
-</div>
-
-<!-- REVENUE -->
-<div id="revenue" class="page">
-<div style="background:#0f172a;margin:12px;border-radius:16px;display:grid;grid-template-columns:1fr 1fr;padding:12px;color:#94a3b8;text-align:center"><div><small>📦 My Products</small><br><b id="myProdCount" style="color:#fff;font-size:18px">0</b></div><div><small>💰 Total Revenue</small><br><b id="revTotal" style="color:#fff;font-size:18px">UGX 0</b></div></div>
-<div id="revList"></div>
-</div>
-
-<!-- RECHARGE -->
-<div id="recharge" class="page">
-<div class="p-card"><div style="text-align:center"><div style="width:58px;height:58px;background:#e8f0ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:26px;color:#0b5fff">💳</div><h3 style="margin:0">Recharge Account</h3><small style="color:#6b7a99">Wallet for renting - Min 19,000</small></div>
-<label style="font-size:12px;font-weight:bold;margin-top:12px;display:block">Amount Min 19,000</label><div style="display:flex;border:1px solid #e1e8f0;background:#f6f8fc;border-radius:11px;overflow:hidden;margin-top:6px"><span style="background:#0b5fff;color:#fff;padding:13px 12px;font-weight:bold">UGX</span><input id="depAmt" type="number" placeholder="19000" style="flex:1;border:none;background:transparent;padding:13px;outline:none"></div>
-<div style="background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff;border-radius:14px;padding:14px;margin-top:14px;display:flex;justify-content:space-between;align-items:center"><div><small>PAY TO</small><br><b>0785 344 451</b><br><small>Names: Khalfa Smart</small></div><div id="copyTxt" style="background:#fff;color:#0f172a;padding:8px 14px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:12px" onclick="copyNum()">Copy</div></div>
-<button id="depBtn" class="btn" onclick="deposit()">Proceed to Recharge</button>
-<div style="margin-top:16px"><b>How to pay:</b><div style="background:#f8fbff;border-radius:10px;padding:10px;margin-top:6px;font-size:13px">1. Dial <b>*165#</b> > Send Money > <b>0785344451</b></div><div style="background:#f8fbff;border-radius:10px;padding:10px;margin-top:6px;font-size:13px">2. Enter amount you typed</div><div style="background:#f8fbff;border-radius:10px;padding:10px;margin-top:6px;font-size:13px">3. PIN confirm</div><div style="background:#f8fbff;border-radius:10px;padding:10px;margin-top:6px;font-size:13px">4. Click Proceed above, admin approves 2-5 mins. Money goes to <b>WALLET</b></div></div>
-</div>
-</div>
-
-<!-- WITHDRAW -->
-<div id="withdraw" class="page">
-<div class="p-card"><div style="text-align:center"><div style="width:56px;height:56px;background:#e8f0ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:24px">🏦</div><b>Withdraw Funds</b><br><small style="color:#6b7a99">Balance withdrawable only - Min 5,000</small></div>
-<label style="font-size:12px;font-weight:bold;margin-top:12px;display:block">Amount Min 5,000</label><input id="withAmt" class="input" type="number" placeholder="5000">
-<label style="font-size:12px;font-weight:bold;margin-top:10px;display:block">Mobile Money Number</label><input id="withNum" class="input" placeholder="0785...">
-<label style="font-size:12px;font-weight:bold;margin-top:10px;display:block">Account Names</label><input id="withName" class="input" placeholder="Your names">
-<button id="withBtn" class="btn" onclick="withdraw()">Proceed to Withdraw</button>
-<div style="background:#fff8e1;padding:10px;border-radius:8px;margin-top:10px;font-size:12px">⏳ PENDING - Admin approves in 2-5 mins</div>
-</div>
-</div>
-
-<!-- MINE -->
-<div id="mine" class="page">
-<div class="p-card"><div style="display:flex;gap:12px;align-items:center"><div style="width:56px;height:56px;background:#0b5fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px">👤</div><div><b id="myPhone2">Loading</b><br><small id="wallet2">Wallet: 0</small> | <small id="bal2">Balance: 0</small></div></div></div>
-<div class="p-card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button class="btn" onclick="page('recharge')">💰 Recharge</button><button class="btn" style="background:#0a8a30" onclick="page('withdraw')">🏧 Withdraw</button></div><button class="btn" style="background:#e53935;margin-top:10px" onclick="logout()">↪ Logout</button></div>
-</div>
-
-<div class="bottom">
-<a id="bHome" class="active" onclick="page('home')">🏠<br>Home</a>
-<a id="bProd" onclick="page('products')">📦<br>Products</a>
-<a id="bRef" onclick="page('referral')">👥<br>Invite</a>
-<a id="bRev" onclick="page('revenue')">🧾<br>Revenue</a>
-<a id="bMine" onclick="page('mine')">👤<br>Mine</a>
-</div>
-
-</div>
-</body>
-</html>
+window.rent=async(n,p,d,t)=>{
+ let u=await getDoc(doc(db,"users",uid));if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet');show('deposit');return;}
+ if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days - Total UGX '+t.toLocaleString())) return;
+ await updateDoc(doc(db,"users",uid),{wallet:increment(-p)});
+ await addDoc(collection(db,"active_machines"),{userId:uid,name:n,price:p,days:d,daysLeft:d,totalProfit:t,lastCount:Date.now(),status:"ACTIVE",createdAt:serverTimestamp()});
+ load();show('revenue');
+};
+window.submitDep=async()=>{
+ let a=parseInt(depAmt.value);if(a<19000){alert('Min 19000');return;}
+ let tid=depTid.value.trim();if(!tid){alert('Enter Transaction ID');return;}
+ await addDoc(collection(db,"deposits"),{userId:uid,amount:a,phone:"+256785344451",transId:tid,status:"PENDING",createdAt:serverTimestamp()});
+ depMsg.innerText='Submitted - PENDING';
+};
+window.submitWd=async()=>{
+ let a=parseInt(wdAmt.value);if(a<5000){alert('Min 5000');return;}
+ let ph=wdPhone.value.trim();if(!ph){alert('Enter phone');return;}
+ let u=await getDoc(doc(db,"users",uid));if(!u.exists()||(u.data().balance||0)<a){alert('Insufficient balance');return;}
+ await addDoc(collection(db,"withdraws"),{userId:uid,phone:ph,amount:a,status:"PENDING",createdAt:serverTimestamp()});
+ await updateDoc(doc(db,"users",uid),{balance:increment(-a)});
+ wdMsg.innerText='Submitted - PENDING';
+};
+window.doRegister=async()=>{
+ let phone=rPhone.value.trim();let pass=rPass.value.trim();if(!phone||!pass){alert('Enter phone and password');return;}
+ let id=phone.replace(/\D/g,'').slice(-9)||'U'+Date.now();uid=id;localStorage.setItem('k_uid',uid);
+ await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:rInv.value||"",wallet:0,balance:0,createdAt:serverTimestamp()});
+ show('home');
+};
+window.doLogin=async()=>{
+ let phone=lPhone.value.trim();let pass=lPass.value.trim();
+ let snap=await getDocs(collection(db,"users"));let found=null;snap.forEach(d=>{if(d.data().phone===phone&&d.data().password===pass)found=d.id;});
+ if(found){uid=found;localStorage.setItem('k_uid',uid);show('home');}else alert('Wrong details');
+};
+if(uid) show('home'); else show('register');
+</script></body></html>
