@@ -1,138 +1,123 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KHALFA SMART LOANS</title><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}body{background:#070a19;color:#fff;min-height:100vh}.top{position:sticky;top:0;z-index:10;background:rgba(7,10,25,0.9);backdrop-filter:blur(12px);border-bottom:1px solid #1e293b;padding:12px 15px;display:flex;justify-content:space-between;align-items:center}.logo{font-weight:800;font-size:18px;color:#fbbf24;letter-spacing:1px}.balCard{margin:12px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:18px;padding:16px;color:#000;position:relative;overflow:hidden}.balCard::after{content:"";position:absolute;right:-20px;top:-20px;width:120px;height:120px;background:rgba(255,255,255,0.2);border-radius:50%}.bLbl{font-size:11px;opacity:0.7;font-weight:600;letter-spacing:1px}.bAmt{font-size:28px;font-weight:800;margin:4px 0}.bBtns{display:flex;gap:8px;margin-top:10px}.bBtn{flex:1;padding:9px;border:0;border-radius:10px;font-weight:700;font-size:12px;cursor:pointer}.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:0 12px}.sC{background:#131a33;border:1px solid #1e293b;border-radius:12px;padding:10px;text-align:center}.sC b{color:#fbbf24;display:block;font-size:13px}.sC span{font-size:10px;opacity:0.6}.tabs{display:flex;gap:6px;padding:12px;overflow-x:auto}.t{padding:8px 14px;border-radius:20px;border:1px solid #1e293b;background:#131a33;color:#94a3b8;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer}.t.on{background:#fbbf24;color:#000;border-color:#fbbf24}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 90px}.pC{background:#131a33;border:1px solid #1e293b;border-radius:16px;padding:12px;position:relative;overflow:hidden}.pC.hot{border-color:#fbbf24}.pBadge{position:absolute;top:8px;right:8px;background:#fbbf24;color:#000;font-size:8px;padding:3px 7px;border-radius:20px;font-weight:800}.pName{font-weight:800;font-size:13px;color:#fbbf24}.pPrice{font-size:18px;font-weight:800;margin:6px 0}.pInfo{font-size:10px;line-height:1.5;color:#94a3b8}.pInfo b{color:#fff}.rentBtn{width:100%;margin-top:10px;padding:9px;border:0;border-radius:10px;background:#fff;color:#000;font-weight:800;font-size:11px;cursor:pointer}.rentBtn:disabled{background:#334155;color:#64748b}.rentBtn.hotBtn{background:#fbbf24}.list{padding:0 12px 90px}.iC{background:#131a33;border:1px solid #1e293b;border-radius:12px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}.modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:flex-end;z-index:99}.modal.on{display:flex}.mBox{background:#0f172a;width:100%;border-radius:20px 20px 0 0;padding:18px;border-top:1px solid #1e293b;max-height:85vh;overflow:auto}.inp{width:100%;padding:12px;border-radius:10px;border:1px solid #1e293b;background:#020617;color:#fff;margin:6px 0}.btn{width:100%;padding:12px;border-radius:10px;border:0;font-weight:800;cursor:pointer}.btnY{background:#fbbf24;color:#000}.btnG{background:#22c55e;color:#fff}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0f172a;border-top:1px solid #1e293b;display:flex;padding:6px}.bm{flex:1;text-align:center;padding:6px;font-size:10px;color:#64748b;cursor:pointer}.bm.on{color:#fbbf24}.h{display:none!important}</style></head><body>
-<div class="top"><div class="logo">KHALFA 💎</div><div style="font-size:11px">📱 <span id="uPhone">-</span></div></div>
-<div id="loginPage"><div style="padding:30px 15px"><h1 style="font-size:26px">Welcome to<br><span style="color:#fbbf24">KHALFA SMART</span><br>Investments</h1><p style="font-size:12px;color:#94a3b8;margin-top:8px">Secure • Profitable • Instant Withdrawal</p><div style="background:#131a33;border-radius:16px;padding:15px;margin-top:20px"><input id="lPhone" class="inp" placeholder="Phone e.g 2567xxxxxxx"><input id="lPass" type="password" class="inp" placeholder="Password"><button onclick="login()" class="btn btnY" style="margin-top:10px">LOGIN / REGISTER</button><p style="font-size:10px;color:#64748b;text-align:center;margin-top:10px">Login will auto create account if new</p></div></div></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Khalfa Smart Loans - Login</title>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-<div id="mainPage" class="h">
-<div class="balCard"><div class="bLbl">TOTAL ASSETS (UGX)</div><div class="bAmt" id="bal">0</div><div style="font-size:10px;opacity:0.7">Recharge: <span id="recharge">0</span> | Earned: <span id="earned">0</span></div><div class="bBtns"><button class="bBtn" style="background:#000;color:#fbbf24" onclick="openM('rechargeM')">Recharge</button><button class="bBtn" style="background:#fff" onclick="openM('withdrawM')">Withdraw</button></div></div>
-<div class="stats"><div class="sC"><b id="sRent">0</b><span>Active Plans</span></div><div class="sC"><b id="sToday">0</b><span>Today Profit</span></div><div class="sC"><b id="sTot">0</b><span>Total Earned</span></div></div>
+const firebaseConfig = {
+  apiKey: "AIzaSyBGnvj0KnpXcmRo63WlbISS0HyeUTbbTsg",
+  authDomain: "khalfa-smart-loans.firebaseapp.com",
+  projectId: "khalfa-smart-loans",
+  storageBucket: "khalfa-smart-loans.firebasestorage.app",
+  messagingSenderId: "13720870393",
+  appId: "1:13720870393:web:11628a5d12c66c42c53128"
+};
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
 
-<div class="tabs"><div class="t on" onclick="switchTab('all',this)">All Plans</div><div class="t" onclick="switchTab('active',this)">My Active</div><div class="t" onclick="switchTab('trans',this)">Transactions</div><div class="t" onclick="switchTab('invite',this)">Invite</div></div>
+window.onload = () => {
+  if(localStorage.getItem("khalfa_phone")){ window.location.href="dashboard.html"; return; }
+  const urlParams=new URLSearchParams(window.location.search);
+  const code=urlParams.get("code");
+  if(code){ document.getElementById("refCode").value=code; document.getElementById("refBox").style.display="block"; }
+}
 
-<div id="plansGrid" class="grid"></div>
-<div id="transList" class="list h"></div>
-<div id="activeList" class="list h"></div>
-<div id="inviteBox" class="list h"><div style="background:#131a33;border-radius:16px;padding:15px;text-align:center"><h3 style="color:#fbbf24">Invite & Earn 10%</h3><p style="font-size:11px;color:#94a3b8;margin:8px 0">Copy your invite link</p><div style="background:#020617;padding:10px;border-radius:8px;font-size:11px;word-break:break-all" id="invLink">-</div><button class="btn btnY" style="margin-top:10px" onclick="copyInv()">Copy Link</button></div></div>
+window.show = (t) => {
+  document.getElementById("loginBox").style.display=t==="login"?"block":"none";
+  document.getElementById("regBox").style.display=t==="reg"?"block":"none";
+  document.getElementById("tabLogin").style.background=t==="login"?"#0b5fff":"#eef2f9";
+  document.getElementById("tabLogin").style.color=t==="login"?"#fff":"#5a6a8a";
+  document.getElementById("tabReg").style.background=t==="reg"?"#0b5fff":"#eef2f9";
+  document.getElementById("tabReg").style.color=t==="reg"?"#fff":"#5a6a8a";
+}
+
+window.register = async () => {
+  const phone=document.getElementById("rPhone").value.trim();
+  const pass=document.getElementById("rPass").value.trim();
+  const ref=document.getElementById("refCode").value.trim();
+  if(!phone||phone.length<10){ alert("Enter valid phone"); return; }
+  if(!pass||pass.length<4){ alert("Password min 4 chars"); return; }
+  const btn=document.getElementById("rBtn"); btn.innerText="Creating..."; btn.disabled=true;
+  try{
+    const q=query(collection(db,"users"),where("phone","==",phone));
+    const snap=await getDocs(q);
+    if(!snap.empty){ alert("Phone already registered, login."); show('login'); btn.innerText="Register"; btn.disabled=false; return; }
+    const myCode=Math.floor(100000+Math.random()*900000).toString();
+    await addDoc(collection(db,"users"),{
+      phone,password:pass,wallet:0,balance:0,myCode:myCode,referredBy:ref||null,createdAt:serverTimestamp()
+    });
+    localStorage.setItem("khalfa_phone",phone);
+    localStorage.setItem("khalfa_code",myCode);
+    alert("Account created!");
+    window.location.href="dashboard.html";
+  }catch(e){ alert(e.message); btn.innerText="Register"; btn.disabled=false; }
+}
+
+window.login = async () => {
+  const phone=document.getElementById("lPhone").value.trim();
+  const pass=document.getElementById("lPass").value.trim();
+  if(!phone||!pass){ alert("Enter phone and password"); return; }
+  const btn=document.getElementById("lBtn"); btn.innerText="Checking..."; btn.disabled=true;
+  try{
+    const q=query(collection(db,"users"),where("phone","==",phone),where("password","==",pass));
+    const snap=await getDocs(q);
+    if(snap.empty){ alert("Wrong phone or password"); btn.innerText="Login"; btn.disabled=false; return; }
+    const data=snap.docs[0].data();
+    localStorage.setItem("khalfa_phone",phone);
+    localStorage.setItem("khalfa_code",data.myCode||"268917");
+    window.location.href="dashboard.html";
+  }catch(e){ alert(e.message); btn.innerText="Login"; btn.disabled=false; }
+}
+</script>
+<style>
+*{box-sizing:border-box;font-family:Arial}body{margin:0;background:linear-gradient(135deg,#0b5fff 0%,#093bb0 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:15px}
+.card{background:#fff;width:100%;max-width:380px;border-radius:22px;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.logo{text-align:center;margin-bottom:18px}.logo-icon{width:64px;height:64px;background:linear-gradient(135deg,#0b5fff,#1e73ff);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:#fff;font-size:28px;font-weight:bold}
+.tabs{display:flex;background:#eef2f9;border-radius:12px;padding:4px;margin-bottom:18px}.tabs button{flex:1;border:none;padding:10px;border-radius:9px;font-weight:bold;cursor:pointer;transition:.2s}
+.input{width:100%;padding:13px 14px;border:1px solid #e1e8f0;background:#f6f8fc;border-radius:11px;outline:none;margin-top:8px;font-size:14px}
+.btn{width:100%;margin-top:14px;background:linear-gradient(135deg,#0b5fff,#1e73ff);color:#fff;border:none;padding:14px;border-radius:11px;font-weight:bold;cursor:pointer;box-shadow:0 5px 15px rgba(11,95,255,.35)}
+.ref{background:#fff8e1;border:1px dashed #ffb84d;border-radius:10px;padding:10px;font-size:12px;display:none}
+ small{color:#6b7a99}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="logo"><div class="logo-icon">K</div><b style="color:#0b5fff;font-size:20px">KHALFA</b><b style="font-size:20px;color:#0f172a"> SMART LOANS</b><br><small>Smart Investment Platform</small></div>
+
+<div class="tabs">
+<button id="tabLogin" style="background:#0b5fff;color:#fff" onclick="show('login')">Login</button>
+<button id="tabReg" style="background:#eef2f9;color:#5a6a8a" onclick="show('reg')">Register</button>
 </div>
 
-<div class="bottom h" id="bottomNav"><div class="bm on" onclick="nav('home',this)">🏠<br>Home</div><div class="bm" onclick="nav('active',this)">📊<br>Earnings</div><div class="bm" onclick="nav('trans',this)">📜<br>History</div><div class="bm" onclick="nav('me',this)">👤<br>Me</div></div>
+<div id="loginBox">
+<label style="font-size:12px;font-weight:bold">Phone Number</label>
+<input id="lPhone" class="input" type="tel" placeholder="0785 344 451">
+<label style="font-size:12px;font-weight:bold;margin-top:10px;display:block">Password</label>
+<input id="lPass" class="input" type="password" placeholder="••••••">
+<button id="lBtn" class="btn" onclick="login()">Login</button>
+<p style="text-align:center;font-size:12px;margin-top:12px"><span style="color:#0b5fff;cursor:pointer" onclick="show('reg')">No account? Register</span></p>
+</div>
 
-<!-- Modals -->
-<div id="rechargeM" class="modal" onclick="if(event.target==this)closeM('rechargeM')"><div class="mBox"><h3>Recharge</h3><p style="font-size:11px;color:#94a3b8">Minimum 20,000 UGX - Admin will approve</p><input id="rAmt" type="number" class="inp" placeholder="Amount e.g 30000"><input id="rTx" class="inp" placeholder="Transaction ID (MTN/Airtel)"><button onclick="doRecharge()" class="btn btnY">Submit Recharge</button><div style="margin-top:10px;background:#1e293b;padding:10px;border-radius:8px;font-size:11px">MTN: 076... / Airtel: 070...<br>Names: KHALFA SMART</div></div></div>
+<div id="regBox" style="display:none">
+<div id="refBox" class="ref">🔗 Referral Code Detected: <b id="refCodeDisplay"></b><br>You will be under LV1 12% team</div>
+<label style="font-size:12px;font-weight:bold">Phone Number</label>
+<input id="rPhone" class="input" type="tel" placeholder="0785 344 451">
+<label style="font-size:12px;font-weight:bold;margin-top:10px;display:block">Password</label>
+<input id="rPass" class="input" type="password" placeholder="Create password (min 4)">
+<label style="font-size:12px;font-weight:bold;margin-top:10px;display:block">Referral Code (Optional)</label>
+<input id="refCode" class="input" type="text" placeholder="Code e.g. 268917">
+<button id="rBtn" class="btn" onclick="register()">Register</button>
+<p style="text-align:center;font-size:12px;margin-top:12px"><span style="color:#0b5fff;cursor:pointer" onclick="show('login')">Have account? Login</span></p>
+</div>
 
-<div id="withdrawM" class="modal" onclick="if(event.target==this)closeM('withdrawM')"><div class="mBox"><h3>Withdraw</h3><input id="wAmt" type="number" class="inp" placeholder="Amount Min 5000"><input id="wTo" class="inp" placeholder="Withdraw to Number"><button onclick="doWithdraw()" class="btn btnG">Submit Withdrawal</button></div></div>
-
+<div style="text-align:center;margin-top:18px;font-size:11px;color:#6b7a99">Min Deposit 19,000 UGX | Min Withdraw 5,000 UGX<br>Secure & Fast</div>
+</div>
 <script>
-let cur=null;
-const PLANS=[
-{n:"Starter Plan",p:30000,d:1500,day:30,hot:true,ret:"45,000"},
-{n:"Growth Plan",p:60000,d:3200,day:30,ret:"96,000"},
-{n:"Premium Plan",p:120000,d:7000,day:30,ret:"210,000"},
-{n:"Business Plan",p:250000,d:16000,day:30,ret:"480,000"},
-{n:"Elite Plan",p:500000,d:35000,day:30,ret:"1,050,000"},
-{n:"Diamond Plan",p:1000000,d:75000,day:30,ret:"2,250,000"}
-];
-function G(k){try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}}function S(k,v){localStorage.setItem(k,JSON.stringify(v))}
-function openM(id){document.getElementById(id).classList.add('on')}function closeM(id){document.getElementById(id).classList.remove('on')}
-function login(){
- let ph=document.getElementById('lPhone').value.trim(), ps=document.getElementById('lPass').value.trim();
- if(!ph||ph.length<9){alert('Enter phone');return}
- if(!ps){alert('Enter password');return}
- let users=G('ku'); let u=users.find(x=>x.p==ph);
- if(!u){u={p:ph,ps:ps,b:0,tr:0,te:0,t:Date.now()};users.push(u);S('ku',users);alert('Account created!')}
- else if(u.ps!=ps){alert('Wrong password');return}
- cur=u; localStorage.setItem('kcur',ph);
- document.getElementById('loginPage').classList.add('h');
- document.getElementById('mainPage').classList.remove('h');
- document.getElementById('bottomNav').classList.remove('h');
- document.getElementById('uPhone').innerText=ph;
- document.getElementById('invLink').innerText=location.origin+"?inv="+ph;
- refresh();
-}
-function refresh(){
- if(!cur)return;
- let users=G('ku'); let u=users.find(x=>x.p==cur.p); if(!u)return; cur=u;
- document.getElementById('bal').innerText=u.b.toLocaleString();
- document.getElementById('recharge').innerText=(u.tr||0).toLocaleString();
- document.getElementById('earned').innerText=(u.te||0).toLocaleString();
- let rentals=G('kr').filter(x=>x.ph==cur.p&&x.s=='active');
- document.getElementById('sRent').innerText=rentals.length;
- let today=rentals.reduce((s,x)=>s+x.d,0);
- document.getElementById('sToday').innerText=today.toLocaleString();
- document.getElementById('sTot').innerText=(u.te||0).toLocaleString();
- renderPlans(); renderTrans(); renderActive();
-}
-function renderPlans(){
- let html=PLANS.map((pl,i)=>`<div class="pC ${pl.hot?'hot':''}">${pl.hot?'<div class="pBadge">HOT</div>':''}<div class="pName">${pl.n}</div><div class="pPrice">${pl.p.toLocaleString()}<span style="font-size:11px;color:#94a3b8"> UGX</span></div><div class="pInfo"><b>Daily:</b> ${pl.d.toLocaleString()} UGX<br><b>Duration:</b> ${pl.day} Days<br><b>Total Return:</b> ${pl.ret} UGX</div><button class="rentBtn ${pl.hot?'hotBtn':''}" onclick="buyPlan(${i})" ${cur.b<pl.p?'disabled':''}>${cur.b>=pl.p?'Invest Now':'Insufficient'}</button></div>`).join('');
- document.getElementById('plansGrid').innerHTML=html;
-}
-function buyPlan(i){
- let pl=PLANS[i]; if(cur.b<pl.p){alert('Recharge first');openM('rechargeM');return}
- let users=G('ku'); let u=users.find(x=>x.p==cur.p); u.b-=pl.p; u.tr=u.tr||0; S('ku',users);
- let rentals=G('kr'); rentals.push({ph:cur.p,n:pl.n,p:pl.p,d:pl.d,day:pl.day,ret:pl.ret,bought:Date.now(),s:'active',earned:0});
- S('kr',rentals);
- // add transaction
- let trans=G('kt'); trans.push({ph:cur.p,type:'invest',a:pl.p,info:pl.n,time:Date.now()});
- S('kt',trans);
- alert('Invested in '+pl.n); refresh();
-}
-function doRecharge(){
- let a=parseInt(document.getElementById('rAmt').value), tx=document.getElementById('rTx').value.trim();
- if(!a||a<1000){alert('Enter amount');return}
- if(!tx){alert('Enter Tx ID');return}
- let deps=G('kd'); deps.push({ph:cur.p,a:a,tx:tx,s:'pending',time:Date.now()});
- S('kd',deps);
- let trans=G('kt'); trans.push({ph:cur.p,type:'recharge',a:a,info:'Pending - '+tx,s:'pending',time:Date.now()});
- S('kt',trans);
- closeM('rechargeM'); alert('Submitted! Admin will approve and balance will auto add. Check Transactions.'); refresh();
-}
-function doWithdraw(){
- let a=parseInt(document.getElementById('wAmt').value), to=document.getElementById('wTo').value.trim();
- if(!a||a<5000){alert('Min 5000');return}
- if(cur.b<a){alert('Insufficient');return}
- let users=G('ku'); let u=users.find(x=>x.p==cur.p); u.b-=a; S('ku',users);
- let withs=G('kw'); withs.push({ph:cur.p,a:a,to:to,s:'pending',time:Date.now()});
- S('kw',withs);
- let trans=G('kt'); trans.push({ph:cur.p,type:'withdraw',a:a,info:'To '+to,s:'pending',time:Date.now()});
- S('kt',trans);
- closeM('withdrawM'); alert('Withdraw pending'); refresh();
-}
-function renderTrans(){
- let trans=G('kt').filter(x=>x.ph==cur.p).slice().reverse();
- let html=trans.map(t=>{
-  let col=t.type=='recharge'?'#22c55e':t.type=='withdraw'?'#ef4444':'#fbbf24';
-  return `<div class="iC"><div><b style="color:${col}">${t.type.toUpperCase()} ${t.a.toLocaleString()} UGX</b><div style="font-size:10px;color:#94a3b8">${t.info} • ${new Date(t.time).toLocaleString()}</div></div><div style="font-size:10px;padding:4px 8px;border-radius:20px;background:#1e293b">${t.s||'done'}</div></div>`;
- }).join('')||'<div style="text-align:center;padding:20px;color:#64748b">No transactions yet</div>';
- document.getElementById('transList').innerHTML=html;
-}
-function renderActive(){
- let rentals=G('kr').filter(x=>x.ph==cur.p).slice().reverse();
- let html=rentals.map(r=>`<div class="iC"><div><b style="color:#fbbf24">${r.n}</b><div style="font-size:11px">Invested: ${r.p.toLocaleString()} | Daily: ${r.d.toLocaleString()}<br>Earning... Total: ${r.ret}</div></div><div style="font-size:10px;background:#22c55e;color:#fff;padding:4px 8px;border-radius:20px">${r.s}</div></div>`).join('')||'<div style="text-align:center;padding:20px;color:#64748b">No active plans</div>';
- document.getElementById('activeList').innerHTML=html;
-}
-function switchTab(tab,el){
- document.querySelectorAll('.t').forEach(x=>x.classList.remove('on')); el.classList.add('on');
- document.getElementById('plansGrid').classList.add('h');document.getElementById('transList').classList.add('h');document.getElementById('activeList').classList.add('h');document.getElementById('inviteBox').classList.add('h');
- if(tab=='all')document.getElementById('plansGrid').classList.remove('h');
- if(tab=='trans')document.getElementById('transList').classList.remove('h');
- if(tab=='active')document.getElementById('activeList').classList.remove('h');
- if(tab=='invite')document.getElementById('inviteBox').classList.remove('h');
-}
-function nav(p,el){document.querySelectorAll('.bm').forEach(x=>x.classList.remove('on'));el.classList.add('on');document.getElementById('plansGrid').classList.add('h');document.getElementById('transList').classList.add('h');document.getElementById('activeList').classList.add('h');document.getElementById('inviteBox').classList.add('h');if(p=='home')document.getElementById('plansGrid').classList.remove('h');if(p=='trans')document.getElementById('transList').classList.remove('h');if(p=='active')document.getElementById('activeList').classList.remove('h');if(p=='me'){document.getElementById('inviteBox').classList.remove('h');} }
-function copyInv(){navigator.clipboard.writeText(document.getElementById('invLink').innerText);alert('Copied!')}
- // auto login
- let saved=localStorage.getItem('kcur'); if(saved){let users=G('ku');let u=users.find(x=>x.p==saved);if(u){cur=u;document.getElementById('loginPage').classList.add('h');document.getElementById('mainPage').classList.remove('h');document.getElementById('bottomNav').classList.remove('h');document.getElementById('uPhone').innerText=saved;document.getElementById('invLink').innerText=location.origin+"?inv="+saved;refresh();}}
- // daily profit auto (simulate every 1 min for test)
- setInterval(()=>{
-  if(!cur)return; let users=G('ku'); let u=users.find(x=>x.p==cur.p); if(!u)return;
-  let rentals=G('kr').filter(x=>x.ph==cur.p&&x.s=='active');
-  let profit=rentals.reduce((s,x)=>s+x.d,0);
-  if(profit>0){ // add once per day logic simplified: add every refresh check? For demo we add profit every 24h
-   let last=parseInt(localStorage.getItem('kLastProfit')||'0'); let now=Date.now();
-   if(now-last>20000){ // 20 sec for testing, change to 86400000 for 24h
-    u.b+=profit; u.te=(u.te||0)+profit; S('ku',users);
-    let trans=G('kt'); trans.push({ph:cur.p,type:'profit',a:profit,info:'Daily Profit',time:Date.now()}); S('kt',trans);
-    localStorage.setItem('kLastProfit',now+''); refresh();
-   }
-  }
- },5000);
-</script></body></html>
+const urlParams=new URLSearchParams(window.location.search); const c=urlParams.get("code"); if(c){ document.getElementById("refBox").style.display="block"; document.getElementById("refCodeDisplay") && (document.getElementById("refCodeDisplay").innerText=c); }
+</script>
+</body>
+</html>
