@@ -21,7 +21,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 .nav button{border:0;background:none;color:#8892A6;font-size:11px}
 .nav button.active{color:var(--gold);font-weight:800}
 .hide{display:none}
-.prod{display:flex;gap:10px;background:#fff;margin:10px 12px;border-radius:16px;padding:12px}
+.prod{display:flex;gap:10px;background:#fff;margin:10px 12px;border-radius:16px;padding:12px;position:relative;overflow:hidden}
 .r2{display:flex;gap:10px;margin:12px}
 .r2 div{flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;border:1px solid #E2E8F0;cursor:pointer}
 .tab{padding:8px 16px;border-radius:20px;border:1px solid #CBD5E1;font-size:12px;font-weight:700;cursor:pointer}
@@ -174,7 +174,7 @@ window.showK=()=>{listK.classList.remove('hide');listL.classList.add('hide');tK.
 window.showL=()=>{listL.classList.remove('hide');listK.classList.add('hide');tL.classList.add('a');tK.classList.remove('a')};
 const KM=[
 {n:"KM-15",days:15,price:19000,total:30000},
-{n:"KM-30",days:17,price:3000,total:48000},
+{n:"KM-30",days:17,price:3000,total:48000,soldOut:true},
 {n:"KM-50",days:18,price:95000,total:195000},
 {n:"KM-70",days:30,price:280000,total:450000},
 {n:"KM-80",days:30,price:350000,total:520000},
@@ -193,7 +193,14 @@ const KY=[
 ];
 function card(p){
 let d=Math.round(p.total/p.days);
-return `<div class="prod"><div style="width:80px;height:80px;background:#F8FAFC;border-radius:12px;display:flex;align-items:center;justify-content:center">🏭</div><div style="flex:1"><div style="display:flex;justify-content:space-between"><b>${p.n}</b><span style="background:#D4AF37;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px">VIP</span></div><small>🕒 ${p.days} Days</small><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:4px;font-size:11px"><span>Price</span><b>UGX ${p.price.toLocaleString()}</b></div><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:2px;font-size:11px"><span>Daily</span><b style="color:#00B67A">UGX ${d.toLocaleString()}</b></div><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:2px;font-size:11px"><span>Total</span><b style="color:#00B67A">UGX ${p.total.toLocaleString()}</b></div><button onclick="rent('${p.n}',${p.price},${p.days},${p.total})" style="width:100%;margin-top:8px;padding:10px;border:0;background:#00B67A;color:#fff;border-radius:8px;font-weight:800">Rent / Buy</button></div></div>`;
+let isSold = p.soldOut === true;
+let btn = isSold 
+? `<button disabled style="width:100%;margin-top:8px;padding:10px;border:0;background:#9ca3af;color:#fff;border-radius:8px;font-weight:800;cursor:not-allowed">SOLD OUT</button>`
+: `<button onclick="rent('${p.n}',${p.price},${p.days},${p.total})" style="width:100%;margin-top:8px;padding:10px;border:0;background:#00B67A;color:#fff;border-radius:8px;font-weight:800">Rent / Buy</button>`;
+let badge = isSold
+? `<span style="background:#ef4444;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:800">SOLD OUT</span>`
+: `<span style="background:#D4AF37;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px">VIP</span>`;
+return `<div class="prod" style="${isSold ? 'opacity:0.75;pointer-events:none;' : ''}"><div style="width:80px;height:80px;background:#F8FAFC;border-radius:12px;display:flex;align-items:center;justify-content:center">🏭</div><div style="flex:1"><div style="display:flex;justify-content:space-between"><b>${p.n}</b>${badge}</div><small>🕒 ${p.days} Days</small><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:4px;font-size:11px"><span>Price</span><b>UGX ${p.price.toLocaleString()}</b></div><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:2px;font-size:11px"><span>Daily</span><b style="color:#00B67A">UGX ${d.toLocaleString()}</b></div><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:2px;font-size:11px"><span>Total</span><b style="color:#00B67A">UGX ${p.total.toLocaleString()}</b></div>${btn}</div>${isSold ? `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-20deg);background:rgba(239,68,68,0.9);color:#fff;padding:6px 18px;border-radius:8px;font-weight:900;font-size:14px;letter-spacing:1px;pointer-events:none;">SOLD OUT</div>` : ''}</div>`;
 }
 listK.innerHTML=KM.map(card).join('');
 listL.innerHTML=KY.map(card).join('');
@@ -248,6 +255,7 @@ await updateDoc(doc(db,"active_machines",m.id),{daysLeft:nl,lastCount:Date.now()
 }
 }
 window.rent=async(n,p,d,t)=>{
+if(n==="KM-30"){alert('KM-30 is SOLD OUT');return;}
 let u=await getDoc(doc(db,"users",uid));
 if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet');show('deposit');return;}
 if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days')) return;
@@ -295,4 +303,4 @@ if(found){uid=found;localStorage.setItem('k_uid',uid);show('home');}else alert('
 if(uid) show('home'); else show('register');
 </script>
 </body>
- </html>
+</html>
