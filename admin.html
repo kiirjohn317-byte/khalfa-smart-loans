@@ -1,19 +1,151 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KHALFA ADMIN - FULL DETAILS</title><style>:root{--navy:#0A1931;--gold:#D4AF37;--gold2:#B8962E}body{margin:0;font-family:Inter,sans-serif;background:#F5F7FB;padding:12px}.h{background:var(--navy);color:var(--gold);padding:14px;border-radius:12px;display:flex;justify-content:space-between;font-weight:800}.card{background:#fff;margin:12px 0;border-radius:16px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)}.btn{padding:10px 14px;border-radius:8px;border:0;font-weight:800;cursor:pointer;margin:2px}.btnG{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff}.btnN{background:var(--navy);color:#fff}.btnR{background:#EF4444;color:#fff}.hide{display:none}input{width:100%;padding:14px;border-radius:12px;border:1px solid #CBD5E1;margin-top:8px}.tab{padding:8px 16px;border-radius:20px;border:1px solid #CBD5E1;font-size:12px;font-weight:700;cursor:pointer}.tab.a{background:#0A1931;color:#D4AF37}</style></head><body><div class="h"><span>KHALFA ADMIN</span><span id="count"></span></div><div id="loginBox" class="card" style="margin-top:40px;text-align:center"><h2>Admin Login</h2><input id="pass" type="password" placeholder="Password = KHALFA2026"><button class="btn btnG" style="width:100%;margin-top:12px" onclick="login()">Login</button><p id="msg" style="color:red;font-size:12px"></p></div><div id="panel" class="hide"><div style="display:flex;gap:8px;margin-top:12px"><div id="t1" class="tab a" onclick="showTab('deposits')">Deposits</div><div id="t2" class="tab" onclick="showTab('withdraws')">Withdraws</div><div id="t3" class="tab" onclick="showTab('users')">Users</div></div><div id="sec-deposits" class="card"><b>💰 Deposits - Approve to Wallet</b><div id="depList" style="margin-top:10px;font-size:12px">Loading...</div></div><div id="sec-withdraws" class="card hide"><b>🏧 Withdraws - Approve Payout</b><div id="wdList" style="margin-top:10px;font-size:12px">Loading...</div></div><div id="sec-users" class="card hide"><b>👥 Users - Name & Number & Balances</b><div id="userList" style="margin-top:10px;font-size:12px">Loading...</div></div></div><script type="module">
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KHALFA ADMIN - FULL DETAILS</title>
+<style>
+:root{--navy:#0A1931;--gold:#D4AF37;--gold2:#B8962E}
+body{margin:0;font-family:Inter,sans-serif;background:#F5F7FB;padding:12px}
+.h{background:var(--navy);color:var(--gold);padding:14px;border-radius:12px;display:flex;justify-content:space-between;font-weight:800}
+.card{background:#fff;margin:12px 0;border-radius:16px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.btn{padding:10px 14px;border-radius:8px;border:0;font-weight:800;cursor:pointer;margin:2px}
+.btnG{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff}
+.btnN{background:var(--navy);color:#fff}
+.btnR{background:#EF4444;color:#fff}
+.hide{display:none}
+input{width:100%;padding:14px;border-radius:12px;border:1px solid #CBD5E1;margin-top:8px}
+.tab{padding:8px 16px;border-radius:20px;border:1px solid #CBD5E1;font-size:12px;font-weight:700;cursor:pointer}
+.tab.a{background:#0A1931;color:#D4AF37}
+</style>
+</head>
+<body>
+
+<div class="h">
+<span>KHALFA ADMIN</span>
+<span id="count">Loading</span>
+</div>
+
+<div id="loginBox" class="card" style="margin-top:40px;text-align:center">
+<h2 style="color:#0A1931">Admin Login</h2>
+<input id="pass" type="password" placeholder="Password = KHALFA2026">
+<button class="btn btnG" style="width:100%;margin-top:12px" onclick="login()">Login</button>
+<p id="msg" style="color:red;font-size:12px"></p>
+</div>
+
+<div id="panel" class="hide">
+<div style="display:flex;gap:8px;margin-top:12px">
+<div id="t1" class="tab a" onclick="showTab('deposits')">Deposits</div>
+<div id="t2" class="tab" onclick="showTab('withdraws')">Withdraws</div>
+<div id="t3" class="tab" onclick="showTab('users')">Users</div>
+</div>
+
+<div id="sec-deposits" class="card">
+<b>💰 Deposits - Approve to Wallet</b>
+<div id="depList" style="margin-top:10px;font-size:12px">Loading...</div>
+</div>
+
+<div id="sec-withdraws" class="card hide">
+<b>🏧 Withdraws - Approve Payout</b>
+<div id="wdList" style="margin-top:10px;font-size:12px">Loading...</div>
+</div>
+
+<div id="sec-users" class="card hide">
+<b>👥 Users - Name & Number & Balances</b>
+<div id="userList" style="margin-top:10px;font-size:12px">Loading...</div>
+</div>
+</div>
+
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getFirestore, doc, getDoc, getDocs, collection, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-const ADMIN_PASS="KHALFA2026";
-const firebaseConfig={apiKey:"YOUR_API_KEY",authDomain:"khalfa-smart-loans.firebaseapp.com",projectId:"khalfa-smart-loans",appId:"YOUR_APP_ID"};
-const app=initializeApp(firebaseConfig);const db=getFirestore(app);
-window.login=()=>{if(pass.value===ADMIN_PASS){loginBox.classList.add('hide');panel.classList.remove('hide');loadAll();}else{msg.innerText="Wrong - Use KHALFA2026";}};
-window.showTab=(t)=>{['deposits','withdraws','users'].forEach(x=>document.getElementById('sec-'+x).classList.add('hide'));document.getElementById('sec-'+t).classList.remove('hide');};
+
+const ADMIN_PASS = "KHALFA2026";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "khalfa-smart-loans.firebaseapp.com",
+  projectId: "khalfa-smart-loans",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.login = () => {
+  if(pass.value === ADMIN_PASS){
+    loginBox.classList.add('hide');
+    panel.classList.remove('hide');
+    loadAll();
+  } else {
+    msg.innerText = "Wrong - Use KHALFA2026";
+  }
+};
+
+window.showTab = (t) => {
+  ['deposits','withdraws','users'].forEach(x=>{
+    document.getElementById('sec-'+x).classList.add('hide');
+  });
+  document.getElementById('sec-'+t).classList.remove('hide');
+};
+
 async function loadAll(){
-let depSnap=await getDocs(collection(db,"deposits"));let html="";for(let d of depSnap.docs){let x=d.data();let u=await getDoc(doc(db,"users",x.userId));let phone=u.exists()?u.data().phone:x.userId;let name=phone;let p=x.status==="PENDING";html+=`<div style="padding:12px;border:1px solid #E2E8F0;border-radius:12px;margin-bottom:8px"><div><b>Name/Phone:</b> ${name}<br><b>Number:</b> ${x.phone||phone}<br><b>UserID:</b> ${x.userId}<br><b>Amount:</b> UGX ${x.amount}<br><b>Trans ID:</b> ${x.transId||'N/A'}<br><b>Date:</b> ${x.createdAt?.toDate?x.createdAt.toDate().toLocaleString():''}<br><b>Status:</b> <span style="color:${p?'red':'green'}">${x.status}</span></div><div style="margin-top:8px">${p?`<button class="btn btnG" onclick="approveDep('${d.id}','${x.userId}',${x.amount})">✅ APPROVE DEPOSIT +Wallet</button> <button class="btn btnR" onclick="rejectDep('${d.id}')">❌ Reject</button>`:''}</div></div>`;}depList.innerHTML=html||"No deposits";
-let wdSnap=await getDocs(collection(db,"withdraws"));let html2="";for(let d of wdSnap.docs){let x=d.data();let u=await getDoc(doc(db,"users",x.userId));let userPhone=u.exists()?u.data().phone:x.userId;let p=x.status==="PENDING";html2+=`<div style="padding:12px;border:1px solid #E2E8F0;border-radius:12px;margin-bottom:8px"><div><b>Name/Phone:</b> ${userPhone}<br><b>Withdraw Number:</b> ${x.phone}<br><b>UserID:</b> ${x.userId}<br><b>Amount:</b> UGX ${x.amount}<br><b>Date:</b> ${x.createdAt?.toDate?x.createdAt.toDate().toLocaleString():''}<br><b>Status:</b> <span style="color:${p?'red':'green'}">${x.status}</span></div><div style="margin-top:8px">${p?`<button class="btn btnG" onclick="approveWd('${d.id}')">✅ APPROVE WITHDRAW - PAID</button> <button class="btn btnN" onclick="refundWd('${d.id}','${x.userId}',${x.amount})">↩️ Refund to Balance</button>`:''}</div></div>`;}wdList.innerHTML=html2||"No withdraws";
-let uSnap=await getDocs(collection(db,"users"));let html3="";uSnap.forEach(d=>{let x=d.data();html3+=`<div style="padding:10px;border-bottom:1px solid #eee;display:flex;justify-content:space-between"><div><b>${x.phone||d.id}</b><br>ID: ${d.id}<br>Invite: ${x.invite||'none'}</div><div style="text-align:right">Wallet: <b>UGX ${x.wallet||0}</b><br>Balance: <b>UGX ${x.balance||0}</b></div></div>`;});userList.innerHTML=html3;count.innerText="Connected ✓";
+  let depSnap = await getDocs(collection(db,"deposits"));
+  let html = "";
+  for(let d of depSnap.docs){
+    let x = d.data();
+    let u = await getDoc(doc(db,"users",x.userId));
+    let phone = u.exists() ? u.data().phone : x.userId;
+    let p = x.status === "PENDING";
+    html += `<div style="padding:12px;border:1px solid #E2E8F0;border-radius:12px;margin-bottom:8px"><div><b>Name/Phone:</b> ${phone}<br><b>Number:</b> ${x.phone || phone}<br><b>UserID:</b> ${x.userId}<br><b>Amount:</b> UGX ${x.amount}<br><b>Trans ID:</b> ${x.transId || 'N/A'}<br><b>Date:</b> ${x.createdAt?.toDate ? x.createdAt.toDate().toLocaleString() : ''}<br><b>Status:</b> ${x.status}</div><div style="margin-top:8px">${p ? `<button class="btn btnG" onclick="approveDep('${d.id}','${x.userId}',${x.amount})">✅ APPROVE DEPOSIT</button> <button class="btn btnR" onclick="rejectDep('${d.id}')">❌ Reject</button>` : ''}</div></div>`;
+  }
+  depList.innerHTML = html || "No deposits";
+
+  let wdSnap = await getDocs(collection(db,"withdraws"));
+  let html2 = "";
+  for(let d of wdSnap.docs){
+    let x = d.data();
+    let u = await getDoc(doc(db,"users",x.userId));
+    let userPhone = u.exists() ? u.data().phone : x.userId;
+    let p = x.status === "PENDING";
+    html2 += `<div style="padding:12px;border:1px solid #E2E8F0;border-radius:12px;margin-bottom:8px"><div><b>Name/Phone:</b> ${userPhone}<br><b>Withdraw Number:</b> ${x.phone}<br><b>UserID:</b> ${x.userId}<br><b>Amount:</b> UGX ${x.amount}<br><b>Date:</b> ${x.createdAt?.toDate ? x.createdAt.toDate().toLocaleString() : ''}<br><b>Status:</b> ${x.status}</div><div style="margin-top:8px">${p ? `<button class="btn btnG" onclick="approveWd('${d.id}')">✅ APPROVE WITHDRAW</button> <button class="btn btnN" onclick="refundWd('${d.id}','${x.userId}',${x.amount})">↩️ Refund</button>` : ''}</div></div>`;
+  }
+  wdList.innerHTML = html2 || "No withdraws";
+
+  let uSnap = await getDocs(collection(db,"users"));
+  let html3 = "";
+  uSnap.forEach(d=>{
+    let x = d.data();
+    html3 += `<div style="padding:10px;border-bottom:1px solid #eee;display:flex;justify-content:space-between"><div><b>${x.phone || d.id}</b><br>ID: ${d.id}</div><div style="text-align:right">Wallet: <b>UGX ${x.wallet || 0}</b><br>Balance: <b>UGX ${x.balance || 0}</b></div></div>`;
+  });
+  userList.innerHTML = html3 || "No users";
+  count.innerText = "Connected ✓";
 }
-window.approveDep=async(id,uid,amt)=>{if(!confirm("Approve Deposit?\nUser: "+uid+"\nAmount: UGX "+amt+" to Wallet?"))return;await updateDoc(doc(db,"users",uid),{wallet:increment(amt)});await updateDoc(doc(db,"deposits",id),{status:"APPROVED"});alert("Deposit Approved + Wallet added");loadAll();};
-window.rejectDep=async(id)=>{if(!confirm("Reject this deposit?"))return;await updateDoc(doc(db,"deposits",id),{status:"REJECTED"});loadAll();};
-window.approveWd=async(id)=>{if(!confirm("Confirm you have sent MTN money? Mark PAID?"))return;await updateDoc(doc(db,"withdraws",id),{status:"PAID"});alert("Withdraw Marked PAID");loadAll();};
-window.refundWd=async(id,uid,amt)=>{if(!confirm("Refund UGX "+amt+" to Balance of "+uid+" ?"))return;await updateDoc(doc(db,"users",uid),{balance:increment(amt)});await updateDoc(doc(db,"withdraws",id),{status:"REFUNDED"});loadAll();};
-</script></body></html>
+
+window.approveDep = async(id,uid,amt)=>{
+  if(!confirm("Approve Deposit? User: "+uid+" Amount: UGX "+amt+" to Wallet?")) return;
+  await updateDoc(doc(db,"users",uid),{wallet:increment(amt)});
+  await updateDoc(doc(db,"deposits",id),{status:"APPROVED"});
+  alert("Approved + Wallet added");
+  loadAll();
+};
+window.rejectDep = async(id)=>{
+  if(!confirm("Reject?")) return;
+  await updateDoc(doc(db,"deposits",id),{status:"REJECTED"});
+  loadAll();
+};
+window.approveWd = async(id)=>{
+  if(!confirm("Mark PAID?")) return;
+  await updateDoc(doc(db,"withdraws",id),{status:"PAID"});
+  alert("Withdraw PAID");
+  loadAll();
+};
+window.refundWd = async(id,uid,amt)=>{
+  if(!confirm("Refund UGX "+amt+" to "+uid+" ?")) return;
+  await updateDoc(doc(db,"users",uid),{balance:increment(amt)});
+  await updateDoc(doc(db,"withdraws",id),{status:"REFUNDED"});
+  loadAll();
+};
+</script>
+</body>
+  </html>
