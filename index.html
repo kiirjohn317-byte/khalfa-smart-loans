@@ -175,7 +175,7 @@ window.showL=()=>{listL.classList.remove('hide');listK.classList.add('hide');tL.
 const KM=[
 {n:"KM-15",days:15,price:19000,total:30000},
 {n:"KM-30",days:17,price:3000,total:48000,soldOut:true},
-{n:"KM-50",days:18,price:95000,total:195000},
+{n:"KM-50",days:18,price:95000,total:140000,daily:7000},
 {n:"KM-70",days:30,price:280000,total:450000},
 {n:"KM-80",days:30,price:350000,total:520000},
 {n:"KM-90",days:40,price:450000,total:720000},
@@ -192,7 +192,7 @@ const KY=[
 {n:"KY-80",days:30,price:700000,total:1000000}
 ];
 function card(p){
-let d=Math.round(p.total/p.days);
+let d=p.daily||Math.round(p.total/p.days);
 let isSold = p.soldOut === true;
 let btn = isSold 
 ? `<button disabled style="width:100%;margin-top:8px;padding:10px;border:0;background:#9ca3af;color:#fff;border-radius:8px;font-weight:800;cursor:not-allowed">SOLD OUT</button>`
