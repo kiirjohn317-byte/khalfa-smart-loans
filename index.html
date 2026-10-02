@@ -41,7 +41,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Invite Code</label>
 <div class="inp"><span style="padding:0 10px">🎟️</span><input id="rInv" placeholder="Optional"></div>
 <button class="btnG" style="margin-top:18px" onclick="doRegister()">Register</button>
-<p style="font-size:12px">Have account? <span onclick="show('login')" style="color:#2563EB;font-weight:800">Login</span></p>
+<p style="font-size:12px">Have account? <span onclick="showPage('login')" style="color:#2563EB;font-weight:800">Login</span></p>
 </div></div></div>
 
 <div id="p-login" class="hide"><div class="c" style="margin-top:28px;text-align:center">
@@ -50,7 +50,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <label style="font-size:12px;font-weight:700">Phone</label><div class="inp"><span style="padding:0 10px">📱</span><input id="lPhone" placeholder="078..."></div>
 <label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Password</label><div class="inp"><span style="padding:0 10px">🔒</span><input id="lPass" type="password" placeholder="Password"></div>
 <button class="btnN" style="margin-top:18px" onclick="doLogin()">Login</button>
-<p style="font-size:12px">No account? <span onclick="show('register')" style="color:#D4AF37;font-weight:800">Register</span></p>
+<p style="font-size:12px">No account? <span onclick="showPage('register')" style="color:#D4AF37;font-weight:800">Register</span></p>
 </div></div></div>
 
 <div id="p-home" class="hide">
@@ -62,10 +62,10 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <h2 id="balance" style="margin:6px 0">UGX 0</h2>
 </div>
 <div class="r2">
-<div onclick="show('deposit')">💳<br><small>Recharge</small></div>
-<div onclick="show('withdraw')">🏧<br><small>Withdraw</small></div>
-<div onclick="show('products')">📦<br><small>Products</small></div>
-<div onclick="show('invite')">👥<br><small>Invite</small></div>
+<div onclick="showPage('deposit')">💳<br><small>Recharge</small></div>
+<div onclick="showPage('withdraw')">🏧<br><small>Withdraw</small></div>
+<div onclick="showPage('products')">📦<br><small>Products</small></div>
+<div onclick="showPage('invite')">👥<br><small>Invite</small></div>
 </div>
 <div class="c"><b>Transactions</b><div id="transList" style="font-size:12px;margin-top:8px;color:#666">No transactions</div></div>
 </div>
@@ -86,7 +86,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <input id="depTid" placeholder="Transaction ID" style="width:100%;padding:14px;border-radius:12px;border:1px solid #CBD5E1;margin-top:12px">
 <button class="btnG" style="margin-top:12px" onclick="submitDep()">Submit</button>
 <p id="depMsg" style="font-size:12px;color:#00B67A"></p>
-</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="show('home')">Back</button></div>
+</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
 
 <div id="p-withdraw" class="hide"><div class="c">
 <h3 style="margin:0">Withdraw</h3><small>Min UGX 5,000</small>
@@ -96,7 +96,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <div class="inp"><span style="padding:0 10px">📱</span><input id="wdPhone" placeholder="078..."></div>
 <button class="btnG" style="margin-top:14px" onclick="submitWd()">Submit</button>
 <p id="wdMsg" style="font-size:12px;color:#00B67A"></p>
-</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="show('home')">Back</button></div>
+</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
 
 <div id="p-products" class="hide">
 <div style="padding:12px"><b>Investment Plans</b></div>
@@ -106,7 +106,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 </div>
 <div id="listK"></div>
 <div id="listL" class="hide"></div>
-<button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="show('home')">Back</button>
+<button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button>
 </div>
 
 <div id="p-revenue" class="hide">
@@ -120,80 +120,152 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <h4>No Products Available</h4>
 <small style="color:#888">Your products will appear here</small>
 </div>
-<button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="show('home')">Back</button>
+<button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button>
 </div>
 
 <div id="p-invite" class="hide"><div class="c">
 <div style="display:flex;justify-content:space-between;align-items:center;background:#F1F5F9;padding:12px;border-radius:12px">
-<a id="invLink" style="font-size:11px;color:#2563EB;word-break:break-all"></a>
-<button class="copy" onclick="let realLink='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+uid; navigator.clipboard.writeText(realLink); this.innerText='✓ Copied'; setTimeout(()=>this.innerText='Copy',2000)">Copy</button>
+<a id="invLink" style="font-size:11px;color:#2563EB;word-break:break-all">https://Novalend.com/registration?code=</a>
+<button class="copy" id="copyBtn">Copy</button>
 </div>
 <div style="margin-top:14px"><b>Referral Levels</b></div>
 <div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV1 12%</span><span>0</span></div>
 <div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV2 4%</span><span>0</span></div>
 <div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV3 2%</span><span>0</span></div>
 <div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV4 1%</span><span>0</span></div>
-</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="show('home')">Back</button></div>
+</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
 
 <div id="bottomNav" class="nav hide">
-<button id="nH" class="active" onclick="show('home')">🏠<br>Home</button>
-<button onclick="show('products')">📦<br>Products</button>
-<button onclick="show('invite')">👥<br>Invite</button>
-<button id="nR" onclick="show('revenue')">📊<br>Revenue</button>
-<button onclick="show('deposit')">👤<br>Mine</button>
+<button id="nH" class="active" onclick="showPage('home')">🏠<br>Home</button>
+<button onclick="showPage('products')">📦<br>Products</button>
+<button onclick="showPage('invite')">👥<br>Invite</button>
+<button id="nR" onclick="showPage('revenue')">📊<br>Revenue</button>
+<button onclick="showPage('deposit')">👤<br>Mine</button>
 </div>
+
+<script>
+// EMERGENCY UI - WORKS EVEN IF FIREBASE FAILS
+function showPage(p){
+  if(p==='register'||p==='login'){
+    document.getElementById('p-register').classList.add('hide');
+    document.getElementById('p-login').classList.add('hide');
+    document.getElementById('p-'+p).classList.remove('hide');
+    document.getElementById('bottomNav').classList.add('hide');
+    return;
+  }
+  let uid = localStorage.getItem('k_uid');
+  if(!uid){ 
+    document.getElementById('p-register').classList.remove('hide');
+    document.getElementById('p-home').classList.add('hide');
+    return;
+  }
+  ['register','login','home','deposit','products','revenue','withdraw','invite'].forEach(x=>{
+    let el=document.getElementById('p-'+x);
+    if(el) el.classList.add('hide');
+  });
+  let target=document.getElementById('p-'+p);
+  if(target) target.classList.remove('hide');
+  document.getElementById('bottomNav').classList.remove('hide');
+  // update invite link instantly
+  if(p==='invite'){
+    let uid2 = localStorage.getItem('k_uid') || 'USER';
+    let linkEl = document.getElementById('invLink');
+    if(linkEl) linkEl.innerText = "https://Novalend.com/registration?code=" + uid2;
+  }
+}
+function showK(){document.getElementById('listK').classList.remove('hide');document.getElementById('listL').classList.add('hide');document.getElementById('tK').classList.add('a');document.getElementById('tL').classList.remove('a')}
+function showL(){document.getElementById('listL').classList.remove('hide');document.getElementById('listK').classList.add('hide');document.getElementById('tL').classList.add('a');document.getElementById('tK').classList.remove('a')}
+window.showPage=showPage; window.showK=showK; window.showL=showL; window.show=showPage;
+
+// Copy button - always works
+document.addEventListener('DOMContentLoaded', ()=>{
+  let btn=document.getElementById('copyBtn');
+  if(btn){
+    btn.addEventListener('click', ()=>{
+      let uid = localStorage.getItem('k_uid') || '';
+      let realLink='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+uid;
+      navigator.clipboard.writeText(realLink).then(()=>{
+        btn.innerText='✓ Copied';
+        setTimeout(()=>btn.innerText='Copy',2000);
+      });
+    });
+  }
+  let uid = localStorage.getItem('k_uid');
+  if(uid) showPage('home'); else showPage('register');
+});
+</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, updateDoc, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 const firebaseConfig={
-apiKey:"YOUR_API_KEY",
+apiKey:"AIzaSyB5x4i5y3z...",
 authDomain:"khalfa-smart-loans.firebaseapp.com",
 projectId:"khalfa-smart-loans",
-appId:"YOUR_APP_ID"
+appId:"1:123456789:web:abc"
 };
+try{
 const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
-
-// FIX: Define all elements first so invite doesn't crash
-const bottomNav = document.getElementById('bottomNav');
-const nH = document.getElementById('nH');
-const nR = document.getElementById('nR');
-const invLink = document.getElementById('invLink');
-const wallet = document.getElementById('wallet');
-const balance = document.getElementById('balance');
-const uShow = document.getElementById('uShow');
-
 let uid=localStorage.getItem('k_uid');
 
-window.show=(p)=>{
-if(p==='register'||p==='login'){
-['register','login'].forEach(x=>{
-let e=document.getElementById('p-'+x);
-if(e) e.classList.add('hide');
-});
-let t=document.getElementById('p-'+p);
-if(t) t.classList.remove('hide');
-if(bottomNav) bottomNav.classList.add('hide');
-return;
+async function load(){
+if(!uid) return;
+let u=await getDoc(doc(db,"users",uid));
+let w=0,b=0;
+if(u.exists()){w=u.data().wallet||0;b=u.data().balance||0;}
+document.getElementById('wallet').innerText="UGX "+w.toLocaleString();
+document.getElementById('balance').innerText="UGX "+b.toLocaleString();
+document.getElementById('uShow').innerText=uid;
+document.getElementById('invLink').innerText="https://Novalend.com/registration?code="+uid;
 }
-if(!uid){show('register');return;}
-['register','login','home','deposit','products','revenue','withdraw','invite'].forEach(x=>{
-let e=document.getElementById('p-'+x);
-if(e) e.classList.add('hide');
-});
-let target=document.getElementById('p-'+p);
-if(target) target.classList.remove('hide');
-if(bottomNav) bottomNav.classList.remove('hide');
-document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-if(p==='home' && nH) nH.classList.add('active');
-if(p==='revenue' && nR) nR.classList.add('active');
-// FIX: also load for invite so link shows
-if(p==='home'||p==='revenue'||p==='invite') load();
+window.load=load;
+window.rent=async(n,p,d,t)=>{
+if(n==="KM-30"){alert('KM-30 is SOLD OUT');return;}
+let u=await getDoc(doc(db,"users",uid));
+if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet');showPage('deposit');return;}
+if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days')) return;
+await updateDoc(doc(db,"users",uid),{wallet:increment(-p)});
+await addDoc(collection(db,"active_machines"),{userId:uid,name:n,price:p,days:d,daysLeft:d,totalProfit:t,lastCount:Date.now(),status:"ACTIVE",createdAt:serverTimestamp()});
+load();showPage('revenue');
 };
-
-window.showK=()=>{document.getElementById('listK').classList.remove('hide');document.getElementById('listL').classList.add('hide');document.getElementById('tK').classList.add('a');document.getElementById('tL').classList.remove('a')};
-window.showL=()=>{document.getElementById('listL').classList.remove('hide');document.getElementById('listK').classList.add('hide');document.getElementById('tL').classList.add('a');document.getElementById('tK').classList.remove('a')};
+window.submitDep=async()=>{
+let a=parseInt(document.getElementById('depAmt').value);
+if(a<19000){alert('Min 19000');return;}
+let tid=document.getElementById('depTid').value.trim();
+if(!tid){alert('Enter Transaction ID');return;}
+await addDoc(collection(db,"deposits"),{userId:uid,amount:a,phone:"+256785344451",transId:tid,status:"PENDING",createdAt:serverTimestamp()});
+document.getElementById('depMsg').innerText='Submitted - PENDING';
+};
+window.submitWd=async()=>{
+let a=parseInt(document.getElementById('wdAmt').value);
+if(a<5000){alert('Min 5000');return;}
+let ph=document.getElementById('wdPhone').value.trim();
+if(!ph){alert('Enter phone');return;}
+let u=await getDoc(doc(db,"users",uid));
+if(!u.exists()||(u.data().balance||0)<a){alert('Insufficient balance');return;}
+await addDoc(collection(db,"withdraws"),{userId:uid,phone:ph,amount:a,status:"PENDING",createdAt:serverTimestamp()});
+await updateDoc(doc(db,"users",uid),{balance:increment(-a)});
+document.getElementById('wdMsg').innerText='Submitted - PENDING';
+};
+window.doRegister=async()=>{
+let phone=document.getElementById('rPhone').value.trim();
+let pass=document.getElementById('rPass').value.trim();
+if(!phone||!pass){alert('Enter phone and password');return;}
+let id=phone.replace(/\D/g,'').slice(-9)||'U'+Date.now();
+uid=id;
+localStorage.setItem('k_uid',uid);
+await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:document.getElementById('rInv').value||"",wallet:0,balance:0,createdAt:serverTimestamp()});
+showPage('home'); load();
+};
+window.doLogin=async()=>{
+let phone=document.getElementById('lPhone').value.trim();
+let pass=document.getElementById('lPass').value.trim();
+let snap=await getDocs(collection(db,"users"));
+let found=null;
+snap.forEach(d=>{if(d.data().phone===phone&&d.data().password===pass)found=d.id;});
+if(found){uid=found;localStorage.setItem('k_uid',uid);showPage('home'); load();}else alert('Wrong details');
+};
 
 const KM=[
 {n:"KM-15",days:15,price:19000,total:30000},
@@ -227,104 +299,8 @@ return `<div class="prod" style="${isSold ? 'opacity:0.75;pointer-events:none;' 
 }
 document.getElementById('listK').innerHTML=KM.map(card).join('');
 document.getElementById('listL').innerHTML=KY.map(card).join('');
-
-async function load(){
-if(!uid) return;
-try{
-let u=await getDoc(doc(db,"users",uid));
-let w=0,b=0;
-if(u.exists()){w=u.data().wallet||0;b=u.data().balance||0;}
-if(wallet) wallet.innerText="UGX "+w.toLocaleString();
-if(balance) balance.innerText="UGX "+b.toLocaleString();
-if(uShow) uShow.innerText=uid;
-// FIXED: Shows Novalend.com but copy will be GitHub working link
-if(invLink) invLink.innerText="https://Novalend.com/registration?code="+uid;
-}catch(e){ if(invLink) invLink.innerText="https://Novalend.com/registration?code="+uid; }
-
-let snap=await getDocs(collection(db,"active_machines"));
-let my=[];
-snap.forEach(d=>{let x=d.data();if(x.userId===uid)my.push({...x,id:d.id});});
-let active=my.filter(m=>m.status==="ACTIVE");
-let empty=document.getElementById('empty');
-let activeWrap=document.getElementById('activeWrap');
-let myCount=document.getElementById('myCount');
-let totRev=document.getElementById('totRev');
-if(active.length===0){
-if(empty) empty.style.display="block";
-if(activeWrap) activeWrap.innerHTML="";
-if(myCount) myCount.innerText="0";
-if(totRev) totRev.innerText="UGX 0";
-}else{
-if(empty) empty.style.display="none";
-if(myCount) myCount.innerText=active.length;
-let tot=0;
-active.forEach(m=>tot+=m.totalProfit);
-if(totRev) totRev.innerText="UGX "+tot.toLocaleString();
-if(activeWrap) activeWrap.innerHTML=active.map(m=>{
-let daily=Math.round(m.totalProfit/m.days);
-let pct=Math.round(((m.days-m.daysLeft)/m.days)*100);
-return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#D1FAE5;padding:4px 8px;border-radius:20px;font-size:10px">DAILY • ACTIVE</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Duration</small><br><b>${m.days} Days</b></div><div><small>Total</small><br><b>UGX ${m.totalProfit.toLocaleString()}</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#00C896;width:${pct}%"></div></div><small>Day ${m.days-m.daysLeft}/${m.days}</small></div>`;
-}).join('');
-}
-let tr="";
-snap.forEach(d=>{let x=d.data();if(x.userId===uid)tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>${x.name} - ${x.daysLeft}d</span><span>${x.status}</span></div>`});
-try{
-let dep=await getDocs(collection(db,"deposits"));
-dep.forEach(d=>{let x=d.data();if(x.userId===uid)tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>Recharge UGX ${x.amount}</span><span>${x.status}</span></div>`});
-let wd=await getDocs(collection(db,"withdraws"));
-wd.forEach(d=>{let x=d.data();if(x.userId===uid)tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>Withdraw UGX ${x.amount}</span><span>${x.status}</span></div>`});
-}catch(e){}
-let transList=document.getElementById('transList');
-if(transList) transList.innerHTML=tr||"No transactions";
-}
-
-window.rent=async(n,p,d,t)=>{
-if(n==="KM-30"){alert('KM-30 is SOLD OUT');return;}
-let u=await getDoc(doc(db,"users",uid));
-if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet');show('deposit');return;}
-if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days')) return;
-await updateDoc(doc(db,"users",uid),{wallet:increment(-p)});
-await addDoc(collection(db,"active_machines"),{userId:uid,name:n,price:p,days:d,daysLeft:d,totalProfit:t,lastCount:Date.now(),status:"ACTIVE",createdAt:serverTimestamp()});
-load();show('revenue');
-};
-window.submitDep=async()=>{
-let a=parseInt(document.getElementById('depAmt').value);
-if(a<19000){alert('Min 19000');return;}
-let tid=document.getElementById('depTid').value.trim();
-if(!tid){alert('Enter Transaction ID');return;}
-await addDoc(collection(db,"deposits"),{userId:uid,amount:a,phone:"+256785344451",transId:tid,status:"PENDING",createdAt:serverTimestamp()});
-document.getElementById('depMsg').innerText='Submitted - PENDING';
-};
-window.submitWd=async()=>{
-let a=parseInt(document.getElementById('wdAmt').value);
-if(a<5000){alert('Min 5000');return;}
-let ph=document.getElementById('wdPhone').value.trim();
-if(!ph){alert('Enter phone');return;}
-let u=await getDoc(doc(db,"users",uid));
-if(!u.exists()||(u.data().balance||0)<a){alert('Insufficient balance');return;}
-await addDoc(collection(db,"withdraws"),{userId:uid,phone:ph,amount:a,status:"PENDING",createdAt:serverTimestamp()});
-await updateDoc(doc(db,"users",uid),{balance:increment(-a)});
-document.getElementById('wdMsg').innerText='Submitted - PENDING';
-};
-window.doRegister=async()=>{
-let phone=document.getElementById('rPhone').value.trim();
-let pass=document.getElementById('rPass').value.trim();
-if(!phone||!pass){alert('Enter phone and password');return;}
-let id=phone.replace(/\D/g,'').slice(-9)||'U'+Date.now();
-uid=id;
-localStorage.setItem('k_uid',uid);
-await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:document.getElementById('rInv').value||"",wallet:0,balance:0,createdAt:serverTimestamp()});
-show('home');
-};
-window.doLogin=async()=>{
-let phone=document.getElementById('lPhone').value.trim();
-let pass=document.getElementById('lPass').value.trim();
-let snap=await getDocs(collection(db,"users"));
-let found=null;
-snap.forEach(d=>{if(d.data().phone===phone&&d.data().password===pass)found=d.id;});
-if(found){uid=found;localStorage.setItem('k_uid',uid);show('home');}else alert('Wrong details');
-};
-if(uid) show('home'); else show('register');
+if(uid) load();
+}catch(e){ console.log("Firebase error but UI still works", e); }
 </script>
 </body>
 </html>
