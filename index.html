@@ -126,7 +126,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <div id="p-invite" class="hide"><div class="c">
 <div style="display:flex;justify-content:space-between;align-items:center;background:#F1F5F9;padding:12px;border-radius:12px">
 <a id="invLink" style="font-size:11px;color:#2563EB;word-break:break-all"></a>
-<button class="copy" onclick="navigator.clipboard.writeText(invLink.innerText)">Copy</button>
+<button class="copy" onclick="let realLink='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+uid; navigator.clipboard.writeText(realLink); this.innerText='✓ Copied'; setTimeout(()=>this.innerText='Copy',2000)">Copy</button>
 </div>
 <div style="margin-top:14px"><b>Referral Levels</b></div>
 <div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV1 12%</span><span>0</span></div>
@@ -212,7 +212,8 @@ if(u.exists()){w=u.data().wallet||0;b=u.data().balance||0;}
 wallet.innerText="UGX "+w.toLocaleString();
 balance.innerText="UGX "+b.toLocaleString();
 uShow.innerText=uid;
-invLink.innerText="https://khalfasmartloans.com/registration?code="+uid;
+// FIXED LINK - SHOWS NOVALEND.COM
+invLink.innerText="https://Novalend.com/registration?code="+uid;
 let snap=await getDocs(collection(db,"active_machines"));
 let my=[];
 snap.forEach(d=>{let x=d.data();if(x.userId===uid)my.push({...x,id:d.id});});
