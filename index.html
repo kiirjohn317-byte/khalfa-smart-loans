@@ -154,24 +154,47 @@ appId:"YOUR_APP_ID"
 };
 const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
+
+// FIX: Define all elements first so invite doesn't crash
+const bottomNav = document.getElementById('bottomNav');
+const nH = document.getElementById('nH');
+const nR = document.getElementById('nR');
+const invLink = document.getElementById('invLink');
+const wallet = document.getElementById('wallet');
+const balance = document.getElementById('balance');
+const uShow = document.getElementById('uShow');
+
 let uid=localStorage.getItem('k_uid');
+
 window.show=(p)=>{
 if(p==='register'||p==='login'){
-['register','login'].forEach(x=>document.getElementById('p-'+x).classList.add('hide'));
-document.getElementById('p-'+p).classList.remove('hide');
-bottomNav.classList.add('hide');return;
+['register','login'].forEach(x=>{
+let e=document.getElementById('p-'+x);
+if(e) e.classList.add('hide');
+});
+let t=document.getElementById('p-'+p);
+if(t) t.classList.remove('hide');
+if(bottomNav) bottomNav.classList.add('hide');
+return;
 }
 if(!uid){show('register');return;}
-['register','login','home','deposit','products','revenue','withdraw','invite'].forEach(x=>document.getElementById('p-'+x)?.classList.add('hide'));
-document.getElementById('p-'+p).classList.remove('hide');
-bottomNav.classList.remove('hide');
+['register','login','home','deposit','products','revenue','withdraw','invite'].forEach(x=>{
+let e=document.getElementById('p-'+x);
+if(e) e.classList.add('hide');
+});
+let target=document.getElementById('p-'+p);
+if(target) target.classList.remove('hide');
+if(bottomNav) bottomNav.classList.remove('hide');
 document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-if(p==='home') nH.classList.add('active');
-if(p==='revenue') nR.classList.add('active');
-if(p==='home'||p==='revenue') load();
+if(p==='home' && nH) nH.classList.add('active');
+if(p==='revenue' && nR) nR.classList.add('active');
+// FIX: also load for invite so link shows
+if(p==='home'||p==='revenue'||p==='invite') load();
 };
-window.showK=()=>{listK.classList.remove('hide');listL.classList.add('hide');tK.classList.add('a');tL.classList.remove('a')};
-window.showL=()=>{listL.classList.remove('hide');listK.classList.add('hide');tL.classList.add('a');tK.classList.remove('a')};
+
+window.showK=()=>{document.getElementById('listK').classList.remove('hide');document.getElementById('listL').classList.add('hide');document.getElementById('tK').classList.add('a');document.getElementById('tL').classList.remove('a')};
+window.showL=()=>{document.getElementById('listL').classList.remove('hide');document.getElementById('listK').classList.add('hide');document.getElementById('tL').classList.add('a');document.getElementById('tK').classList.remove('a')};
+
 const KM=[
 {n:"KM-15",days:15,price:19000,total:30000},
 {n:"KM-30",days:17,price:3000,total:48000,soldOut:true},
@@ -202,34 +225,42 @@ let badge = isSold
 : `<span style="background:#D4AF37;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px">VIP</span>`;
 return `<div class="prod" style="${isSold ? 'opacity:0.75;pointer-events:none;' : ''}"><div style="width:80px;height:80px;background:#F8FAFC;border-radius:12px;display:flex;align-items:center;justify-content:center">🏭</div><div style="flex:1"><div style="display:flex;justify-content:space-between"><b>${p.n}</b>${badge}</div><small>🕒 ${p.days} Days</small><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:4px;font-size:11px"><span>Price</span><b>UGX ${p.price.toLocaleString()}</b></div><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:2px;font-size:11px"><span>Daily</span><b style="color:#00B67A">UGX ${d.toLocaleString()}</b></div><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:2px;font-size:11px"><span>Total</span><b style="color:#00B67A">UGX ${p.total.toLocaleString()}</b></div>${btn}</div>${isSold ? `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-20deg);background:rgba(239,68,68,0.9);color:#fff;padding:6px 18px;border-radius:8px;font-weight:900;font-size:14px;letter-spacing:1px;pointer-events:none;">SOLD OUT</div>` : ''}</div>`;
 }
-listK.innerHTML=KM.map(card).join('');
-listL.innerHTML=KY.map(card).join('');
+document.getElementById('listK').innerHTML=KM.map(card).join('');
+document.getElementById('listL').innerHTML=KY.map(card).join('');
+
 async function load(){
 if(!uid) return;
+try{
 let u=await getDoc(doc(db,"users",uid));
 let w=0,b=0;
 if(u.exists()){w=u.data().wallet||0;b=u.data().balance||0;}
-wallet.innerText="UGX "+w.toLocaleString();
-balance.innerText="UGX "+b.toLocaleString();
-uShow.innerText=uid;
-// FIXED LINK - SHOWS NOVALEND.COM
-invLink.innerText="https://Novalend.com/registration?code="+uid;
+if(wallet) wallet.innerText="UGX "+w.toLocaleString();
+if(balance) balance.innerText="UGX "+b.toLocaleString();
+if(uShow) uShow.innerText=uid;
+// FIXED: Shows Novalend.com but copy will be GitHub working link
+if(invLink) invLink.innerText="https://Novalend.com/registration?code="+uid;
+}catch(e){ if(invLink) invLink.innerText="https://Novalend.com/registration?code="+uid; }
+
 let snap=await getDocs(collection(db,"active_machines"));
 let my=[];
 snap.forEach(d=>{let x=d.data();if(x.userId===uid)my.push({...x,id:d.id});});
 let active=my.filter(m=>m.status==="ACTIVE");
+let empty=document.getElementById('empty');
+let activeWrap=document.getElementById('activeWrap');
+let myCount=document.getElementById('myCount');
+let totRev=document.getElementById('totRev');
 if(active.length===0){
-empty.style.display="block";
-activeWrap.innerHTML="";
-myCount.innerText="0";
-totRev.innerText="UGX 0";
+if(empty) empty.style.display="block";
+if(activeWrap) activeWrap.innerHTML="";
+if(myCount) myCount.innerText="0";
+if(totRev) totRev.innerText="UGX 0";
 }else{
-empty.style.display="none";
-myCount.innerText=active.length;
+if(empty) empty.style.display="none";
+if(myCount) myCount.innerText=active.length;
 let tot=0;
 active.forEach(m=>tot+=m.totalProfit);
-totRev.innerText="UGX "+tot.toLocaleString();
-activeWrap.innerHTML=active.map(m=>{
+if(totRev) totRev.innerText="UGX "+tot.toLocaleString();
+if(activeWrap) activeWrap.innerHTML=active.map(m=>{
 let daily=Math.round(m.totalProfit/m.days);
 let pct=Math.round(((m.days-m.daysLeft)/m.days)*100);
 return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#D1FAE5;padding:4px 8px;border-radius:20px;font-size:10px">DAILY • ACTIVE</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Duration</small><br><b>${m.days} Days</b></div><div><small>Total</small><br><b>UGX ${m.totalProfit.toLocaleString()}</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#00C896;width:${pct}%"></div></div><small>Day ${m.days-m.daysLeft}/${m.days}</small></div>`;
@@ -237,24 +268,16 @@ return `<div class="c"><div style="display:flex;justify-content:space-between"><
 }
 let tr="";
 snap.forEach(d=>{let x=d.data();if(x.userId===uid)tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>${x.name} - ${x.daysLeft}d</span><span>${x.status}</span></div>`});
+try{
 let dep=await getDocs(collection(db,"deposits"));
 dep.forEach(d=>{let x=d.data();if(x.userId===uid)tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>Recharge UGX ${x.amount}</span><span>${x.status}</span></div>`});
 let wd=await getDocs(collection(db,"withdraws"));
 wd.forEach(d=>{let x=d.data();if(x.userId===uid)tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>Withdraw UGX ${x.amount}</span><span>${x.status}</span></div>`});
-transList.innerHTML=tr||"No transactions";
-for(let m of my){
-if(m.status!=="ACTIVE")continue;
-if(Date.now()-m.lastCount>86400000&&m.daysLeft>0){
-let nl=m.daysLeft-1;
-if(nl===0){
-await updateDoc(doc(db,"users",uid),{balance:increment(m.totalProfit)});
-await updateDoc(doc(db,"active_machines",m.id),{daysLeft:0,status:"COMPLETED",lastCount:Date.now()});
-}else{
-await updateDoc(doc(db,"active_machines",m.id),{daysLeft:nl,lastCount:Date.now()});
+}catch(e){}
+let transList=document.getElementById('transList');
+if(transList) transList.innerHTML=tr||"No transactions";
 }
-}
-}
-}
+
 window.rent=async(n,p,d,t)=>{
 if(n==="KM-30"){alert('KM-30 is SOLD OUT');return;}
 let u=await getDoc(doc(db,"users",uid));
@@ -265,37 +288,37 @@ await addDoc(collection(db,"active_machines"),{userId:uid,name:n,price:p,days:d,
 load();show('revenue');
 };
 window.submitDep=async()=>{
-let a=parseInt(depAmt.value);
+let a=parseInt(document.getElementById('depAmt').value);
 if(a<19000){alert('Min 19000');return;}
-let tid=depTid.value.trim();
+let tid=document.getElementById('depTid').value.trim();
 if(!tid){alert('Enter Transaction ID');return;}
 await addDoc(collection(db,"deposits"),{userId:uid,amount:a,phone:"+256785344451",transId:tid,status:"PENDING",createdAt:serverTimestamp()});
-depMsg.innerText='Submitted - PENDING';
+document.getElementById('depMsg').innerText='Submitted - PENDING';
 };
 window.submitWd=async()=>{
-let a=parseInt(wdAmt.value);
+let a=parseInt(document.getElementById('wdAmt').value);
 if(a<5000){alert('Min 5000');return;}
-let ph=wdPhone.value.trim();
+let ph=document.getElementById('wdPhone').value.trim();
 if(!ph){alert('Enter phone');return;}
 let u=await getDoc(doc(db,"users",uid));
 if(!u.exists()||(u.data().balance||0)<a){alert('Insufficient balance');return;}
 await addDoc(collection(db,"withdraws"),{userId:uid,phone:ph,amount:a,status:"PENDING",createdAt:serverTimestamp()});
 await updateDoc(doc(db,"users",uid),{balance:increment(-a)});
-wdMsg.innerText='Submitted - PENDING';
+document.getElementById('wdMsg').innerText='Submitted - PENDING';
 };
 window.doRegister=async()=>{
-let phone=rPhone.value.trim();
-let pass=rPass.value.trim();
+let phone=document.getElementById('rPhone').value.trim();
+let pass=document.getElementById('rPass').value.trim();
 if(!phone||!pass){alert('Enter phone and password');return;}
 let id=phone.replace(/\D/g,'').slice(-9)||'U'+Date.now();
 uid=id;
 localStorage.setItem('k_uid',uid);
-await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:rInv.value||"",wallet:0,balance:0,createdAt:serverTimestamp()});
+await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:document.getElementById('rInv').value||"",wallet:0,balance:0,createdAt:serverTimestamp()});
 show('home');
 };
 window.doLogin=async()=>{
-let phone=lPhone.value.trim();
-let pass=lPass.value.trim();
+let phone=document.getElementById('lPhone').value.trim();
+let pass=document.getElementById('lPass').value.trim();
 let snap=await getDocs(collection(db,"users"));
 let found=null;
 snap.forEach(d=>{if(d.data().phone===phone&&d.data().password===pass)found=d.id;});
