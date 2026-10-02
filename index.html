@@ -144,7 +144,6 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 </div>
 
 <script>
-// EMERGENCY UI - WORKS EVEN IF FIREBASE FAILS
 function showPage(p){
   if(p==='register'||p==='login'){
     document.getElementById('p-register').classList.add('hide');
@@ -166,18 +165,16 @@ function showPage(p){
   let target=document.getElementById('p-'+p);
   if(target) target.classList.remove('hide');
   document.getElementById('bottomNav').classList.remove('hide');
-  // update invite link instantly
   if(p==='invite'){
     let uid2 = localStorage.getItem('k_uid') || 'USER';
     let linkEl = document.getElementById('invLink');
     if(linkEl) linkEl.innerText = "https://Novalend.com/registration?code=" + uid2;
   }
+  if(window.load) window.load();
 }
 function showK(){document.getElementById('listK').classList.remove('hide');document.getElementById('listL').classList.add('hide');document.getElementById('tK').classList.add('a');document.getElementById('tL').classList.remove('a')}
 function showL(){document.getElementById('listL').classList.remove('hide');document.getElementById('listK').classList.add('hide');document.getElementById('tL').classList.add('a');document.getElementById('tK').classList.remove('a')}
 window.showPage=showPage; window.showK=showK; window.showL=showL; window.show=showPage;
-
-// Copy button - always works
 document.addEventListener('DOMContentLoaded', ()=>{
   let btn=document.getElementById('copyBtn');
   if(btn){
@@ -209,25 +206,112 @@ const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
 let uid=localStorage.getItem('k_uid');
 
-async function load(){
-if(!uid) return;
-let u=await getDoc(doc(db,"users",uid));
-let w=0,b=0;
-if(u.exists()){w=u.data().wallet||0;b=u.data().balance||0;}
-document.getElementById('wallet').innerText="UGX "+w.toLocaleString();
-document.getElementById('balance').innerText="UGX "+b.toLocaleString();
-document.getElementById('uShow').innerText=uid;
-document.getElementById('invLink').innerText="https://Novalend.com/registration?code="+uid;
-}
-window.load=load;
+// FIXED LOAD - PRODUCTS NEVER DISAPPEAR
+window.load=async()=>{
+if(!uid){ uid=localStorage.getItem('k_uid'); if(!uid) return; }
+try{
+  let u=await getDoc(doc(db,"users",uid));
+  let w=0,b=0;
+  if(u.exists()){w=u.data().wallet||0;b=u.data().balance||0;}
+  document.getElementById('wallet').innerText="UGX "+w.toLocaleString();
+  document.getElementById('balance').innerText="UGX "+b.toLocaleString();
+  document.getElementById('uShow').innerText=uid;
+  document.getElementById('invLink').innerText="https://Novalend.com/registration?code="+uid;
+}catch(e){}
+
+try{
+  let snap=await getDocs(collection(db,"active_machines"));
+  let my=[];
+  snap.forEach(d=>{
+    let x=d.data();
+    if(x.userId===uid) my.push({...x,id:d.id});
+  });
+
+  let active=my.filter(m=>!m.status || m.status==="ACTIVE");
+  let completed=my.filter(m=>m.status==="COMPLETED");
+  
+  let empty=document.getElementById('empty');
+  let activeWrap=document.getElementById('activeWrap');
+  let myCount=document.getElementById('myCount');
+  let totRev=document.getElementById('totRev');
+  let transList=document.getElementById('transList');
+
+  // FIX: Never hide if user has any products
+  if(my.length===0){
+    if(empty) empty.style.display="block";
+    if(activeWrap) activeWrap.innerHTML="";
+    if(myCount) myCount.innerText="0";
+    if(totRev) totRev.innerText="UGX 0";
+  }else{
+    if(empty) empty.style.display="none";
+    if(myCount) myCount.innerText=active.length;
+    let tot=0;
+    my.forEach(m=>tot+=(m.totalProfit||0));
+    if(totRev) totRev.innerText="UGX "+tot.toLocaleString();
+    
+    if(activeWrap){
+      let html="";
+      if(active.length>0){
+        html+=active.map(m=>{
+          let daily=Math.round((m.totalProfit||0)/(m.days||1));
+          let done=(m.days||0)-(m.daysLeft||0);
+          let pct=Math.max(10,Math.round((done/(m.days||1))*100));
+          return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#D1FAE5;color:#065F46;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800">ACTIVE</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Progress</small><br><b>${done}/${m.days} Days</b></div><div><small>Left</small><br><b>${m.daysLeft} Days</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#00C896;width:${pct}%"></div></div><div style="margin-top:6px;font-size:11px;color:#666">Total: UGX ${(m.totalProfit||0).toLocaleString()} | Price: UGX ${(m.price||0).toLocaleString()}</div></div>`;
+        }).join('');
+      }
+      if(completed.length>0){
+        html+=completed.map(m=>{
+          return `<div class="c" style="border:1px solid #D1FAE5"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#E5E7EB;padding:4px 8px;border-radius:20px;font-size:10px">COMPLETED ✓</span></div><div style="margin-top:8px;font-size:12px">Earned: <b style="color:#00B67A">UGX ${(m.totalProfit||0).toLocaleString()}</b></div></div>`;
+        }).join('');
+      }
+      activeWrap.innerHTML=html;
+    }
+
+    // FIX: Transactions always show rented products
+    let tr="";
+    my.forEach(x=>{
+      tr+=`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:11px"><span>📦 ${x.name} - ${x.daysLeft}d left - UGX ${(x.price||0).toLocaleString()}</span><span style="color:${x.status==='COMPLETED'?'#888':'#00B67A'};font-weight:700">${x.status||'ACTIVE'}</span></div>`;
+    });
+    
+    // Also show deposits/withdraws if possible
+    try{
+      let dep=await getDocs(collection(db,"deposits"));
+      dep.forEach(d=>{let x=d.data();if(x.userId===uid) tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>💳 Recharge UGX ${x.amount}</span><span style="color:${x.status==='PENDING'?'#F59E0B':'#00B67A'}">${x.status}</span></div>`;});
+      let wd=await getDocs(collection(db,"withdraws"));
+      wd.forEach(d=>{let x=d.data();if(x.userId===uid) tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>🏧 Withdraw UGX ${x.amount}</span><span>${x.status}</span></div>`;});
+    }catch(e){}
+
+    if(transList) transList.innerHTML=tr||"No transactions";
+  }
+
+  // FIX: Only deduct after real 24h, not on every open
+  for(let m of my){
+    if(m.status==="COMPLETED") continue;
+    if(!m.lastCount) continue;
+    let diffHours = (Date.now() - m.lastCount) / (1000*60*60);
+    if(diffHours >= 24 && m.daysLeft>0){
+      let nl=m.daysLeft-1;
+      if(nl<=0){
+        await updateDoc(doc(db,"users",uid),{balance:increment(m.totalProfit||0)});
+        await updateDoc(doc(db,"active_machines",m.id),{daysLeft:0,status:"COMPLETED",lastCount:Date.now()});
+      }else{
+        await updateDoc(doc(db,"active_machines",m.id),{daysLeft:nl,lastCount:Date.now()});
+      }
+    }
+  }
+
+}catch(e){ console.log("load error", e); }
+};
+
 window.rent=async(n,p,d,t)=>{
 if(n==="KM-30"){alert('KM-30 is SOLD OUT');return;}
 let u=await getDoc(doc(db,"users",uid));
-if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet');showPage('deposit');return;}
+if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet UGX '+p.toLocaleString());showPage('deposit');return;}
 if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days')) return;
 await updateDoc(doc(db,"users",uid),{wallet:increment(-p)});
 await addDoc(collection(db,"active_machines"),{userId:uid,name:n,price:p,days:d,daysLeft:d,totalProfit:t,lastCount:Date.now(),status:"ACTIVE",createdAt:serverTimestamp()});
-load();showPage('revenue');
+await window.load();
+showPage('revenue');
 };
 window.submitDep=async()=>{
 let a=parseInt(document.getElementById('depAmt').value);
@@ -236,6 +320,7 @@ let tid=document.getElementById('depTid').value.trim();
 if(!tid){alert('Enter Transaction ID');return;}
 await addDoc(collection(db,"deposits"),{userId:uid,amount:a,phone:"+256785344451",transId:tid,status:"PENDING",createdAt:serverTimestamp()});
 document.getElementById('depMsg').innerText='Submitted - PENDING';
+window.load();
 };
 window.submitWd=async()=>{
 let a=parseInt(document.getElementById('wdAmt').value);
@@ -247,6 +332,7 @@ if(!u.exists()||(u.data().balance||0)<a){alert('Insufficient balance');return;}
 await addDoc(collection(db,"withdraws"),{userId:uid,phone:ph,amount:a,status:"PENDING",createdAt:serverTimestamp()});
 await updateDoc(doc(db,"users",uid),{balance:increment(-a)});
 document.getElementById('wdMsg').innerText='Submitted - PENDING';
+window.load();
 };
 window.doRegister=async()=>{
 let phone=document.getElementById('rPhone').value.trim();
@@ -256,7 +342,7 @@ let id=phone.replace(/\D/g,'').slice(-9)||'U'+Date.now();
 uid=id;
 localStorage.setItem('k_uid',uid);
 await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:document.getElementById('rInv').value||"",wallet:0,balance:0,createdAt:serverTimestamp()});
-showPage('home'); load();
+showPage('home'); window.load();
 };
 window.doLogin=async()=>{
 let phone=document.getElementById('lPhone').value.trim();
@@ -264,7 +350,7 @@ let pass=document.getElementById('lPass').value.trim();
 let snap=await getDocs(collection(db,"users"));
 let found=null;
 snap.forEach(d=>{if(d.data().phone===phone&&d.data().password===pass)found=d.id;});
-if(found){uid=found;localStorage.setItem('k_uid',uid);showPage('home'); load();}else alert('Wrong details');
+if(found){uid=found;localStorage.setItem('k_uid',uid);showPage('home'); window.load();}else alert('Wrong details');
 };
 
 const KM=[
@@ -299,8 +385,8 @@ return `<div class="prod" style="${isSold ? 'opacity:0.75;pointer-events:none;' 
 }
 document.getElementById('listK').innerHTML=KM.map(card).join('');
 document.getElementById('listL').innerHTML=KY.map(card).join('');
-if(uid) load();
-}catch(e){ console.log("Firebase error but UI still works", e); }
+if(uid) window.load();
+}catch(e){ console.log("Firebase error", e); }
 </script>
 </body>
 </html>
