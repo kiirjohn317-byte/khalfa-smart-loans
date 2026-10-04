@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -36,165 +36,34 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 </head>
 <body>
 <div class="h"><span>NOVALEND</span><span id="uShow" style="font-size:10px;color:#8892A6"></span></div>
-
-<div id="p-register"><div class="c" style="margin-top:28px;text-align:center">
-<h2 style="color:#0A1931;margin:0">Create Account</h2>
-<div style="text-align:left;margin-top:18px">
-<label style="font-size:12px;font-weight:700">Phone</label>
-<div class="inp"><span style="padding:0 10px">📱</span><input id="rPhone" placeholder="078..."></div>
-<label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Password</label>
-<div class="inp"><span style="padding:0 10px">🔒</span><input id="rPass" type="password" placeholder="Password"></div>
-<label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Invite Code</label>
-<div class="inp"><span style="padding:0 10px">🎟️</span><input id="rInv" placeholder="Optional"></div>
-<button class="btnG" style="margin-top:18px" onclick="doRegister()">Register</button>
-<p style="font-size:12px">Have account? <span onclick="showPage('login')" style="color:#2563EB;font-weight:800">Login</span></p>
-</div></div></div>
-
-<div id="p-login" class="hide"><div class="c" style="margin-top:28px;text-align:center">
-<h2 style="color:#0A1931">Welcome Back</h2>
-<div style="text-align:left;margin-top:18px">
-<label style="font-size:12px;font-weight:700">Phone</label><div class="inp"><span style="padding:0 10px">📱</span><input id="lPhone" placeholder="078..."></div>
-<label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Password</label><div class="inp"><span style="padding:0 10px">🔒</span><input id="lPass" type="password" placeholder="Password"></div>
-<button class="btnN" style="margin-top:18px" onclick="doLogin()">Login</button>
-<p style="font-size:12px">No account? <span onclick="showPage('register')" style="color:#D4AF37;font-weight:800">Register</span></p>
-</div></div></div>
-
-<div id="p-home" class="hide">
-<div class="bm">
-<small style="color:#8892A6">WALLET</small>
-<h2 id="wallet" style="margin:6px 0">UGX 0</h2>
-<div style="height:1px;background:#1E3A5F;margin:14px 0"></div>
-<small style="color:#8892A6">BALANCE</small>
-<h2 id="balance" style="margin:6px 0">UGX 0</h2>
-</div>
-<div class="r2">
-<div onclick="showPage('deposit')">💳<br><small>Recharge</small></div>
-<div onclick="showPage('withdraw')">🏧<br><small>Withdraw</small></div>
-<div onclick="showPage('products')">📦<br><small>Products</small></div>
-<div onclick="showPage('invite')">👥<br><small>Invite</small></div>
-</div>
-<div class="c"><b>Transactions</b><div id="transList" style="font-size:12px;margin-top:8px;color:#666">No transactions</div></div>
-</div>
-
-<div id="p-deposit" class="hide"><div class="c">
-<h3 style="margin:0">Recharge</h3><small>Min UGX 19,000</small>
-<label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Amount</label>
-<div class="inp"><b>UGX</b><input id="depAmt" type="number" value="19000"></div>
-<label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Number</label>
-<div class="inp"><input id="payNum" value="+256785344451" readonly><button class="copy" onclick="navigator.clipboard.writeText('+256785344451');this.innerText='✓ Copied'">Copy</button></div>
-<div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px;margin-top:12px;font-size:12px">
-<b>MTN Mobile Money</b><br>
-1. Dial *165# - Send Money<br>
-2. Enter +256785344451<br>
-3. Enter Amount<br>
-4. Copy Transaction ID
-</div>
-<input id="depTid" placeholder="Transaction ID" style="width:100%;padding:14px;border-radius:12px;border:1px solid #CBD5E1;margin-top:12px">
-<button class="btnG" style="margin-top:12px" onclick="submitDep()">Submit</button>
-<p id="depMsg" style="font-size:12px;color:#00B67A"></p>
-</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
-
-<div id="p-withdraw" class="hide"><div class="c">
-<h3 style="margin:0">Withdraw</h3><small>Min UGX 5,000</small>
-<label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Amount</label>
-<div class="inp"><b>UGX</b><input id="wdAmt" type="number" placeholder="5000"></div>
-<label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Phone Number</label>
-<div class="inp"><span style="padding:0 10px">📱</span><input id="wdPhone" placeholder="078..."></div>
-<button class="btnG" style="margin-top:14px" onclick="submitWd()">Submit</button>
-<p id="wdMsg" style="font-size:12px;color:#00B67A"></p>
-</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
-
-<div id="p-products" class="hide">
-<div style="padding:12px"><b>Investment Plans</b></div>
-<div style="display:flex;gap:6px;padding:0 12px;flex-wrap:wrap">
-<div id="tK" class="tab a" onclick="showTab('K')">K SERIES</div>
-<div id="tN" class="tab" onclick="showTab('N')">N SERIES</div>
-<div id="tJ" class="tab" onclick="showTab('J')">J SERIES</div>
-<div id="tY" class="tab" onclick="showTab('Y')">Y SERIES</div>
-</div>
-<div id="listK"></div>
-<div id="listN" class="hide"></div>
-<div id="listJ" class="hide"></div>
-<div id="listY" class="hide"></div>
-<button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button>
-</div>
-
-<div id="p-revenue" class="hide">
-<div style="background:#0A1931;color:#fff;margin:12px;border-radius:20px;display:flex">
-<div style="flex:1;padding:16px;text-align:center;border-right:1px solid #1A2A4A"><small style="color:#8892A6">My Products</small><br><b id="myCount">0</b></div>
-<div style="flex:1;padding:16px;text-align:center"><small style="color:#8892A6">Total Revenue</small><br><b id="totRev">UGX 0</b></div>
-</div>
-<div id="activeWrap"></div>
-<div id="empty" style="text-align:center;margin-top:40px">
-<div style="background:#EEF2FF;width:60px;height:60px;border-radius:16px;display:flex;justify-content:center;align-items:center;margin:0 auto">📦</div>
-<h4>No Products Available</h4>
-<small style="color:#888">Your products will appear here</small>
-</div>
-<button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button>
-</div>
-
-<div id="p-invite" class="hide"><div class="c">
-<div style="display:flex;justify-content:space-between;align-items:center;background:#F1F5F9;padding:12px;border-radius:12px">
-<a id="invLink" style="font-size:11px;color:#2563EB;word-break:break-all"></a>
-<button class="copy" id="copyBtn">Copy</button>
-</div>
-<div style="margin-top:14px"><b>Referral Levels</b></div>
-<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV1 12%</span><span>0</span></div>
-<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV2 4%</span><span>0</span></div>
-<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV3 2%</span><span>0</span></div>
-<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV4 1%</span><span>0</span></div>
-</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
-
-<div id="bottomNav" class="nav hide">
-<button class="active" onclick="showPage('home')">🏠<br>Home</button>
-<button onclick="showPage('products')">📦<br>Products</button>
-<button onclick="showPage('invite')">👥<br>Invite</button>
-<button onclick="showPage('revenue')">📊<br>Revenue</button>
-<button onclick="showPage('deposit')">👤<br>Mine</button>
-</div>
-
-<div class="support-tooltip">💬 Need Help?</div>
-<a href="https://wa.me/256755797207?text=Hello%20NOVALEND%20Support%20%F0%9F%92%8E%2C%20I%20need%20help%20with%20my%20account" class="novalend-support-btn" target="_blank">💬</a>
-
+<div id="p-register"><div class="c" style="margin-top:28px;text-align:center"><h2 style="color:#0A1931;margin:0">Create Account</h2><div style="text-align:left;margin-top:18px"><label style="font-size:12px;font-weight:700">Phone</label><div class="inp"><span style="padding:0 10px">📱</span><input id="rPhone" placeholder="078..."></div><label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Password</label><div class="inp"><span style="padding:0 10px">🔒</span><input id="rPass" type="password" placeholder="Password"></div><label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Invite Code</label><div class="inp"><span style="padding:0 10px">🎟️</span><input id="rInv" placeholder="Optional"></div><button class="btnG" style="margin-top:18px" onclick="doRegister()">Register</button><p style="font-size:12px">Have account? <span onclick="showPage('login')" style="color:#2563EB;font-weight:800">Login</span></p></div></div></div>
+<div id="p-login" class="hide"><div class="c" style="margin-top:28px;text-align:center"><h2 style="color:#0A1931">Welcome Back</h2><div style="text-align:left;margin-top:18px"><label style="font-size:12px;font-weight:700">Phone</label><div class="inp"><span style="padding:0 10px">📱</span><input id="lPhone" placeholder="078..."></div><label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Password</label><div class="inp"><span style="padding:0 10px">🔒</span><input id="lPass" type="password" placeholder="Password"></div><button class="btnN" style="margin-top:18px" onclick="doLogin()">Login</button><p style="font-size:12px">No account? <span onclick="showPage('register')" style="color:#D4AF37;font-weight:800">Register</span></p></div></div></div>
+<div id="p-home" class="hide"><div class="bm"><small style="color:#8892A6">WALLET</small><h2 id="wallet" style="margin:6px 0">UGX 0</h2><div style="height:1px;background:#1E3A5F;margin:14px 0"></div><small style="color:#8892A6">BALANCE</small><h2 id="balance" style="margin:6px 0">UGX 0</h2></div><div class="r2"><div onclick="showPage('deposit')">💳<br><small>Recharge</small></div><div onclick="showPage('withdraw')">🏧<br><small>Withdraw</small></div><div onclick="showPage('products')">📦<br><small>Products</small></div><div onclick="showPage('invite')">👥<br><small>Invite</small></div></div><div class="c"><b>Transactions</b><div id="transList" style="font-size:12px;margin-top:8px;color:#666">No transactions</div></div></div>
+<div id="p-deposit" class="hide"><div class="c"><h3 style="margin:0">Recharge</h3><small>Min UGX 19,000</small><label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Amount</label><div class="inp"><b>UGX</b><input id="depAmt" type="number" value="19000"></div><label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Number</label><div class="inp"><input id="payNum" value="+256785344451" readonly><button class="copy" onclick="navigator.clipboard.writeText('+256785344451');this.innerText='✓ Copied'">Copy</button></div><div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px;margin-top:12px;font-size:12px"><b>MTN Mobile Money</b><br>1. Dial *165# - Send Money<br>2. Enter +256785344451<br>3. Enter Amount<br>4. Copy Transaction ID</div><input id="depTid" placeholder="Transaction ID" style="width:100%;padding:14px;border-radius:12px;border:1px solid #CBD5E1;margin-top:12px"><button class="btnG" style="margin-top:12px" onclick="submitDep()">Submit</button><p id="depMsg" style="font-size:12px;color:#00B67A"></p></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
+<div id="p-withdraw" class="hide"><div class="c"><h3 style="margin:0">Withdraw</h3><small>Min UGX 5,000</small><label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Amount</label><div class="inp"><b>UGX</b><input id="wdAmt" type="number" placeholder="5000"></div><label style="font-size:12px;font-weight:700;margin-top:14px;display:block">Phone Number</label><div class="inp"><span style="padding:0 10px">📱</span><input id="wdPhone" placeholder="078..."></div><button class="btnG" style="margin-top:14px" onclick="submitWd()">Submit</button><p id="wdMsg" style="font-size:12px;color:#00B67A"></p></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
+<div id="p-products" class="hide"><div style="padding:12px"><b>Investment Plans</b></div><div style="display:flex;gap:6px;padding:0 12px;flex-wrap:wrap"><div id="tK" class="tab a" onclick="showTab('K')">K SERIES</div><div id="tN" class="tab" onclick="showTab('N')">N SERIES</div><div id="tJ" class="tab" onclick="showTab('J')">J SERIES</div><div id="tY" class="tab" onclick="showTab('Y')">Y SERIES</div></div><div id="listK"></div><div id="listN" class="hide"></div><div id="listJ" class="hide"></div><div id="listY" class="hide"></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
+<div id="p-revenue" class="hide"><div style="background:#0A1931;color:#fff;margin:12px;border-radius:20px;display:flex"><div style="flex:1;padding:16px;text-align:center;border-right:1px solid #1A2A4A"><small style="color:#8892A6">My Products</small><br><b id="myCount">0</b></div><div style="flex:1;padding:16px;text-align:center"><small style="color:#8892A6">Total Revenue</small><br><b id="totRev">UGX 0</b></div></div><div id="activeWrap"></div><div id="empty" style="text-align:center;margin-top:40px"><div style="background:#EEF2FF;width:60px;height:60px;border-radius:16px;display:flex;justify-content:center;align-items:center;margin:0 auto">📦</div><h4>No Products Available</h4><small style="color:#888">Your products will appear here</small></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
+<div id="p-invite" class="hide"><div class="c"><div style="background:#F1F5F9;padding:14px;border-radius:12px;border:1px dashed #CBD5E1"><small style="color:#64748B;font-weight:700">YOUR INVITE LINK</small><div id="invLink" style="font-size:12px;color:#2563EB;word-break:break-all;margin-top:6px;font-weight:700">Loading...</div></div><button class="btnG" id="copyBtn" style="margin-top:12px">📋 Copy Link</button><div style="margin-top:14px"><b>Referral Levels</b></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV1 12%</span><span>0</span></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV2 4%</span><span>0</span></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV3 2%</span><span>0</span></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV4 1%</span><span>0</span></div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
+<div id="bottomNav" class="nav hide"><button class="active" onclick="showPage('home')">🏠<br>Home</button><button onclick="showPage('products')">📦<br>Products</button><button onclick="showPage('invite')">👥<br>Invite</button><button onclick="showPage('revenue')">📊<br>Revenue</button><button onclick="showPage('deposit')">👤<br>Mine</button></div>
+<div class="support-tooltip">💬 Need Help?</div><a href="https://wa.me/256755797207?text=Hello%20NOVALEND%20Support%20%F0%9F%92%8E%2C%20I%20need%20help%20with%20my%20account" class="novalend-support-btn" target="_blank">💬</a>
 <script>
-// === FIXED IN YOUR CODE - ALL SERIES SAME MACHINE + Y1-Y4 = YOUR NEW DIAMOND GOLD ===
-const IMG_K = "k.png"; // K SERIES navy blue gold K-1 - ALL K1-K4 same
-const IMG_N = "n.png"; // N SERIES NM-8000 black gold drill - ALL N1-N3 same
-const IMG_J = "j.png"; // J SERIES J-1200 grey heavy - ALL J1-J3 same
-const IMG_Y = "y.png"; // Y SERIES DIAMOND GOLD - ALL Y1-Y4 same - THIS NEW IMAGE YOU JUST SENT
-
+const IMG_K = "k.png";
+const IMG_N = "n.png";
+const IMG_J = "j.png";
+const IMG_Y = "y.png";
 const productsData = {
-K: [
-  {name:"K1", days:15, price:19000, total:30000, daily:2000, img:IMG_K},
-  {name:"K2", days:20, price:50000, total:80000, daily:4000, img:IMG_K},
-  {name:"K3", days:20, price:75000, total:110000, daily:5500, img:IMG_K},
-  {name:"K4", days:25, price:95000, total:140000, daily:5600, img:IMG_K},
-],
-N: [
-  {name:"N1", days:30, price:150000, total:210000, daily:7000, img:IMG_N},
-  {name:"N2", days:30, price:250000, total:377000, daily:12566, img:IMG_N},
-  {name:"N3", days:28, price:280000, total:420000, daily:15000, img:IMG_N},
-],
-J: [
-  {name:"J1", days:40, price:70000, total:198000, daily:4950, img:IMG_J},
-  {name:"J2", days:40, price:95000, total:220000, daily:5500, img:IMG_J},
-  {name:"J3", days:40, price:150000, total:300000, daily:7500, img:IMG_J},
-],
-Y: [
-  {name:"Y1", days:15, price:1000000, total:1500000, daily:100000, img:IMG_Y},
-  {name:"Y2", days:15, price:2000000, total:3000000, daily:200000, img:IMG_Y},
-  {name:"Y3", days:15, price:5000000, total:7000000, daily:466666, img:IMG_Y},
-  {name:"Y4", days:10, price:10000000, total:15000000, daily:1500000, img:IMG_Y},
-]
+K: [{name:"K1", days:15, price:19000, total:30000, daily:2000, img:IMG_K},{name:"K2", days:20, price:50000, total:80000, daily:4000, img:IMG_K},{name:"K3", days:20, price:75000, total:110000, daily:5500, img:IMG_K},{name:"K4", days:25, price:95000, total:140000, daily:5600, img:IMG_K}],
+N: [{name:"N1", days:30, price:150000, total:210000, daily:7000, img:IMG_N},{name:"N2", days:30, price:250000, total:377000, daily:12566, img:IMG_N},{name:"N3", days:28, price:280000, total:420000, daily:15000, img:IMG_N}],
+J: [{name:"J1", days:40, price:70000, total:198000, daily:4950, img:IMG_J},{name:"J2", days:40, price:95000, total:220000, daily:5500, img:IMG_J},{name:"J3", days:40, price:150000, total:300000, daily:7500, img:IMG_J}],
+Y: [{name:"Y1", days:15, price:1000000, total:1500000, daily:100000, img:IMG_Y},{name:"Y2", days:15, price:2000000, total:3000000, daily:200000, img:IMG_Y},{name:"Y3", days:15, price:5000000, total:7000000, daily:466666, img:IMG_Y},{name:"Y4", days:10, price:10000000, total:15000000, daily:1500000, img:IMG_Y}]
 };
-
 function renderAll(){
   Object.keys(productsData).forEach(series=>{
     let div = document.getElementById('list'+series);
     if(!div) return;
     div.innerHTML = productsData[series].map(p=>`
       <div class="prod">
-        <img src="${p.img}" class="machine-img">
+        <img src="${p.img}" class="machine-img" onerror="this.style.display='none'">
         <div style="padding:14px">
           <h3 style="margin:0 0 12px 0;text-align:center;color:#0A1931;font-size:18px;font-weight:900">${p.name}</h3>
           <div style="background:#F8FAFC;border-radius:14px;overflow:hidden">
@@ -209,7 +78,6 @@ function renderAll(){
     `).join('');
   });
 }
-
 function showTab(s){
   ['K','N','J','Y'].forEach(x=>{
     document.getElementById('list'+x).classList.add('hide');
@@ -218,7 +86,12 @@ function showTab(s){
   document.getElementById('list'+s).classList.remove('hide');
   document.getElementById('t'+s).classList.add('a');
 }
-
+function updateInviteLink(){
+  let u=localStorage.getItem('k_uid')||'';
+  let l='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+u;
+  let e=document.getElementById('invLink');
+  if(e) e.innerText=l;
+}
 function showPage(p){
   if(p==='register'||p==='login'){
     document.getElementById('p-register').classList.add('hide');
@@ -240,13 +113,13 @@ function showPage(p){
   let target=document.getElementById('p-'+p);
   if(target) target.classList.remove('hide');
   document.getElementById('bottomNav').classList.remove('hide');
+  if(p==='invite') updateInviteLink();
   if(window.load) window.load();
 }
-
 window.showPage=showPage; window.showTab=showTab;
-
 document.addEventListener('DOMContentLoaded', ()=>{
   renderAll();
+  updateInviteLink();
   let btn=document.getElementById('copyBtn');
   if(btn){
     btn.addEventListener('click', ()=>{
@@ -254,7 +127,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       let realLink='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+uid;
       navigator.clipboard.writeText(realLink).then(()=>{
         btn.innerText='✓ Copied';
-        setTimeout(()=>btn.innerText='Copy',2000);
+        setTimeout(()=>btn.innerText='📋 Copy Link',2000);
       });
     });
   }
@@ -262,7 +135,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   if(uid) showPage('home'); else showPage('register');
 });
 </script>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, updateDoc, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
@@ -286,6 +158,7 @@ try{
   document.getElementById('balance').innerText="UGX "+b.toLocaleString();
   document.getElementById('uShow').innerText=uid;
 }catch(e){}
+updateInviteLink();
 try{
   let snap=await getDocs(collection(db,"active_machines"));
   let my=[];
