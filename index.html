@@ -26,6 +26,46 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 .r2 div{flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;border:1px solid #E2E8F0;cursor:pointer}
 .tab{padding:8px 16px;border-radius:20px;border:1px solid #CBD5E1;font-size:12px;font-weight:700;cursor:pointer}
 .tab.a{background:#0A1931;color:#D4AF37}
+
+/* NOVALEND WHATSAPP SUPPORT */
+.novalend-support-btn{
+  position:fixed;
+  bottom:90px;
+  right:18px;
+  z-index:9999;
+  background:#25D366;
+  color:white;
+  width:62px;
+  height:62px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 18px rgba(0,0,0,0.35);
+  cursor:pointer;
+  animation:pulse 2s infinite;
+  text-decoration:none;
+  font-size:34px;
+}
+@keyframes pulse{
+  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(37,211,102,0.7)}
+  70%{transform:scale(1.08);box-shadow:0 0 0 12px rgba(37,211,102,0)}
+  100%{transform:scale(1);box-shadow:0 0 0 0 rgba(37,211,102,0)}
+}
+.support-tooltip{
+  position:fixed;
+  bottom:158px;
+  right:18px;
+  background:#0A1931;
+  color:#D4AF37;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:800;
+  z-index:9999;
+  box-shadow:0 2px 10px rgba(0,0,0,0.25);
+  border:1px solid #D4AF37;
+}
 </style>
 </head>
 <body>
@@ -143,6 +183,15 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <button onclick="showPage('deposit')">👤<br>Mine</button>
 </div>
 
+<!-- WHATSAPP SUPPORT BUTTON -->
+<div class="support-tooltip">💬 Need Help?</div>
+<a href="https://wa.me/256755797207?text=Hello%20NOVALEND%20Support%20%F0%9F%92%8E%2C%20I%20need%20help%20with%20my%20account" 
+   class="novalend-support-btn" 
+   target="_blank"
+   id="waSupport">
+   💬
+</a>
+
 <script>
 function showPage(p){
   if(p==='register'||p==='login'){
@@ -206,7 +255,6 @@ const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
 let uid=localStorage.getItem('k_uid');
 
-// FIXED LOAD - PRODUCTS NEVER DISAPPEAR
 window.load=async()=>{
 if(!uid){ uid=localStorage.getItem('k_uid'); if(!uid) return; }
 try{
@@ -226,17 +274,13 @@ try{
     let x=d.data();
     if(x.userId===uid) my.push({...x,id:d.id});
   });
-
   let active=my.filter(m=>!m.status || m.status==="ACTIVE");
   let completed=my.filter(m=>m.status==="COMPLETED");
-  
   let empty=document.getElementById('empty');
   let activeWrap=document.getElementById('activeWrap');
   let myCount=document.getElementById('myCount');
   let totRev=document.getElementById('totRev');
   let transList=document.getElementById('transList');
-
-  // FIX: Never hide if user has any products
   if(my.length===0){
     if(empty) empty.style.display="block";
     if(activeWrap) activeWrap.innerHTML="";
@@ -248,7 +292,6 @@ try{
     let tot=0;
     my.forEach(m=>tot+=(m.totalProfit||0));
     if(totRev) totRev.innerText="UGX "+tot.toLocaleString();
-    
     if(activeWrap){
       let html="";
       if(active.length>0){
@@ -266,25 +309,18 @@ try{
       }
       activeWrap.innerHTML=html;
     }
-
-    // FIX: Transactions always show rented products
     let tr="";
     my.forEach(x=>{
       tr+=`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:11px"><span>📦 ${x.name} - ${x.daysLeft}d left - UGX ${(x.price||0).toLocaleString()}</span><span style="color:${x.status==='COMPLETED'?'#888':'#00B67A'};font-weight:700">${x.status||'ACTIVE'}</span></div>`;
     });
-    
-    // Also show deposits/withdraws if possible
     try{
       let dep=await getDocs(collection(db,"deposits"));
       dep.forEach(d=>{let x=d.data();if(x.userId===uid) tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>💳 Recharge UGX ${x.amount}</span><span style="color:${x.status==='PENDING'?'#F59E0B':'#00B67A'}">${x.status}</span></div>`;});
       let wd=await getDocs(collection(db,"withdraws"));
       wd.forEach(d=>{let x=d.data();if(x.userId===uid) tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>🏧 Withdraw UGX ${x.amount}</span><span>${x.status}</span></div>`;});
     }catch(e){}
-
     if(transList) transList.innerHTML=tr||"No transactions";
   }
-
-  // FIX: Only deduct after real 24h, not on every open
   for(let m of my){
     if(m.status==="COMPLETED") continue;
     if(!m.lastCount) continue;
@@ -299,7 +335,6 @@ try{
       }
     }
   }
-
 }catch(e){ console.log("load error", e); }
 };
 
@@ -350,43 +385,9 @@ let pass=document.getElementById('lPass').value.trim();
 let snap=await getDocs(collection(db,"users"));
 let found=null;
 snap.forEach(d=>{if(d.data().phone===phone&&d.data().password===pass)found=d.id;});
-if(found){uid=found;localStorage.setItem('k_uid',uid);showPage('home'); window.load();}else alert('Wrong details');
+if(found){uid=found;localStorage.setItem('k_uid',uid);showPage('home');window.load();}else alert('Wrong phone or password');
 };
-
-const KM=[
-{n:"KM-15",days:15,price:19000,total:30000},
-{n:"KM-30",days:17,price:3000,total:48000,soldOut:true},
-{n:"KM-50",days:18,price:95000,total:140000,daily:7000},
-{n:"KM-70",days:30,price:280000,total:450000},
-{n:"KM-80",days:30,price:350000,total:520000},
-{n:"KM-90",days:40,price:450000,total:720000},
-{n:"KM-100",days:25,price:520000,total:835000},
-{n:"KM-16",days:28,price:900000,total:1300000}
-];
-const KY=[
-{n:"KY-20",days:15,price:5000000,total:7000000},
-{n:"KY-30",days:20,price:1000000,total:1500000},
-{n:"KY-40",days:25,price:3000000,total:5000000},
-{n:"KY-50",days:15,price:19000000,total:35000000},
-{n:"KY-60",days:28,price:10000000,total:15000000},
-{n:"KY-70",days:10,price:35000000,total:45000000},
-{n:"KY-80",days:30,price:700000,total:1000000}
-];
-function card(p){
-let d=p.daily||Math.round(p.total/p.days);
-let isSold = p.soldOut === true;
-let btn = isSold 
-? `<button disabled style="width:100%;margin-top:8px;padding:10px;border:0;background:#9ca3af;color:#fff;border-radius:8px;font-weight:800;cursor:not-allowed">SOLD OUT</button>`
-: `<button onclick="rent('${p.n}',${p.price},${p.days},${p.total})" style="width:100%;margin-top:8px;padding:10px;border:0;background:#00B67A;color:#fff;border-radius:8px;font-weight:800">Rent / Buy</button>`;
-let badge = isSold
-? `<span style="background:#ef4444;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:800">SOLD OUT</span>`
-: `<span style="background:#D4AF37;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px">VIP</span>`;
-return `<div class="prod" style="${isSold ? 'opacity:0.75;pointer-events:none;' : ''}"><div style="width:80px;height:80px;background:#F8FAFC;border-radius:12px;display:flex;align-items:center;justify-content:center">🏭</div><div style="flex:1"><div style="display:flex;justify-content:space-between"><b>${p.n}</b>${badge}</div><small>🕒 ${p.days} Days</small><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:4px;font-size:11px"><span>Price</span><b>UGX ${p.price.toLocaleString()}</b></div><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:2px;font-size:11px"><span>Daily</span><b style="color:#00B67A">UGX ${d.toLocaleString()}</b></div><div style="display:flex;justify-content:space-between;background:#F8FAFC;padding:4px 6px;border-radius:6px;margin-top:2px;font-size:11px"><span>Total</span><b style="color:#00B67A">UGX ${p.total.toLocaleString()}</b></div>${btn}</div>${isSold ? `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-20deg);background:rgba(239,68,68,0.9);color:#fff;padding:6px 18px;border-radius:8px;font-weight:900;font-size:14px;letter-spacing:1px;pointer-events:none;">SOLD OUT</div>` : ''}</div>`;
-}
-document.getElementById('listK').innerHTML=KM.map(card).join('');
-document.getElementById('listL').innerHTML=KY.map(card).join('');
-if(uid) window.load();
-}catch(e){ console.log("Firebase error", e); }
+}catch(e){console.log(e)}
 </script>
 </body>
 </html>
