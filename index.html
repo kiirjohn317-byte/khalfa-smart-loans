@@ -47,10 +47,11 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <div id="bottomNav" class="nav hide"><button class="active" onclick="showPage('home')">🏠<br>Home</button><button onclick="showPage('products')">📦<br>Products</button><button onclick="showPage('invite')">👥<br>Invite</button><button onclick="showPage('revenue')">📊<br>Revenue</button><button onclick="showPage('deposit')">👤<br>Mine</button></div>
 <div class="support-tooltip">💬 Need Help?</div><a href="https://wa.me/256755797207?text=Hello%20NOVALEND%20Support%20%F0%9F%92%8E%2C%20I%20need%20help%20with%20my%20account" class="novalend-support-btn" target="_blank">💬</a>
 <script>
-const IMG_K = "k.png";
-const IMG_N = "n.png";
-const IMG_J = "j.png";
-const IMG_Y = "y.png";
+// FIXED - 4 DISTINCT - NO MORE k.png 404 - NO onerror hide
+const IMG_K = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMjAiIGhlaWdodD0iMjIwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMEExOTMxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iODAiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNEQkFGNjciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuMzVlbSI+SzwvdGV4dD48L3N2Zz4=";
+const IMG_N = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMjAiIGhlaWdodD0iMjIwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRTJFOGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iODAiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiMwQTE5MzEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuMzVlbSI+TjwvdGV4dD48L3N2Zz4=";
+const IMG_J = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMjAiIGhlaWdodD0iMjIwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMTExODI3Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iODAiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNEQkFGNjciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuMzVlbSI+SjwvdGV4dD48L3N2Zz4=";
+const IMG_Y = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMjAiIGhlaWdodD0iMjIwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRDRBRjM3Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iODAiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiMwQTE5MzEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuMzVlbSI+WTwvdGV4dD48L3N2Zz4=";
 const productsData = {
 K: [{name:"K1", days:15, price:19000, total:30000, daily:2000, img:IMG_K},{name:"K2", days:20, price:50000, total:80000, daily:4000, img:IMG_K},{name:"K3", days:20, price:75000, total:110000, daily:5500, img:IMG_K},{name:"K4", days:25, price:95000, total:140000, daily:5600, img:IMG_K}],
 N: [{name:"N1", days:30, price:150000, total:210000, daily:7000, img:IMG_N},{name:"N2", days:30, price:250000, total:377000, daily:12566, img:IMG_N},{name:"N3", days:28, price:280000, total:420000, daily:15000, img:IMG_N}],
@@ -63,7 +64,7 @@ function renderAll(){
     if(!div) return;
     div.innerHTML = productsData[series].map(p=>`
       <div class="prod">
-        <img src="${p.img}" class="machine-img" onerror="this.style.display='none'">
+        <img src="${p.img}" class="machine-img">
         <div style="padding:14px">
           <h3 style="margin:0 0 12px 0;text-align:center;color:#0A1931;font-size:18px;font-weight:900">${p.name}</h3>
           <div style="background:#F8FAFC;border-radius:14px;overflow:hidden">
