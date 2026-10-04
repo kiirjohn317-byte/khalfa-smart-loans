@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -22,18 +22,16 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 .nav button.active{color:var(--gold);font-weight:800}
 .hide{display:none}
 .prod{background:#fff;margin:12px;border-radius:20px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.08);border:1px solid #E2E8F0}
-.machine-img{width:100%;height:170px;object-fit:contain;background:radial-gradient(#fff,#EEF2FF);padding:12px}
+.machine-img{width:100%;height:200px;object-fit:contain;background:#fff;padding:10px}
 .r2{display:flex;gap:10px;margin:12px}
 .r2 div{flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;border:1px solid #E2E8F0;cursor:pointer}
 .tab{padding:8px 14px;border-radius:20px;border:1px solid #CBD5E1;font-size:11px;font-weight:700;cursor:pointer}
 .tab.a{background:#0A1931;color:#D4AF37}
-.horizontal-row{display:flex;gap:6px;background:#F8FAFC;padding:10px;border-radius:12px;margin:8px 0}
-.horizontal-row div{flex:1;text-align:center}
-.horizontal-row small{font-size:9px;color:#888;display:block;font-weight:700}
-.horizontal-row b{font-size:10px;color:#0A1931}
-.novalend-support-btn{position:fixed;bottom:90px;right:18px;z-index:9999;background:#25D366;color:white;width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,0.35);animation:pulse 2s infinite;text-decoration:none;font-size:34px}
+.v-row{display:flex;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #F1F5F9;font-size:13px}
+.v-row:last-child{border:0}
+.novalend-support-btn{position:fixed;bottom:90px;right:18px;z-index:9999;background:#25D366;color:white;width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,0.35);cursor:pointer;animation:pulse 2s infinite;text-decoration:none;font-size:34px}
 @keyframes pulse{0%{transform:scale(1)}70%{transform:scale(1.08)}100%{transform:scale(1)}}
-.support-tooltip{position:fixed;bottom:158px;right:18px;background:#0A1931;color:#D4AF37;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:800;z-index:9999;border:1px solid #D4AF37}
+.support-tooltip{position:fixed;bottom:158px;right:18px;background:#0A1931;color:#D4AF37;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:800;z-index:9999;box-shadow:0 2px 10px rgba(0,0,0,0.25);border:1px solid #D4AF37}
 </style>
 </head>
 <body>
@@ -107,7 +105,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 </div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
 
 <div id="p-products" class="hide">
-<div style="padding:12px"><b>Investment Machines</b></div>
+<div style="padding:12px"><b>Investment Plans</b></div>
 <div style="display:flex;gap:6px;padding:0 12px;flex-wrap:wrap">
 <div id="tK" class="tab a" onclick="showTab('K')">K SERIES</div>
 <div id="tN" class="tab" onclick="showTab('N')">N SERIES</div>
@@ -123,21 +121,21 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 
 <div id="p-revenue" class="hide">
 <div style="background:#0A1931;color:#fff;margin:12px;border-radius:20px;display:flex">
-<div style="flex:1;padding:16px;text-align:center;border-right:1px solid #1A2A4A"><small style="color:#8892A6">My Machines</small><br><b id="myCount">0</b></div>
+<div style="flex:1;padding:16px;text-align:center;border-right:1px solid #1A2A4A"><small style="color:#8892A6">My Products</small><br><b id="myCount">0</b></div>
 <div style="flex:1;padding:16px;text-align:center"><small style="color:#8892A6">Total Revenue</small><br><b id="totRev">UGX 0</b></div>
 </div>
 <div id="activeWrap"></div>
 <div id="empty" style="text-align:center;margin-top:40px">
 <div style="background:#EEF2FF;width:60px;height:60px;border-radius:16px;display:flex;justify-content:center;align-items:center;margin:0 auto">📦</div>
-<h4>No Machines</h4>
-<small style="color:#888">Rent to start earning</small>
+<h4>No Products Available</h4>
+<small style="color:#888">Your products will appear here</small>
 </div>
 <button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button>
 </div>
 
 <div id="p-invite" class="hide"><div class="c">
 <div style="display:flex;justify-content:space-between;align-items:center;background:#F1F5F9;padding:12px;border-radius:12px">
-<a id="invLink" style="font-size:11px;color:#2563EB;word-break:break-all">https://Novalend.com/registration?code=</a>
+<a id="invLink" style="font-size:11px;color:#2563EB;word-break:break-all"></a>
 <button class="copy" id="copyBtn">Copy</button>
 </div>
 <div style="margin-top:14px"><b>Referral Levels</b></div>
@@ -148,10 +146,10 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 </div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
 
 <div id="bottomNav" class="nav hide">
-<button id="nH" class="active" onclick="showPage('home')">🏠<br>Home</button>
+<button class="active" onclick="showPage('home')">🏠<br>Home</button>
 <button onclick="showPage('products')">📦<br>Products</button>
 <button onclick="showPage('invite')">👥<br>Invite</button>
-<button id="nR" onclick="showPage('revenue')">📊<br>Revenue</button>
+<button onclick="showPage('revenue')">📊<br>Revenue</button>
 <button onclick="showPage('deposit')">👤<br>Mine</button>
 </div>
 
@@ -159,11 +157,11 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <a href="https://wa.me/256755797207?text=Hello%20NOVALEND%20Support%20%F0%9F%92%8E%2C%20I%20need%20help%20with%20my%20account" class="novalend-support-btn" target="_blank">💬</a>
 
 <script>
-// === SAME MACHINE PER SERIES + HORIZONTAL LAYOUT ===
-const IMG_K = "k.png"; // K1-K4 SAME
-const IMG_N = "n.png"; // N1-N3 SAME
-const IMG_J = "j.png"; // J1-J3 SAME
-const IMG_Y = "y.png"; // Y1-Y4 SAME
+// === FIXED: SAME MACHINE PER SERIES + VERTICAL DAYS->TOTAL + CLEAN NAME ===
+const IMG_K = "k.png"; // K-1 box machine you sent
+const IMG_N = "n.png"; // N-1 black drill
+const IMG_J = "j.png"; // J-1 grey heavy
+const IMG_Y = "y.png"; // Y-1 gold diamond
 
 const productsData = {
 K: [
@@ -195,17 +193,17 @@ function renderAll(){
     let div = document.getElementById('list'+series);
     if(!div) return;
     div.innerHTML = productsData[series].map(p=>`
-      <div class="prod" style="display:block;padding:0">
-        <img src="${p.img}" class="machine-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1087/1087815.png'">
-        <div style="padding:12px">
-          <h3 style="margin:0 0 8px 0;text-align:center;color:#0A1931">${p.name} - DRAW MACHINE</h3>
-          <div class="horizontal-row">
-            <div><small>DAYS</small><b>${p.days}</b></div>
-            <div><small>PRICE</small><b>UGX ${p.price.toLocaleString()}</b></div>
-            <div><small>DAILY</small><b style="color:#00C896">UGX ${p.daily.toLocaleString()}</b></div>
-            <div><small>TOTAL</small><b style="color:#D4AF37">UGX ${p.total.toLocaleString()}</b></div>
+      <div class="prod">
+        <img src="${p.img}" class="machine-img" onerror="this.src='https://via.placeholder.com/300x200?text=${p.name}'">
+        <div style="padding:14px">
+          <h3 style="margin:0 0 12px 0;text-align:center;color:#0A1931;font-size:18px;font-weight:900">${p.name}</h3>
+          <div style="background:#F8FAFC;border-radius:14px;overflow:hidden">
+            <div class="v-row"><span>⏳ Days</span><b>${p.days} Days</b></div>
+            <div class="v-row"><span>💵 Price</span><b>UGX ${p.price.toLocaleString()}</b></div>
+            <div class="v-row"><span>📅 Daily Income</span><b style="color:#00C896">UGX ${p.daily.toLocaleString()}</b></div>
+            <div class="v-row"><span>💰 Total Return</span><b style="color:#D4AF37">UGX ${p.total.toLocaleString()}</b></div>
           </div>
-          <button class="btnG" style="margin-top:8px" onclick="rent('${p.name}',${p.price},${p.days},${p.total})">RENT</button>
+          <button class="btnG" style="margin-top:12px" onclick="rent('${p.name}',${p.price},${p.days},${p.total})">Rent</button>
         </div>
       </div>
     `).join('');
@@ -316,8 +314,8 @@ try{
         let daily=Math.round((m.totalProfit||0)/(m.days||1));
         let done=(m.days||0)-(m.daysLeft||0);
         let pct=Math.max(10,Math.round((done/(m.days||1))*100));
-        return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#D1FAE5;color:#065F46;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800">ACTIVE - ${m.daysLeft}D LEFT</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Progress</small><br><b>${done}/${m.days} Days</b></div><div><small>Left</small><br><b>${m.daysLeft} Days</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#00C896;width:${pct}%"></div></div><div style="margin-top:6px;font-size:11px;color:#666">Total: UGX ${(m.totalProfit||0).toLocaleString()} | Will be credited to BALANCE after finish</div></div>`;
-      }).join('') + completed.map(m=>`<div class="c" style="border:1px solid #D1FAE5"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#E5E7EB;padding:4px 8px;border-radius:20px;font-size:10px">COMPLETED ✓ PAID</span></div><div style="margin-top:8px;font-size:12px">Earned: <b style="color:#00B67A">UGX ${(m.totalProfit||0).toLocaleString()}</b></div></div>`).join('');
+        return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#D1FAE5;color:#065F46;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800">ACTIVE - ${m.daysLeft}D</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Progress</small><br><b>${done}/${m.days}</b></div><div><small>Left</small><br><b>${m.daysLeft}D</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#00C896;width:${pct}%"></div></div></div>`;
+      }).join('') + completed.map(m=>`<div class="c" style="border:1px solid #D1FAE5"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#E5E7EB;padding:4px 8px;border-radius:20px;font-size:10px">COMPLETED ✓ PAID TO BALANCE</span></div><div style="margin-top:8px;font-size:12px">Earned: <b style="color:#00B67A">UGX ${(m.totalProfit||0).toLocaleString()}</b></div></div>`).join('');
       activeWrap.innerHTML=html;
     }
     let tr="";
@@ -338,12 +336,12 @@ try{
       }
     }
   }
-}catch(e){ console.log("load error", e); }
+}catch(e){ console.log(e); }
 };
 window.rent=async(n,p,d,t)=>{
 let u=await getDoc(doc(db,"users",uid));
 if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet UGX '+p.toLocaleString());showPage('deposit');return;}
-if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days - Total UGX '+t.toLocaleString()+' - Will be paid after '+d+' days')) return;
+if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days - Total UGX '+t.toLocaleString())) return;
 await updateDoc(doc(db,"users",uid),{wallet:increment(-p)});
 await addDoc(collection(db,"active_machines"),{userId:uid,name:n,price:p,days:d,daysLeft:d,totalProfit:t,lastCount:Date.now(),status:"ACTIVE",createdAt:serverTimestamp()});
 await window.load(); showPage('revenue');
