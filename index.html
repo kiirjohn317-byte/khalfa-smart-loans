@@ -22,7 +22,7 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 .nav button.active{color:var(--gold);font-weight:800}
 .hide{display:none}
 .prod{background:#fff;margin:12px;border-radius:20px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.08);border:1px solid #E2E8F0}
-.machine-img{width:100%;height:200px;object-fit:contain;background:#fff;padding:10px}
+.machine-img{width:100%;height:220px;object-fit:contain;background:#fff;padding:12px;display:block}
 .r2{display:flex;gap:10px;margin:12px}
 .r2 div{flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;border:1px solid #E2E8F0;cursor:pointer}
 .tab{padding:8px 14px;border-radius:20px;border:1px solid #CBD5E1;font-size:11px;font-weight:700;cursor:pointer}
@@ -157,11 +157,11 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <a href="https://wa.me/256755797207?text=Hello%20NOVALEND%20Support%20%F0%9F%92%8E%2C%20I%20need%20help%20with%20my%20account" class="novalend-support-btn" target="_blank">💬</a>
 
 <script>
-// === FIXED: SAME MACHINE PER SERIES + VERTICAL DAYS->TOTAL + CLEAN NAME ===
-const IMG_K = "k.png"; // K-1 box machine you sent
-const IMG_N = "n.png"; // N-1 black drill
-const IMG_J = "j.png"; // J-1 grey heavy
-const IMG_Y = "y.png"; // Y-1 gold diamond
+// === FIXED IN YOUR CODE - ALL SERIES SAME MACHINE + Y1-Y4 = YOUR NEW DIAMOND GOLD ===
+const IMG_K = "k.png"; // K SERIES navy blue gold K-1 - ALL K1-K4 same
+const IMG_N = "n.png"; // N SERIES NM-8000 black gold drill - ALL N1-N3 same
+const IMG_J = "j.png"; // J SERIES J-1200 grey heavy - ALL J1-J3 same
+const IMG_Y = "y.png"; // Y SERIES DIAMOND GOLD - ALL Y1-Y4 same - THIS NEW IMAGE YOU JUST SENT
 
 const productsData = {
 K: [
@@ -194,14 +194,14 @@ function renderAll(){
     if(!div) return;
     div.innerHTML = productsData[series].map(p=>`
       <div class="prod">
-        <img src="${p.img}" class="machine-img" onerror="this.src='https://via.placeholder.com/300x200?text=${p.name}'">
+        <img src="${p.img}" class="machine-img">
         <div style="padding:14px">
           <h3 style="margin:0 0 12px 0;text-align:center;color:#0A1931;font-size:18px;font-weight:900">${p.name}</h3>
           <div style="background:#F8FAFC;border-radius:14px;overflow:hidden">
-            <div class="v-row"><span>⏳ Days</span><b>${p.days} Days</b></div>
-            <div class="v-row"><span>💵 Price</span><b>UGX ${p.price.toLocaleString()}</b></div>
-            <div class="v-row"><span>📅 Daily Income</span><b style="color:#00C896">UGX ${p.daily.toLocaleString()}</b></div>
-            <div class="v-row"><span>💰 Total Return</span><b style="color:#D4AF37">UGX ${p.total.toLocaleString()}</b></div>
+            <div class="v-row"><span>Days</span><b>${p.days} Days</b></div>
+            <div class="v-row"><span>Price</span><b>UGX ${p.price.toLocaleString()}</b></div>
+            <div class="v-row"><span>Daily Income</span><b style="color:#00C896">UGX ${p.daily.toLocaleString()}</b></div>
+            <div class="v-row"><span>Total Return</span><b style="color:#D4AF37">UGX ${p.total.toLocaleString()}</b></div>
           </div>
           <button class="btnG" style="margin-top:12px" onclick="rent('${p.name}',${p.price},${p.days},${p.total})">Rent</button>
         </div>
