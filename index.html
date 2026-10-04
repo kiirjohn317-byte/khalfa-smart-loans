@@ -21,51 +21,14 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 .nav button{border:0;background:none;color:#8892A6;font-size:11px}
 .nav button.active{color:var(--gold);font-weight:800}
 .hide{display:none}
-.prod{display:flex;gap:10px;background:#fff;margin:10px 12px;border-radius:16px;padding:12px;position:relative;overflow:hidden}
+.prod{display:flex;gap:10px;background:#fff;margin:10px 12px;border-radius:16px;padding:12px;position:relative;overflow:hidden;border-left:4px solid #D4AF37}
 .r2{display:flex;gap:10px;margin:12px}
 .r2 div{flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;border:1px solid #E2E8F0;cursor:pointer}
-.tab{padding:8px 16px;border-radius:20px;border:1px solid #CBD5E1;font-size:12px;font-weight:700;cursor:pointer}
+.tab{padding:8px 14px;border-radius:20px;border:1px solid #CBD5E1;font-size:11px;font-weight:700;cursor:pointer}
 .tab.a{background:#0A1931;color:#D4AF37}
-
-/* NOVALEND WHATSAPP SUPPORT */
-.novalend-support-btn{
-  position:fixed;
-  bottom:90px;
-  right:18px;
-  z-index:9999;
-  background:#25D366;
-  color:white;
-  width:62px;
-  height:62px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 4px 18px rgba(0,0,0,0.35);
-  cursor:pointer;
-  animation:pulse 2s infinite;
-  text-decoration:none;
-  font-size:34px;
-}
-@keyframes pulse{
-  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(37,211,102,0.7)}
-  70%{transform:scale(1.08);box-shadow:0 0 0 12px rgba(37,211,102,0)}
-  100%{transform:scale(1);box-shadow:0 0 0 0 rgba(37,211,102,0)}
-}
-.support-tooltip{
-  position:fixed;
-  bottom:158px;
-  right:18px;
-  background:#0A1931;
-  color:#D4AF37;
-  padding:8px 14px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:800;
-  z-index:9999;
-  box-shadow:0 2px 10px rgba(0,0,0,0.25);
-  border:1px solid #D4AF37;
-}
+.novalend-support-btn{position:fixed;bottom:90px;right:18px;z-index:9999;background:#25D366;color:white;width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,0.35);cursor:pointer;animation:pulse 2s infinite;text-decoration:none;font-size:34px}
+@keyframes pulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(37,211,102,0.7)}70%{transform:scale(1.08);box-shadow:0 0 0 12px rgba(37,211,102,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+.support-tooltip{position:fixed;bottom:158px;right:18px;background:#0A1931;color:#D4AF37;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:800;z-index:9999;box-shadow:0 2px 10px rgba(0,0,0,0.25);border:1px solid #D4AF37}
 </style>
 </head>
 <body>
@@ -139,13 +102,17 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 </div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
 
 <div id="p-products" class="hide">
-<div style="padding:12px"><b>Investment Plans</b></div>
-<div style="display:flex;gap:8px;padding:0 12px">
-<div id="tK" class="tab a" onclick="showK()">KM Series</div>
-<div id="tL" class="tab" onclick="showL()">KY Series</div>
+<div style="padding:12px"><b>Investment Plans - FIXED</b></div>
+<div style="display:flex;gap:6px;padding:0 12px;flex-wrap:wrap">
+<div id="tK" class="tab a" onclick="showTab('K')">K SERIES</div>
+<div id="tN" class="tab" onclick="showTab('N')">N SERIES</div>
+<div id="tJ" class="tab" onclick="showTab('J')">J SERIES</div>
+<div id="tY" class="tab" onclick="showTab('Y')">Y SERIES</div>
 </div>
 <div id="listK"></div>
-<div id="listL" class="hide"></div>
+<div id="listN" class="hide"></div>
+<div id="listJ" class="hide"></div>
+<div id="listY" class="hide"></div>
 <button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button>
 </div>
 
@@ -183,16 +150,65 @@ body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:8
 <button onclick="showPage('deposit')">👤<br>Mine</button>
 </div>
 
-<!-- WHATSAPP SUPPORT BUTTON -->
 <div class="support-tooltip">💬 Need Help?</div>
-<a href="https://wa.me/256755797207?text=Hello%20NOVALEND%20Support%20%F0%9F%92%8E%2C%20I%20need%20help%20with%20my%20account" 
-   class="novalend-support-btn" 
-   target="_blank"
-   id="waSupport">
-   💬
-</a>
+<a href="https://wa.me/256755797207?text=Hello%20NOVALEND%20Support%20%F0%9F%92%8E%2C%20I%20need%20help%20with%20my%20account" class="novalend-support-btn" target="_blank">💬</a>
 
 <script>
+// === PRODUCTS FIXED WITH DAILY ===
+const productsData = {
+K: [
+  {name:"K-1", days:15, price:19000, total:30000, daily:2000},
+  {name:"K-2", days:20, price:50000, total:80000, daily:4000},
+  {name:"K-3", days:20, price:75000, total:110000, daily:5500},
+  {name:"K-4", days:25, price:95000, total:140000, daily:5600},
+],
+N: [
+  {name:"N-1", days:30, price:150000, total:210000, daily:7000},
+  {name:"N-2", days:30, price:250000, total:377000, daily:12566},
+  {name:"N-3", days:28, price:280000, total:420000, daily:15000},
+],
+J: [
+  {name:"J-1", days:40, price:70000, total:198000, daily:4950},
+  {name:"J-2", days:40, price:95000, total:220000, daily:5500},
+  {name:"J-3", days:40, price:150000, total:300000, daily:7500},
+],
+Y: [
+  {name:"Y-1", days:15, price:1000000, total:1500000, daily:100000},
+  {name:"Y-2", days:15, price:2000000, total:3000000, daily:200000},
+  {name:"Y-3", days:15, price:5000000, total:7000000, daily:466666},
+  {name:"Y-4", days:10, price:10000000, total:15000000, daily:1500000},
+]
+};
+
+function renderAll(){
+  Object.keys(productsData).forEach(series=>{
+    let div = document.getElementById('list'+series);
+    if(!div) return;
+    div.innerHTML = productsData[series].map(p=>`
+      <div class="prod">
+        <div style="width:52px;height:52px;background:linear-gradient(135deg,#0A1931,#162A4A);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900;font-size:11px">${p.name}</div>
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between"><b style="color:#0A1931">${p.name} - ${p.days} Days</b><b style="color:#D4AF37">UGX ${p.price.toLocaleString()}</b></div>
+          <div style="display:flex;gap:6px;margin:6px 0;flex-wrap:wrap">
+            <span style="background:#ECFDF5;padding:4px 8px;border-radius:8px;font-size:10px">📅 Daily: <b style="color:#00C896">UGX ${p.daily.toLocaleString()}</b></span>
+            <span style="background:#FFFBEB;padding:4px 8px;border-radius:8px;font-size:10px">💰 Total: <b>UGX ${p.total.toLocaleString()}</b></span>
+          </div>
+          <button class="btnG" style="padding:8px 12px;font-size:11px;margin-top:2px;width:100%" onclick="rent('${p.name}',${p.price},${p.days},${p.total})">Rent Now - UGX ${p.daily.toLocaleString()}/Day</button>
+        </div>
+      </div>
+    `).join('');
+  });
+}
+
+function showTab(s){
+  ['K','N','J','Y'].forEach(x=>{
+    document.getElementById('list'+x).classList.add('hide');
+    document.getElementById('t'+x).classList.remove('a');
+  });
+  document.getElementById('list'+s).classList.remove('hide');
+  document.getElementById('t'+s).classList.add('a');
+}
+
 function showPage(p){
   if(p==='register'||p==='login'){
     document.getElementById('p-register').classList.add('hide');
@@ -202,7 +218,7 @@ function showPage(p){
     return;
   }
   let uid = localStorage.getItem('k_uid');
-  if(!uid){ 
+  if(!uid){
     document.getElementById('p-register').classList.remove('hide');
     document.getElementById('p-home').classList.add('hide');
     return;
@@ -214,17 +230,13 @@ function showPage(p){
   let target=document.getElementById('p-'+p);
   if(target) target.classList.remove('hide');
   document.getElementById('bottomNav').classList.remove('hide');
-  if(p==='invite'){
-    let uid2 = localStorage.getItem('k_uid') || 'USER';
-    let linkEl = document.getElementById('invLink');
-    if(linkEl) linkEl.innerText = "https://Novalend.com/registration?code=" + uid2;
-  }
   if(window.load) window.load();
 }
-function showK(){document.getElementById('listK').classList.remove('hide');document.getElementById('listL').classList.add('hide');document.getElementById('tK').classList.add('a');document.getElementById('tL').classList.remove('a')}
-function showL(){document.getElementById('listL').classList.remove('hide');document.getElementById('listK').classList.add('hide');document.getElementById('tL').classList.add('a');document.getElementById('tK').classList.remove('a')}
-window.showPage=showPage; window.showK=showK; window.showL=showL; window.show=showPage;
+
+window.showPage=showPage; window.showTab=showTab;
+
 document.addEventListener('DOMContentLoaded', ()=>{
+  renderAll();
   let btn=document.getElementById('copyBtn');
   if(btn){
     btn.addEventListener('click', ()=>{
@@ -254,7 +266,6 @@ try{
 const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
 let uid=localStorage.getItem('k_uid');
-
 window.load=async()=>{
 if(!uid){ uid=localStorage.getItem('k_uid'); if(!uid) return; }
 try{
@@ -264,16 +275,11 @@ try{
   document.getElementById('wallet').innerText="UGX "+w.toLocaleString();
   document.getElementById('balance').innerText="UGX "+b.toLocaleString();
   document.getElementById('uShow').innerText=uid;
-  document.getElementById('invLink').innerText="https://Novalend.com/registration?code="+uid;
 }catch(e){}
-
 try{
   let snap=await getDocs(collection(db,"active_machines"));
   let my=[];
-  snap.forEach(d=>{
-    let x=d.data();
-    if(x.userId===uid) my.push({...x,id:d.id});
-  });
+  snap.forEach(d=>{let x=d.data();if(x.userId===uid) my.push({...x,id:d.id});});
   let active=my.filter(m=>!m.status || m.status==="ACTIVE");
   let completed=my.filter(m=>m.status==="COMPLETED");
   let empty=document.getElementById('empty');
@@ -286,76 +292,43 @@ try{
     if(activeWrap) activeWrap.innerHTML="";
     if(myCount) myCount.innerText="0";
     if(totRev) totRev.innerText="UGX 0";
+    if(transList) transList.innerHTML="No transactions";
   }else{
     if(empty) empty.style.display="none";
     if(myCount) myCount.innerText=active.length;
-    let tot=0;
-    my.forEach(m=>tot+=(m.totalProfit||0));
+    let tot=0; my.forEach(m=>tot+=(m.totalProfit||0));
     if(totRev) totRev.innerText="UGX "+tot.toLocaleString();
     if(activeWrap){
       let html="";
-      if(active.length>0){
-        html+=active.map(m=>{
-          let daily=Math.round((m.totalProfit||0)/(m.days||1));
-          let done=(m.days||0)-(m.daysLeft||0);
-          let pct=Math.max(10,Math.round((done/(m.days||1))*100));
-          return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#D1FAE5;color:#065F46;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800">ACTIVE</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Progress</small><br><b>${done}/${m.days} Days</b></div><div><small>Left</small><br><b>${m.daysLeft} Days</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#00C896;width:${pct}%"></div></div><div style="margin-top:6px;font-size:11px;color:#666">Total: UGX ${(m.totalProfit||0).toLocaleString()} | Price: UGX ${(m.price||0).toLocaleString()}</div></div>`;
-        }).join('');
-      }
-      if(completed.length>0){
-        html+=completed.map(m=>{
-          return `<div class="c" style="border:1px solid #D1FAE5"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#E5E7EB;padding:4px 8px;border-radius:20px;font-size:10px">COMPLETED ✓</span></div><div style="margin-top:8px;font-size:12px">Earned: <b style="color:#00B67A">UGX ${(m.totalProfit||0).toLocaleString()}</b></div></div>`;
-        }).join('');
-      }
+      html+=active.map(m=>{
+        let daily=Math.round((m.totalProfit||0)/(m.days||1));
+        let done=(m.days||0)-(m.daysLeft||0);
+        let pct=Math.max(10,Math.round((done/(m.days||1))*100));
+        return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#D1FAE5;color:#065F46;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800">ACTIVE</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Progress</small><br><b>${done}/${m.days} Days</b></div><div><small>Left</small><br><b>${m.daysLeft} Days</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#00C896;width:${pct}%"></div></div><div style="margin-top:6px;font-size:11px;color:#666">Total: UGX ${(m.totalProfit||0).toLocaleString()} | Price: UGX ${(m.price||0).toLocaleString()}</div></div>`;
+      }).join('') + completed.map(m=>`<div class="c" style="border:1px solid #D1FAE5"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span style="background:#E5E7EB;padding:4px 8px;border-radius:20px;font-size:10px">COMPLETED ✓</span></div><div style="margin-top:8px;font-size:12px">Earned: <b style="color:#00B67A">UGX ${(m.totalProfit||0).toLocaleString()}</b></div></div>`).join('');
       activeWrap.innerHTML=html;
     }
     let tr="";
-    my.forEach(x=>{
-      tr+=`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:11px"><span>📦 ${x.name} - ${x.daysLeft}d left - UGX ${(x.price||0).toLocaleString()}</span><span style="color:${x.status==='COMPLETED'?'#888':'#00B67A'};font-weight:700">${x.status||'ACTIVE'}</span></div>`;
-    });
-    try{
-      let dep=await getDocs(collection(db,"deposits"));
-      dep.forEach(d=>{let x=d.data();if(x.userId===uid) tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>💳 Recharge UGX ${x.amount}</span><span style="color:${x.status==='PENDING'?'#F59E0B':'#00B67A'}">${x.status}</span></div>`;});
-      let wd=await getDocs(collection(db,"withdraws"));
-      wd.forEach(d=>{let x=d.data();if(x.userId===uid) tr+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;font-size:11px"><span>🏧 Withdraw UGX ${x.amount}</span><span>${x.status}</span></div>`;});
-    }catch(e){}
-    if(transList) transList.innerHTML=tr||"No transactions";
+    my.forEach(x=>{tr+=`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:11px"><span>📦 ${x.name} - ${x.daysLeft}d left</span><span style="color:${x.status==='COMPLETED'?'#888':'#00B67A'};font-weight:700">${x.status||'ACTIVE'}</span></div>`;});
+    if(transList) transList.innerHTML=tr;
   }
-  for(let m of my){
-    if(m.status==="COMPLETED") continue;
-    if(!m.lastCount) continue;
-    let diffHours = (Date.now() - m.lastCount) / (1000*60*60);
-    if(diffHours >= 24 && m.daysLeft>0){
-      let nl=m.daysLeft-1;
-      if(nl<=0){
-        await updateDoc(doc(db,"users",uid),{balance:increment(m.totalProfit||0)});
-        await updateDoc(doc(db,"active_machines",m.id),{daysLeft:0,status:"COMPLETED",lastCount:Date.now()});
-      }else{
-        await updateDoc(doc(db,"active_machines",m.id),{daysLeft:nl,lastCount:Date.now()});
-      }
-    }
-  }
-}catch(e){ console.log("load error", e); }
+}catch(e){ console.log(e); }
 };
-
 window.rent=async(n,p,d,t)=>{
-if(n==="KM-30"){alert('KM-30 is SOLD OUT');return;}
 let u=await getDoc(doc(db,"users",uid));
 if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet UGX '+p.toLocaleString());showPage('deposit');return;}
-if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days')) return;
+if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days - Total UGX '+t.toLocaleString())) return;
 await updateDoc(doc(db,"users",uid),{wallet:increment(-p)});
 await addDoc(collection(db,"active_machines"),{userId:uid,name:n,price:p,days:d,daysLeft:d,totalProfit:t,lastCount:Date.now(),status:"ACTIVE",createdAt:serverTimestamp()});
-await window.load();
-showPage('revenue');
+await window.load(); showPage('revenue');
 };
 window.submitDep=async()=>{
 let a=parseInt(document.getElementById('depAmt').value);
 if(a<19000){alert('Min 19000');return;}
 let tid=document.getElementById('depTid').value.trim();
 if(!tid){alert('Enter Transaction ID');return;}
-await addDoc(collection(db,"deposits"),{userId:uid,amount:a,phone:"+256785344451",transId:tid,status:"PENDING",createdAt:serverTimestamp()});
-document.getElementById('depMsg').innerText='Submitted - PENDING';
-window.load();
+await addDoc(collection(db,"deposits"),{userId:uid,amount:a,transId:tid,status:"PENDING",createdAt:serverTimestamp()});
+document.getElementById('depMsg').innerText='Submitted - PENDING'; window.load();
 };
 window.submitWd=async()=>{
 let a=parseInt(document.getElementById('wdAmt').value);
@@ -366,16 +339,14 @@ let u=await getDoc(doc(db,"users",uid));
 if(!u.exists()||(u.data().balance||0)<a){alert('Insufficient balance');return;}
 await addDoc(collection(db,"withdraws"),{userId:uid,phone:ph,amount:a,status:"PENDING",createdAt:serverTimestamp()});
 await updateDoc(doc(db,"users",uid),{balance:increment(-a)});
-document.getElementById('wdMsg').innerText='Submitted - PENDING';
-window.load();
+document.getElementById('wdMsg').innerText='Submitted - PENDING'; window.load();
 };
 window.doRegister=async()=>{
 let phone=document.getElementById('rPhone').value.trim();
 let pass=document.getElementById('rPass').value.trim();
 if(!phone||!pass){alert('Enter phone and password');return;}
 let id=phone.replace(/\D/g,'').slice(-9)||'U'+Date.now();
-uid=id;
-localStorage.setItem('k_uid',uid);
+uid=id; localStorage.setItem('k_uid',uid);
 await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:document.getElementById('rInv').value||"",wallet:0,balance:0,createdAt:serverTimestamp()});
 showPage('home'); window.load();
 };
