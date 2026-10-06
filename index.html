@@ -44,42 +44,24 @@
 .action-item{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
 .action-icon{width:56px;height:56px;background:linear-gradient(135deg,#0F5FFF,#1E40AF);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px}
 </style></head><body>
-<!-- REGISTER/LOGIN KEEP YOUR ORIGINAL FIREBASE LOGIC -->
 <div id="p-register"><div class="c" style="margin-top:28px;text-align:center"><h2>Create Account</h2><div style="text-align:left;margin-top:18px"><div class="inp"><span style="padding:0 10px">📱</span><input id="rPhone" placeholder="078..."></div><div class="inp"><span style="padding:0 10px">🔒</span><input id="rPass" type="password" placeholder="Password"></div><div class="inp"><span style="padding:0 10px">🎟️</span><input id="rInv" placeholder="Optional"></div><button class="btnG" style="margin-top:18px" onclick="doRegister()">Register</button><p style="font-size:12px">Have account? <span onclick="showPage('login')" style="color:#0F5FFF;font-weight:800">Login</span></p></div></div></div>
 <div id="p-login" class="hide"><div class="c" style="margin-top:28px;text-align:center"><h2>Welcome Back</h2><div style="text-align:left;margin-top:18px"><div class="inp"><span style="padding:0 10px">📱</span><input id="lPhone" placeholder="078..."></div><div class="inp"><span style="padding:0 10px">🔒</span><input id="lPass" type="password" placeholder="Password"></div><button class="btnN" style="margin-top:18px" onclick="doLogin()">Login</button></div></div></div>
-
-<!-- HOME BLUE - MOVING TICKER + FLOATING GIFT - NOVALEND NOT REDLINE -->
 <div id="p-home" class="hide"><div class="home-header"><div style="font-weight:900;font-size:20px">≡ NOVALEND</div><div onclick="showPage('invite')" style="text-align:center;cursor:pointer"><div>🔔</div><small style="font-size:9px;color:#64748B">Message</small></div></div><div class="withdraw-ticker" onclick="showPage('revenue')"><div class="ticker-icon">↑</div><div class="ticker-content"><div class="ticker-list"><div class="ticker-item"><small>WITHDRAW</small><b>+3611 · 2731 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 5,200 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 12,000 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 8,450 UGX</b></div></div></div><div class="gift-box" onclick="showPage('invite')">🎁</div></div><div class="stats-grid"><div class="stat-card"><b id="depositDetails">0.00 UGX</b><small>DEPOSIT DETAILS</small></div><div class="stat-card"><b id="withdrawDetails">0.00 UGX</b><small>WITHDRAW DETAILS</small></div><div class="stat-card"><b id="aiIncome">0.00 UGX</b><small>AI INCOME</small></div><div class="stat-card"><b id="todayEarnings">0.00 UGX</b><small>TODAY'S EARNINGS</small></div></div><div class="stats-grid-3"><div class="stat-card"><b id="inviteCount">0</b><small>INVITE COUNT</small></div><div class="stat-card"><b id="teamCount">0</b><small>TEAM COUNT</small></div><div class="stat-card"><b id="teamIncome">0.00 UGX</b><small>TEAM INCOME</small></div></div><div class="action-row"><button class="btn-deposit" onclick="showPage('deposit')">Deposit</button><button class="btn-withdraw" onclick="showPage('withdraw')">Withdraw</button></div><div class="message-section"><div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #1E293B"><b style="border-left:3px solid #0F5FFF;padding-left:8px">MESSAGE</b><small style="color:#64748B;cursor:pointer" onclick="showPage('invite')">More</small></div><div style="padding:16px;min-height:80px;color:#8892A6;font-size:12px"><div id="transList">No transactions</div></div></div><div style="display:none"><span id="wallet"></span><span id="balance"></span><span id="uShow"></span></div></div>
-
-<!-- MINE BLUE GOLD - NOT CAR - 10 BUTTONS WORKING -->
 <div id="p-mine" class="hide"><div class="mine-top"><div class="mine-header-row"><div class="mine-logo"><div class="mine-logo-icon">💎</div><span>NOVALEND</span><small style="color:#D4AF37;margin-left:4px">GOLD</small></div><div style="display:flex;gap:12px"><div style="width:38px;height:38px;background:#132040;border:1px solid #1E3A5F;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="showPage('invite')">🔔</div><div style="width:38px;height:38px;background:#132040;border:1px solid #1E3A5F;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="showPage('settings')">👤</div></div></div><div style="display:flex;justify-content:space-between;margin-top:16px"><div><small style="color:#64748B">Welcome back,</small><h2 id="mineUserName" style="margin:4px 0;font-size:26px">Khalfa</h2><div style="display:flex;gap:8px"><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(212,175,55,0.15);color:#D4AF37">👑 Member</div><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(15,95,255,0.15);color:#0F5FFF" id="mineUserShort">Khalfa</div></div><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(15,95,255,0.15);color:#0F5FFF;margin-top:8px;cursor:pointer" onclick="openWhatsApp()">💬 Message Upline</div></div><div style="text-align:right"><b>DRIVE<br>YOUR<br>FUTURE</b><div style="font-size:24px;margin-top:8px">💎</div></div></div></div><div class="wallet-cards"><div class="wallet-card"><div class="wallet-icon">💳</div><div><small style="color:#64748B;font-size:11px">Wallet</small><b id="mineWallet">0.00 UGX</b></div></div><div class="wallet-card"><div class="wallet-icon">💰</div><div><small style="color:#64748B;font-size:11px">Balance</small><b id="mineBalance">0.00 UGX</b></div></div><div class="wallet-card"><div class="wallet-icon">💎</div><div><small style="color:#64748B;font-size:11px">Token</small><b>0.00</b></div><div style="position:absolute;right:8px;bottom:8px;background:#fff;color:#0A1931;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:800;cursor:pointer" onclick="showPage('products')">Buy</div></div></div><div style="text-align:center;color:#475569">▼</div><div class="action-grid"><div class="action-item" onclick="showPage('deposit')"><div class="action-icon">💳</div><small>Cash In</small></div><div class="action-item" onclick="showPage('withdraw')"><div class="action-icon">🏧</div><small>Cash Out</small></div><div class="action-item" onclick="showPage('transactions')"><div class="action-icon">📄</div><small>Transactions</small></div><div class="action-item" onclick="showPage('invite')"><div class="action-icon">🔗</div><small>Invite</small></div><div class="action-item" onclick="showPage('referrals')"><div class="action-icon">👥</div><small>Referrals</small></div><div class="action-item" onclick="showPage('vip')"><div class="action-icon">⭐</div><small>VIP Task</small></div><div class="action-item" onclick="showPage('reward')"><div class="action-icon">🎁</div><small>Reward</small></div><div class="action-item" onclick="showPage('manager')"><div class="action-icon">🎧</div><small>Manager</small></div><div class="action-item" onclick="downloadApp()"><div class="action-icon">⬇️</div><small>Download App</small></div><div class="action-item" onclick="showPage('settings')"><div class="action-icon">⚙️</div><small>Settings</small></div></div><div style="display:flex;gap:10px;margin:12px"><div style="flex:1;background:#111C33;border:1px solid #1E293B;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;background:#1E293B;border-radius:10px;display:flex;align-items:center;justify-content:center">📅</div><div><small style="color:#64748B;font-size:10px">Last month's salary</small><b id="lastSalary">0.00 UGX</b></div></div><div style="flex:1;background:#111C33;border:1px solid #1E293B;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;background:#1E293B;border-radius:10px;display:flex;align-items:center;justify-content:center">📅</div><div><small style="color:#64748B;font-size:10px">This month's salary</small><b id="thisSalary">0.00 UGX</b></div></div></div></div>
-
-<!-- DEPOSIT WITH COPY +256785344451 -->
 <div id="p-deposit" class="hide"><div class="c"><h3>Recharge</h3><small>Min UGX 19,000</small><div class="inp"><b>UGX</b><input id="depAmt" type="number" value="19000"></div><div class="inp"><input id="payNum" value="+256785344451" readonly><button style="background:#0F5FFF;color:#fff;border:0;border-radius:8px;padding:8px 12px;margin-right:6px;font-weight:800" onclick="navigator.clipboard.writeText('+256785344451');this.innerText='✓'">Copy</button></div><div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px;margin-top:12px;font-size:12px"><b>MTN Mobile Money</b><br>1. Dial *165# - Send Money<br>2. Enter +256785344451<br>3. Enter Amount<br>4. Copy Transaction ID</div><input id="depTid" placeholder="Transaction ID" style="width:100%;padding:14px;border-radius:12px;border:1px solid #CBD5E1;margin-top:12px"><button class="btnG" style="margin-top:12px" onclick="submitDep()">Submit</button><p id="depMsg" style="font-size:12px;color:#00B67A"></p></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
-
-<!-- WITHDRAW -->
 <div id="p-withdraw" class="hide"><div class="c"><h3>Withdraw</h3><small>Min UGX 5,000</small><div class="inp"><b>UGX</b><input id="wdAmt" type="number" placeholder="5000"></div><div class="inp"><span style="padding:0 10px">📱</span><input id="wdPhone" placeholder="078..."></div><button class="btnG" style="margin-top:14px" onclick="submitWd()">Submit</button><p id="wdMsg" style="font-size:12px;color:#00B67A"></p></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
-
-<!-- TRANSACTIONS PENDING/APPROVED -->
 <div id="p-transactions" class="hide"><div class="c"><h3>Transactions</h3><div style="display:flex;gap:8px;margin:12px 0"><button class="tab a" id="tabDep" onclick="showTransTab('dep')">Deposits</button><button class="tab" id="tabWd" onclick="showTransTab('wd')">Withdraws</button><button class="tab" id="tabAll" onclick="showTransTab('all')">All</button></div><div id="transDepList">Loading...</div><div id="transWdList" class="hide">Loading...</div><div id="transAllList" class="hide">Loading...</div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
-
-<!-- PRODUCTS REAL MACHINE SAME FOR ALL - PRESERVE RENTED -->
 <div id="p-products" class="hide"><div style="padding:12px"><b>Investment Plans</b></div><div style="display:flex;gap:6px;padding:0 12px;flex-wrap:wrap"><div id="tK" class="tab a" onclick="showTab('K')">K SERIES</div><div id="tN" class="tab" onclick="showTab('N')">N SERIES</div><div id="tJ" class="tab" onclick="showTab('J')">J SERIES</div><div id="tY" class="tab" onclick="showTab('Y')">Y SERIES</div></div><div id="listK"></div><div id="listN" class="hide"></div><div id="listJ" class="hide"></div><div id="listY" class="hide"></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
-
 <div id="p-revenue" class="hide"><div style="background:#0A1931;color:#fff;margin:12px;border-radius:20px;display:flex"><div style="flex:1;padding:16px;text-align:center;border-right:1px solid #1A2A4A"><small style="color:#8892A6">My Products</small><br><b id="myCount">0</b></div><div style="flex:1;padding:16px;text-align:center"><small style="color:#8892A6">Total Revenue</small><br><b id="totRev">UGX 0</b></div></div><div id="activeWrap"></div><div id="empty" style="text-align:center;margin-top:40px"><h4 style="color:#fff">No Products</h4></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
-
 <div id="p-invite" class="hide"><div class="c"><div style="background:#EEF2FF;padding:14px;border-radius:12px;border:1px dashed #0F5FFF"><small style="color:#64748B;font-weight:700">YOUR INVITE LINK</small><div id="invLink" style="font-size:12px;color:#0F5FFF;word-break:break-all;margin-top:6px;font-weight:700">Loading...</div></div><button class="btnG" id="copyBtn" style="margin-top:12px">Copy Link</button><div style="margin-top:14px"><b>Levels</b></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV1 12%</span><span id="lv1Count">0</span></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV2 4%</span><span id="lv2Count">0</span></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV3 2%</span><span id="lv3Count">0</span></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV4 1%</span><span id="lv4Count">0</span></div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
-
 <div id="p-referrals" class="hide"><div class="c"><h3>Referrals</h3><div id="referralsList" style="margin-top:12px">Loading...</div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="p-vip" class="hide"><div class="c"><h3>VIP Task</h3><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px">Invite 5 → 5,000 UGX<br>Rent K1 → 2,000 UGX<br>Daily check → 500 UGX</div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="p-reward" class="hide"><div class="c"><h3>Reward</h3><div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px;margin-top:12px">Invite 10 active → 10,000 UGX<br>Team 500K → 25,000 UGX<br>Top referrer → 100,000 UGX</div><button class="btnG" style="margin-top:12px" onclick="openWhatsApp()">Contact Manager</button></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="p-manager" class="hide"><div class="c"><h3>Manager</h3><div style="background:#DCFCE7;border:1px solid #86EFAC;border-radius:12px;padding:16px;text-align:center;margin-top:12px"><div style="font-size:40px">💬</div><b>NOVALEND Manager</b><br><a href="https://wa.me/256755797207?text=Hello%20NOVALEND%20Manager" target="_blank" style="display:inline-block;margin-top:12px;background:#25D366;color:#fff;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:800">WhatsApp</a></div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="p-settings" class="hide"><div class="c"><h3>Settings</h3><label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Phone Number</label><div class="inp"><span style="padding:0 10px">📱</span><input id="setPhone" placeholder="078..."><button class="btnG" style="width:auto;margin-right:6px;padding:8px 12px" onclick="updatePhone()">Save</button></div><label style="font-size:12px;font-weight:700;margin-top:12px;display:block">New Password</label><div class="inp"><span style="padding:0 10px">🔒</span><input id="setPass" type="password" placeholder="New password"></div><button class="btnG" style="margin-top:12px" onclick="updatePass()">Update</button><div style="margin-top:16px;border-top:1px solid #E2E8F0;padding-top:12px"><button class="btnN" style="background:#EF4444" onclick="logout()">Logout</button></div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
-
 <div id="bottomNav" class="nav hide"><button id="navHome" onclick="showPage('home')">🏠<br>Home</button><button onclick="showPage('products')">📦<br>Products</button><button onclick="showPage('invite')">👥<br>Invite</button><button onclick="showPage('revenue')">📊<br>Revenue</button><button class="active" id="navMine" onclick="showPage('mine')">👤<br>Mine</button></div>
-
 <script>
-const IMG_ALL = "data:image/jpeg;base64,YOUR_REAL_BASE64_HERE";
+const IMG_ALL = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjYwIiB2aWV3Qm94PSIwIDAgNDAwIDI2MCI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjYwIiByeD0iMTYiIGZpbGw9IiMwQTE5MzEiLz4KPHJlY3QgeD0iMjAiIHk9IjIwIiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjgwIiByeD0iMTIiIGZpbGw9IiMwRjVGRkYiLz4KPHRleHQgeD0iMjAwIiB5PSI1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjI4IiBmaWxsPSJ3aGl0ZSI+Tk9WQUxFTkQ8L3RleHQ+Cjx0ZXh0IHg9IjIwMCIgeT0iODAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iI0E4QzBGRiI+RFMtMjAwMCDigKIgRGlhbW9uZCBTb3J0ZXI8L3RleHQ+CjxyZWN0IHg9IjMwIiB5PSIxMTUiIHdpZHRoPSIzNDAiIGhlaWdodD0iNzAiIHJ4PSIxMCIgZmlsbD0iIzEzMjA0MCIgc3Ryb2tlPSIjMUUzQTVGIi8+CjxjaXJjbGUgY3g9IjgwIiBjeT0iMTUwIiByPSIxMiIgZmlsbD0iIzAwRkY4OCIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjE1MCIgcj0iMTIiIGZpbGw9IiMwMEZGODgiLz48Y2lyY2xlIGN4PSIyMjAiIGN5PSIxNTAiIHI9IjEyIiBmaWxsPSIjMDBGRjg4Ii8+PGNpcmNsZSBjeD0iMjkwIiBjeT0iMTUwIiByPSIxMiIgZmlsbD0iI0ZGMDAwMCIvPgo8cmVjdCB4PSIzMCIgeT0iMjAwIiB3aWR0aD0iMzQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iIzExMUMzMyIvPgo8dGV4dCB4PSIyMDAiIHk9IjIyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjExIiBmaWxsPSIjODg5MkE2Ij5SRUFEWSDigKIgU09SVElORyBDSEFNQkVSIOKAoiBBQ0NFUFQvUkVKRUNUPC90ZXh0Pgo8L3N2Zz4=";
 const productsData = {
 K: [{name:"K1", days:15, price:19000, total:30000, daily:2000, img:IMG_ALL},{name:"K2", days:20, price:50000, total:80000, daily:4000, img:IMG_ALL},{name:"K3", days:20, price:75000, total:110000, daily:5500, img:IMG_ALL},{name:"K4", days:25, price:95000, total:140000, daily:5600, img:IMG_ALL}],
 N: [{name:"N1", days:30, price:150000, total:210000, daily:7000, img:IMG_ALL},{name:"N2", days:30, price:250000, total:377000, daily:12566, img:IMG_ALL},{name:"N3", days:28, price:280000, total:420000, daily:15000, img:IMG_ALL}],
@@ -119,12 +101,13 @@ function showTransTab(t){
   document.getElementById('transDepList').classList.add('hide');
   document.getElementById('transWdList').classList.add('hide');
   document.getElementById('transAllList').classList.add('hide');
-  document.querySelectorAll('#p-transactions.tab').forEach(b=>b.classList.remove('a'));
+  document.getElementById('tabDep').classList.remove('a');
+  document.getElementById('tabWd').classList.remove('a');
+  document.getElementById('tabAll').classList.remove('a');
   if(t==='dep'){document.getElementById('transDepList').classList.remove('hide');document.getElementById('tabDep').classList.add('a');}
   if(t==='wd'){document.getElementById('transWdList').classList.remove('hide');document.getElementById('tabWd').classList.add('a');}
   if(t==='all'){document.getElementById('transAllList').classList.remove('hide');document.getElementById('tabAll').classList.add('a');}
 }
-function copyNumber(){navigator.clipboard.writeText('+256785344451');}
 function openWhatsApp(){window.open('https://wa.me/256755797207?text=Hello%20NOVALEND%20Manager','_blank');}
 function downloadApp(){alert('Coming soon');}
 function updateInviteLink(){
@@ -156,7 +139,7 @@ function showPage(p){
   if(p==='invite') updateInviteLink();
   if(window.load) window.load();
 }
-window.showPage=showPage; window.showTab=showTab; window.showTransTab=showTransTab; window.copyNumber=copyNumber; window.openWhatsApp=openWhatsApp; window.downloadApp=downloadApp;
+window.showPage=showPage; window.showTab=showTab; window.showTransTab=showTransTab; window.openWhatsApp=openWhatsApp; window.downloadApp=downloadApp;
 function updatePhone(){let ph=document.getElementById('setPhone').value.trim();if(!ph){alert('Enter phone');return;}alert('Saved');localStorage.setItem('k_phone',ph);}
 function updatePass(){let pw=document.getElementById('setPass').value.trim();if(!pw){alert('Enter password');return;}alert('Updated');}
 function logout(){if(confirm('Logout?')){localStorage.removeItem('k_uid');showPage('login');}}
@@ -181,7 +164,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, updateDoc, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyB5x4i5y3z...",authDomain:"khalfa-smart-loans.firebaseapp.com",projectId:"khalfa-smart-loans",appId:"1:123456789:web:abc"};
+const firebaseConfig={apiKey:"AIzaSyB5x4i5y3z-REPLACE_WITH_REAL_KEY",authDomain:"khalfa-smart-loans.firebaseapp.com",projectId:"khalfa-smart-loans",appId:"1:123456789:web:abc"};
 try{
 const app=initializeApp(firebaseConfig);const db=getFirestore(app);let uid=localStorage.getItem('k_uid');
 window.load=async()=>{
@@ -199,10 +182,49 @@ try{
 updateInviteLink();
 try{
   let snap=await getDocs(collection(db,"active_machines"));let my=[];snap.forEach(d=>{let x=d.data();if(x.userId===uid) my.push({...x,id:d.id});});
+  let now=Date.now();
+  for(let m of my){
+    if(m.status==="ACTIVE"||!m.status){
+      let last=m.lastCount||m.createdAt?.toMillis?.()||now;
+      let passed=Math.floor((now-last)/86400000);
+      if(passed>=1){
+        let curLeft = (m.daysLeft!==undefined)? m.daysLeft : m.days;
+        let newLeft=Math.max(0,curLeft-passed);
+        let newLast=last+(passed*86400000);
+        if(newLeft<=0){
+          await updateDoc(doc(db,"active_machines",m.id),{daysLeft:0,status:"COMPLETED",lastCount:now});
+          await updateDoc(doc(db,"users",uid),{balance:increment(m.totalProfit||0)});
+          m.daysLeft=0; m.status="COMPLETED";
+        }else{
+          await updateDoc(doc(db,"active_machines",m.id),{daysLeft:newLeft,lastCount:newLast});
+          m.daysLeft=newLeft; m.lastCount=newLast;
+        }
+      }
+      if(m.daysLeft===undefined) m.daysLeft=m.days;
+    }
+  }
   let tot=0,today=0;my.forEach(m=>{tot+=(m.totalProfit||0);today+=Math.round((m.totalProfit||0)/(m.days||1));});
   const setEl=(id,txt)=>{let e=document.getElementById(id);if(e) e.innerText=txt;};
+  let active=my.filter(m=>!m.status||m.status==="ACTIVE");
   setEl('aiIncome',tot.toLocaleString()+" UGX");setEl('todayEarnings',today.toLocaleString()+" UGX");
-  setEl('myCount',my.filter(m=>!m.status||m.status==="ACTIVE").length);setEl('totRev',"UGX "+tot.toLocaleString());
+  setEl('myCount',active.length);setEl('totRev',"UGX "+tot.toLocaleString());
+  let activeWrap=document.getElementById('activeWrap');
+  let empty=document.getElementById('empty');
+  if(my.length===0){
+    if(empty) empty.style.display="block";
+    if(activeWrap) activeWrap.innerHTML="";
+  }else{
+    if(empty) empty.style.display="none";
+    if(activeWrap){
+      activeWrap.innerHTML=active.map(mm=>{
+        let daily=Math.round((mm.totalProfit||0)/(mm.days||1));
+        let left=mm.daysLeft!==undefined?mm.daysLeft:mm.days;
+        let done=(mm.days||0)-left;
+        let pct=Math.max(5,Math.min(95,Math.round((done/(mm.days||1))*100)));
+        return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${mm.name}</b><span style="background:#D1FAE5;color:#065F46;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800">ACTIVE - ${left}D left</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Progress</small><br><b>${done}/${mm.days}</b></div><div><small>Left</small><br><b>${left}D</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#0F5FFF;width:${pct}%"></div></div><div style="margin-top:8px;font-size:10px;color:#64748B">Money credited to Balance after ${left} days</div></div>`;
+      }).join('') + my.filter(m=>m.status==="COMPLETED").map(mm=>`<div class="c"><b>${mm.name}</b> - COMPLETED ✓ PAID TO BALANCE</div>`).join('');
+    }
+  }
   let usersSnap=await getDocs(collection(db,"users"));let invited=[];usersSnap.forEach(d=>{let data=d.data();if(data.invite===uid||data.inviteCode===uid) invited.push({id:d.id,...data});});
   setEl('inviteCount',invited.length);setEl('teamCount',invited.length);setEl('lv1Count',invited.length);
   let depSnap=await getDocs(collection(db,"deposits"));let myDep=[];depSnap.forEach(d=>{let x=d.data();if(x.userId===uid) myDep.push(x);});
