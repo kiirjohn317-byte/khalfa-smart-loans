@@ -44,9 +44,9 @@
 .action-item{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
 .action-icon{width:56px;height:56px;background:linear-gradient(135deg,#0F5FFF,#1E40AF);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px}
 </style></head><body>
-<div id="p-register"><div class="c" style="margin-top:28px;text-align:center"><h2>Create Account</h2><div style="text-align:left;margin-top:18px"><div class="inp"><span style="padding:0 10px">📱</span><input id="rPhone" placeholder="078..."></div><div class="inp"><span style="padding:0 10px">🔒</span><input id="rPass" type="password" placeholder="Password"></div><div class="inp"><span style="padding:0 10px">🎟️</span><input id="rInv" placeholder="Optional"></div><button class="btnG" style="margin-top:18px" onclick="doRegister()">Register</button><p style="font-size:12px">Have account? <span onclick="showPage('login')" style="color:#0F5FFF;font-weight:800">Login</span></p></div></div></div>
+<div id="p-register"><div class="c" style="margin-top:28px;text-align:center"><h2>Create Account</h2><div style="text-align:left;margin-top:18px"><div class="inp"><span style="padding:0 10px">📱</span><input id="rPhone" placeholder="078..."></div><div class="inp"><span style="padding:0 10px">🔒</span><input id="rPass" type="password" placeholder="Password"></div><div class="inp"><span style="padding:0 10px">🎟️</span><input id="rInv" placeholder="Optional Invite Code"></div><button class="btnG" style="margin-top:18px" onclick="doRegister()">Register</button><p style="font-size:12px">Have account? <span onclick="showPage('login')" style="color:#0F5FFF;font-weight:800">Login</span></p></div></div></div>
 <div id="p-login" class="hide"><div class="c" style="margin-top:28px;text-align:center"><h2>Welcome Back</h2><div style="text-align:left;margin-top:18px"><div class="inp"><span style="padding:0 10px">📱</span><input id="lPhone" placeholder="078..."></div><div class="inp"><span style="padding:0 10px">🔒</span><input id="lPass" type="password" placeholder="Password"></div><button class="btnN" style="margin-top:18px" onclick="doLogin()">Login</button></div></div></div>
-<div id="p-home" class="hide"><div class="home-header"><div style="font-weight:900;font-size:20px">≡ NOVALEND</div><div onclick="showPage('invite')" style="text-align:center;cursor:pointer"><div>🔔</div><small style="font-size:9px;color:#64748B">Message</small></div></div><div class="withdraw-ticker" onclick="showPage('revenue')"><div class="ticker-icon">↑</div><div class="ticker-content"><div class="ticker-list"><div class="ticker-item"><small>WITHDRAW</small><b>+3611 · 2731 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 5,200 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 12,000 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 8,450 UGX</b></div></div></div><div class="gift-box" onclick="showPage('invite')">🎁</div></div><div class="stats-grid"><div class="stat-card"><b id="depositDetails">0.00 UGX</b><small>DEPOSIT DETAILS</small></div><div class="stat-card"><b id="withdrawDetails">0.00 UGX</b><small>WITHDRAW DETAILS</small></div><div class="stat-card"><b id="aiIncome">0.00 UGX</b><small>AI INCOME</small></div><div class="stat-card"><b id="todayEarnings">0.00 UGX</b><small>TODAY'S EARNINGS</small></div></div><div class="stats-grid-3"><div class="stat-card"><b id="inviteCount">0</b><small>INVITE COUNT</small></div><div class="stat-card"><b id="teamCount">0</b><small>TEAM COUNT</small></div><div class="stat-card"><b id="teamIncome">0.00 UGX</b><small>TEAM INCOME</small></div></div><div class="action-row"><button class="btn-deposit" onclick="showPage('deposit')">Deposit</button><button class="btn-withdraw" onclick="showPage('withdraw')">Withdraw</button></div><div class="message-section"><div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #1E293B"><b style="border-left:3px solid #0F5FFF;padding-left:8px">MESSAGE</b><small style="color:#64748B;cursor:pointer" onclick="showPage('invite')">More</small></div><div style="padding:16px;min-height:80px;color:#8892A6;font-size:12px"><div id="transList">No transactions</div></div></div><div style="display:none"><span id="wallet"></span><span id="balance"></span><span id="uShow"></span></div></div>
+<div id="p-home" class="hide"><div class="home-header"><div style="font-weight:900;font-size:20px">≡ NOVALEND</div><div onclick="showPage('invite')" style="text-align:center;cursor:pointer"><div>🔔</div><small style="font-size:9px;color:#64748B">Message</small></div></div><div class="withdraw-ticker" onclick="showPage('revenue')"><div class="ticker-icon">↑</div><div class="ticker-content"><div class="ticker-list"><div class="ticker-item"><small>WITHDRAW</small><b>+3611 · 2731 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 5,200 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 12,000 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 8,450 UGX</b></div></div></div><div class="gift-box" onclick="showPage('invite')">🎁</div></div><div class="stats-grid"><div class="stat-card"><b id="depositDetails">0.00 UGX</b><small>DEPOSIT DETAILS</small></div><div class="stat-card"><b id="withdrawDetails">0.00 UGX</b><small>WITHDRAW DETAILS</small></div><div class="stat-card"><b id="aiIncome">0.00 UGX</b><small>AI INCOME</small></div><div class="stat-card"><b id="todayEarnings">0.00 UGX</b><small>TODAY'S EARNINGS</small></div></div><div class="stats-grid-3"><div class="stat-card"><b id="inviteCount">0</b><small>INVITE COUNT</small></div><div class="stat-card"><b id="teamCount">0</b><small>TEAM COUNT</small></div><div class="stat-card"><b id="teamIncome">0.00 UGX</b><small>TEAM INCOME</small></div></div><div class="action-row"><button class="btn-deposit" onclick="showPage('deposit')">Deposit</button><button class="btn-withdraw" onclick="showPage('withdraw')">Withdraw</button></div><div class="message-section"><div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #1E293B"><b style="border-left:3px solid #0F5FFF;padding-left:8px">MESSAGE</b><small style="color:#64748B;cursor:pointer" onclick="showPage('invite')">More</small></div><div style="padding:14px"><div style="background:linear-gradient(135deg,#0F172A,#1E3A5F);border:1px solid #1E3A5F;border-radius:16px;padding:18px;color:#fff"><div style="display:flex;align-items:center;gap:10px"><div style="font-size:32px">💎</div><div><b style="font-size:18px">WELCOME TO NOVALEND GOLD</b><br><small style="color:#93C5FD;font-weight:700">DRIVE YOUR FUTURE • DS-2000 DIAMOND SORTER</small></div></div><div style="margin-top:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px;font-size:12.5px;line-height:1.7">🚀 <b style="color:#FFD700">Dear Member,</b> Welcome to #1 AI Income Platform!<br><br>✅ <b>HOW TO EARN:</b><br>- Deposit to Wallet (MTN +256785344451)<br>- Rent Machine (K,N,J,Y)<br>- Earn Daily Income 10-40 Days<br>- Total return up to 150%<br><br>👥 <b>INVITE & EARN:</b> LV1 12% LV2 4% LV3 2% LV4 1% bonus to Balance INSTANTLY when friend buys!<br><br>🎁 <b>START NOW:</b> K1 only 19,000 UGX = 2,000 UGX daily!<br><div style="display:flex;gap:8px;margin-top:10px"><button onclick="showPage('products')" style="background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;border:0;padding:11px 18px;border-radius:10px;font-weight:800;font-size:12px">💰 Start Earning</button><button onclick="showPage('invite')" style="background:#1E293B;color:#fff;border:1px solid #2A3F6A;padding:11px 18px;border-radius:10px;font-weight:800;font-size:12px">👥 Invite</button></div></div></div><div id="transList" style="margin-top:12px;font-size:11px;color:#8892A6"></div></div></div><div style="display:none"><span id="wallet"></span><span id="balance"></span><span id="uShow"></span></div></div>
 <div id="p-mine" class="hide"><div class="mine-top"><div class="mine-header-row"><div class="mine-logo"><div class="mine-logo-icon">💎</div><span>NOVALEND</span><small style="color:#D4AF37;margin-left:4px">GOLD</small></div><div style="display:flex;gap:12px"><div style="width:38px;height:38px;background:#132040;border:1px solid #1E3A5F;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="showPage('invite')">🔔</div><div style="width:38px;height:38px;background:#132040;border:1px solid #1E3A5F;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="showPage('settings')">👤</div></div></div><div style="display:flex;justify-content:space-between;margin-top:16px"><div><small style="color:#64748B">Welcome back,</small><h2 id="mineUserName" style="margin:4px 0;font-size:26px">Khalfa</h2><div style="display:flex;gap:8px"><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(212,175,55,0.15);color:#D4AF37">👑 Member</div><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(15,95,255,0.15);color:#0F5FFF" id="mineUserShort">Khalfa</div></div><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(15,95,255,0.15);color:#0F5FFF;margin-top:8px;cursor:pointer" onclick="openWhatsApp()">💬 Message Upline</div></div><div style="text-align:right"><b>DRIVE<br>YOUR<br>FUTURE</b><div style="font-size:24px;margin-top:8px">💎</div></div></div></div><div class="wallet-cards"><div class="wallet-card"><div class="wallet-icon">💳</div><div><small style="color:#64748B;font-size:11px">Wallet</small><b id="mineWallet">0.00 UGX</b></div></div><div class="wallet-card"><div class="wallet-icon">💰</div><div><small style="color:#64748B;font-size:11px">Balance</small><b id="mineBalance">0.00 UGX</b></div></div><div class="wallet-card"><div class="wallet-icon">💎</div><div><small style="color:#64748B;font-size:11px">Token</small><b>0.00</b></div><div style="position:absolute;right:8px;bottom:8px;background:#fff;color:#0A1931;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:800;cursor:pointer" onclick="showPage('products')">Buy</div></div></div><div style="text-align:center;color:#475569">▼</div><div class="action-grid"><div class="action-item" onclick="showPage('deposit')"><div class="action-icon">💳</div><small>Cash In</small></div><div class="action-item" onclick="showPage('withdraw')"><div class="action-icon">🏧</div><small>Cash Out</small></div><div class="action-item" onclick="showPage('transactions')"><div class="action-icon">📄</div><small>Transactions</small></div><div class="action-item" onclick="showPage('invite')"><div class="action-icon">🔗</div><small>Invite</small></div><div class="action-item" onclick="showPage('referrals')"><div class="action-icon">👥</div><small>Referrals</small></div><div class="action-item" onclick="showPage('vip')"><div class="action-icon">⭐</div><small>VIP Task</small></div><div class="action-item" onclick="showPage('reward')"><div class="action-icon">🎁</div><small>Reward</small></div><div class="action-item" onclick="showPage('manager')"><div class="action-icon">🎧</div><small>Manager</small></div><div class="action-item" onclick="downloadApp()"><div class="action-icon">⬇️</div><small>Download App</small></div><div class="action-item" onclick="showPage('settings')"><div class="action-icon">⚙️</div><small>Settings</small></div></div><div style="display:flex;gap:10px;margin:12px"><div style="flex:1;background:#111C33;border:1px solid #1E293B;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;background:#1E293B;border-radius:10px;display:flex;align-items:center;justify-content:center">📅</div><div><small style="color:#64748B;font-size:10px">Last month's salary</small><b id="lastSalary">0.00 UGX</b></div></div><div style="flex:1;background:#111C33;border:1px solid #1E293B;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;background:#1E293B;border-radius:10px;display:flex;align-items:center;justify-content:center">📅</div><div><small style="color:#64748B;font-size:10px">This month's salary</small><b id="thisSalary">0.00 UGX</b></div></div></div></div>
 <div id="p-deposit" class="hide"><div class="c"><h3>Recharge</h3><small>Min UGX 19,000</small><div class="inp"><b>UGX</b><input id="depAmt" type="number" value="19000"></div><div class="inp"><input id="payNum" value="+256785344451" readonly><button style="background:#0F5FFF;color:#fff;border:0;border-radius:8px;padding:8px 12px;margin-right:6px;font-weight:800" onclick="navigator.clipboard.writeText('+256785344451');this.innerText='✓'">Copy</button></div><div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px;margin-top:12px;font-size:12px"><b>MTN Mobile Money</b><br>1. Dial *165# - Send Money<br>2. Enter +256785344451<br>3. Enter Amount<br>4. Copy Transaction ID</div><input id="depTid" placeholder="Transaction ID" style="width:100%;padding:14px;border-radius:12px;border:1px solid #CBD5E1;margin-top:12px"><button class="btnG" style="margin-top:12px" onclick="submitDep()">Submit</button><p id="depMsg" style="font-size:12px;color:#00B67A"></p></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="p-withdraw" class="hide"><div class="c"><h3>Withdraw</h3><small>Min UGX 5,000</small><div class="inp"><b>UGX</b><input id="wdAmt" type="number" placeholder="5000"></div><div class="inp"><span style="padding:0 10px">📱</span><input id="wdPhone" placeholder="078..."></div><button class="btnG" style="margin-top:14px" onclick="submitWd()">Submit</button><p id="wdMsg" style="font-size:12px;color:#00B67A"></p></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
@@ -61,7 +61,7 @@
 <div id="p-settings" class="hide"><div class="c"><h3>Settings</h3><label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Phone Number</label><div class="inp"><span style="padding:0 10px">📱</span><input id="setPhone" placeholder="078..."><button class="btnG" style="width:auto;margin-right:6px;padding:8px 12px" onclick="updatePhone()">Save</button></div><label style="font-size:12px;font-weight:700;margin-top:12px;display:block">New Password</label><div class="inp"><span style="padding:0 10px">🔒</span><input id="setPass" type="password" placeholder="New password"></div><button class="btnG" style="margin-top:12px" onclick="updatePass()">Update</button><div style="margin-top:16px;border-top:1px solid #E2E8F0;padding-top:12px"><button class="btnN" style="background:#EF4444" onclick="logout()">Logout</button></div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="bottomNav" class="nav hide"><button id="navHome" onclick="showPage('home')">🏠<br>Home</button><button onclick="showPage('products')">📦<br>Products</button><button onclick="showPage('invite')">👥<br>Invite</button><button onclick="showPage('revenue')">📊<br>Revenue</button><button class="active" id="navMine" onclick="showPage('mine')">👤<br>Mine</button></div>
 <script>
-const IMG_ALL = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjYwIiB2aWV3Qm94PSIwIDAgNDAwIDI2MCI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjYwIiByeD0iMTYiIGZpbGw9IiMwQTE5MzEiLz4KPHJlY3QgeD0iMjAiIHk9IjIwIiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjgwIiByeD0iMTIiIGZpbGw9IiMwRjVGRkYiLz4KPHRleHQgeD0iMjAwIiB5PSI1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjI4IiBmaWxsPSJ3aGl0ZSI+Tk9WQUxFTkQ8L3RleHQ+Cjx0ZXh0IHg9IjIwMCIgeT0iODAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iI0E4QzBGRiI+RFMtMjAwMCDigKIgRGlhbW9uZCBTb3J0ZXI8L3RleHQ+CjxyZWN0IHg9IjMwIiB5PSIxMTUiIHdpZHRoPSIzNDAiIGhlaWdodD0iNzAiIHJ4PSIxMCIgZmlsbD0iIzEzMjA0MCIgc3Ryb2tlPSIjMUUzQTVGIi8+CjxjaXJjbGUgY3g9IjgwIiBjeT0iMTUwIiByPSIxMiIgZmlsbD0iIzAwRkY4OCIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjE1MCIgcj0iMTIiIGZpbGw9IiMwMEZGODgiLz48Y2lyY2xlIGN4PSIyMjAiIGN5PSIxNTAiIHI9IjEyIiBmaWxsPSIjMDBGRjg4Ii8+PGNpcmNsZSBjeD0iMjkwIiBjeT0iMTUwIiByPSIxMiIgZmlsbD0iI0ZGMDAwMCIvPgo8cmVjdCB4PSIzMCIgeT0iMjAwIiB3aWR0aD0iMzQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iIzExMUMzMyIvPgo8dGV4dCB4PSIyMDAiIHk9IjIyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjExIiBmaWxsPSIjODg5MkE2Ij5SRUFEWSDigKIgU09SVElORyBDSEFNQkVSIOKAoiBBQ0NFUFQvUkVKRUNUPC90ZXh0Pgo8L3N2Zz4=";
+const IMG_ALL = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjYwIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMEExOTMxIi8+PHJlY3QgeD0iMjAiIHk9IjIwIiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjgwIiByeD0iMTIiIGZpbGw9IiMwRjVGRkYiLz48dGV4dCB4PSIyMDAiIHk9IjU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMjgiIGZpbGw9IndoaXRlIj5OT1ZBTEVORDwvdGV4dD48dGV4dCB4PSIyMDAiIHk9IjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNBOEMwRkYiPkRTMjAwMCBEaWFtb25kPC90ZXh0PjxyZWN0IHg9IjMwIiB5PSIxMTUiIHdpZHRoPSIzNDAiIGhlaWdodD0iNzAiIHJ4PSIxMCIgZmlsbD0iIzEzMjA0MCIgc3Ryb2tlPSIjMUUzQTVGIi8+PGNpcmNsZSBjeD0iODAiIGN5PSIxNTAiIHI9IjEyIiBmaWxsPSIjMDBGRjg4Ii8+PGNpcmNsZSBjeD0iMTUwIiBjeT0iMTUwIiByPSIxMiIgZmlsbD0iIzAwRkY4OCIvPjxjaXJjbGUgY3g9IjIyMCIgY3k9IjE1MCIgcj0iMTIiIGZpbGw9IiMwMEZGODgiLz48Y2lyY2xlIGN4PSIyOTAiIGN5PSIxNTAiIHI9IjEyIiBmaWxsPSIjRkYwMDAwIi8+PC9zdmc+";
 const productsData = {
 K: [{name:"K1", days:15, price:19000, total:30000, daily:2000, img:IMG_ALL},{name:"K2", days:20, price:50000, total:80000, daily:4000, img:IMG_ALL},{name:"K3", days:20, price:75000, total:110000, daily:5500, img:IMG_ALL},{name:"K4", days:25, price:95000, total:140000, daily:5600, img:IMG_ALL}],
 N: [{name:"N1", days:30, price:150000, total:210000, daily:7000, img:IMG_ALL},{name:"N2", days:30, price:250000, total:377000, daily:12566, img:IMG_ALL},{name:"N3", days:28, price:280000, total:420000, daily:15000, img:IMG_ALL}],
@@ -171,13 +171,13 @@ window.load=async()=>{
 if(!uid){ uid=localStorage.getItem('k_uid'); if(!uid) return; }
 try{
   let u=await getDoc(doc(db,"users",uid));
-  let w=0,b=0,phone="";
-  if(u.exists()){w=u.data().wallet||0;b=u.data().balance||0;phone=u.data().phone||uid;}
+  let w=0,b=0,phone="",teamInc=0;
+  if(u.exists()){w=u.data().wallet||0;b=u.data().balance||0;phone=u.data().phone||uid;teamInc=u.data().teamIncome||0;}
   const setEl=(id,txt)=>{let e=document.getElementById(id);if(e) e.innerText=txt;};
   setEl('wallet',"UGX "+w.toLocaleString());setEl('balance',"UGX "+b.toLocaleString());
-  setEl('depositDetails',w.toLocaleString()+" UGX");setEl('withdrawDetails',b.toLocaleString()+" UGX");
   setEl('mineWallet',w.toLocaleString()+" UGX");setEl('mineBalance',b.toLocaleString()+" UGX");
   setEl('uShow',uid);setEl('mineUserName',phone);setEl('mineUserShort',phone.slice(-4));
+  setEl('teamIncome',teamInc.toLocaleString()+" UGX");
 }catch(e){}
 updateInviteLink();
 try{
@@ -203,11 +203,18 @@ try{
       if(m.daysLeft===undefined) m.daysLeft=m.days;
     }
   }
-  let tot=0,today=0;my.forEach(m=>{tot+=(m.totalProfit||0);today+=Math.round((m.totalProfit||0)/(m.days||1));});
   const setEl=(id,txt)=>{let e=document.getElementById(id);if(e) e.innerText=txt;};
-  let active=my.filter(m=>!m.status||m.status==="ACTIVE");
-  setEl('aiIncome',tot.toLocaleString()+" UGX");setEl('todayEarnings',today.toLocaleString()+" UGX");
-  setEl('myCount',active.length);setEl('totRev',"UGX "+tot.toLocaleString());
+  let aiIncome=0,todayEarn=0,totalFuture=0;
+  my.forEach(m=>{
+    let daily=Math.round((m.totalProfit||0)/(m.days||1));
+    totalFuture+=(m.totalProfit||0);
+    aiIncome+=(m.totalProfit||0);
+    if(!m.status || m.status==="ACTIVE") todayEarn+=daily;
+  });
+  setEl('aiIncome',aiIncome.toLocaleString()+" UGX");
+  setEl('todayEarnings',todayEarn.toLocaleString()+" UGX");
+  setEl('myCount',my.filter(m=>!m.status||m.status==="ACTIVE").length);
+  setEl('totRev',"UGX "+totalFuture.toLocaleString());
   let activeWrap=document.getElementById('activeWrap');
   let empty=document.getElementById('empty');
   if(my.length===0){
@@ -216,7 +223,7 @@ try{
   }else{
     if(empty) empty.style.display="none";
     if(activeWrap){
-      activeWrap.innerHTML=active.map(mm=>{
+      activeWrap.innerHTML=my.filter(m=>!m.status||m.status==="ACTIVE").map(mm=>{
         let daily=Math.round((mm.totalProfit||0)/(mm.days||1));
         let left=mm.daysLeft!==undefined?mm.daysLeft:mm.days;
         let done=(mm.days||0)-left;
@@ -225,14 +232,27 @@ try{
       }).join('') + my.filter(m=>m.status==="COMPLETED").map(mm=>`<div class="c"><b>${mm.name}</b> - COMPLETED ✓ PAID TO BALANCE</div>`).join('');
     }
   }
-  let usersSnap=await getDocs(collection(db,"users"));let invited=[];usersSnap.forEach(d=>{let data=d.data();if(data.invite===uid||data.inviteCode===uid) invited.push({id:d.id,...data});});
-  setEl('inviteCount',invited.length);setEl('teamCount',invited.length);setEl('lv1Count',invited.length);
-  let depSnap=await getDocs(collection(db,"deposits"));let myDep=[];depSnap.forEach(d=>{let x=d.data();if(x.userId===uid) myDep.push(x);});
-  let wdSnap=await getDocs(collection(db,"withdraws"));let myWd=[];wdSnap.forEach(d=>{let x=d.data();if(x.userId===uid) myWd.push(x);});
+  let usersSnap=await getDocs(collection(db,"users"));
+  let allUsers={}; usersSnap.forEach(d=>{allUsers[d.id]=d.data();});
+  let lv1=[]; usersSnap.forEach(d=>{let data=d.data();if(data.invite===uid||data.inviteCode===uid) lv1.push({id:d.id,...data});});
+  let lv2=[]; lv1.forEach(u=>{usersSnap.forEach(d=>{let data=d.data();if(data.invite===u.id||data.inviteCode===u.id) lv2.push({id:d.id,...data});});});
+  let lv3=[]; lv2.forEach(u=>{usersSnap.forEach(d=>{let data=d.data();if(data.invite===u.id||data.inviteCode===u.id) lv3.push({id:d.id,...data});});});
+  let lv4=[]; lv3.forEach(u=>{usersSnap.forEach(d=>{let data=d.data();if(data.invite===u.id||data.inviteCode===u.id) lv4.push({id:d.id,...data});});});
+  let teamAll=[...lv1,...lv2,...lv3,...lv4];
+  setEl('inviteCount',lv1.length);
+  setEl('teamCount',teamAll.length);
+  setEl('lv1Count',lv1.length);
+  if(document.getElementById('lv2Count')) document.getElementById('lv2Count').innerText=lv2.length;
+  if(document.getElementById('lv3Count')) document.getElementById('lv3Count').innerText=lv3.length;
+  if(document.getElementById('lv4Count')) document.getElementById('lv4Count').innerText=lv4.length;
+  let depSnap=await getDocs(collection(db,"deposits"));let myDep=[];let totalDep=0;depSnap.forEach(d=>{let x=d.data();if(x.userId===uid){myDep.push(x);totalDep+=(x.amount||0);}});
+  let wdSnap=await getDocs(collection(db,"withdraws"));let myWd=[];let totalWd=0;wdSnap.forEach(d=>{let x=d.data();if(x.userId===uid){myWd.push(x);totalWd+=(x.amount||0);}});
+  setEl('depositDetails',totalDep.toLocaleString()+" UGX");
+  setEl('withdrawDetails',totalWd.toLocaleString()+" UGX");
   let depList=document.getElementById('transDepList');if(depList){if(myDep.length===0) depList.innerHTML="No deposits";else depList.innerHTML=myDep.map(d=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><span>💳 UGX ${d.amount} - ${d.transId||''}</span><span style="color:${d.status==='APPROVED'?'#00B67A':'#F59E0B'};font-weight:700">${d.status||'PENDING'}</span></div>`).join('');}
   let wdList=document.getElementById('transWdList');if(wdList){if(myWd.length===0) wdList.innerHTML="No withdraws";else wdList.innerHTML=myWd.map(w=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><span>🏧 UGX ${w.amount} - ${w.phone||''}</span><span style="color:${w.status==='APPROVED'?'#00B67A':'#F59E0B'};font-weight:700">${w.status||'PENDING'}</span></div>`).join('');}
   let allList=document.getElementById('transAllList');if(allList){let all=[...myDep.map(d=>({type:'Deposit',...d})),...myWd.map(w=>({type:'Withdraw',...w}))];if(all.length===0) allList.innerHTML="No transactions";else allList.innerHTML=all.map(a=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><span>${a.type} UGX ${a.amount}</span><span style="color:${a.status==='APPROVED'?'#00B67A':'#F59E0B'}}">${a.status||'PENDING'}</span></div>`).join('');}
-  let refList=document.getElementById('referralsList');if(refList){if(invited.length===0) refList.innerHTML="No referrals";else{let h="";for(let inv of invited){let c=0;snap.forEach(d=>{if(d.data().userId===inv.id) c++;});h+=`<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-bottom:8px;display:flex;justify-content:space-between"><div><b>${inv.phone||inv.id}</b><br><small style="color:#64748B">Machines: ${c}</small></div><span style="background:#EEF2FF;color:#0F5FFF;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700">${c} Machines</span></div>`;}refList.innerHTML=h;}}
+  let refList=document.getElementById('referralsList');if(refList){if(lv1.length===0) refList.innerHTML="No referrals";else{let h="";for(let inv of lv1){let c=0;snap.forEach(d=>{if(d.data().userId===inv.id) c++;});h+=`<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-bottom:8px;display:flex;justify-content:space-between"><div><b>${inv.phone||inv.id}</b><br><small style="color:#64748B">Machines: ${c}</small></div><span style="background:#EEF2FF;color:#0F5FFF;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700">${c} Machines</span></div>`;}refList.innerHTML=h;}}
 }catch(e){console.log(e);}
 };
 window.rent=async(n,p,d,t)=>{
@@ -241,6 +261,24 @@ if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet UGX '+p.toLocaleString
 if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days')) return;
 await updateDoc(doc(db,"users",uid),{wallet:increment(-p)});
 await addDoc(collection(db,"active_machines"),{userId:uid,name:n,price:p,days:d,daysLeft:d,totalProfit:t,lastCount:Date.now(),status:"ACTIVE",createdAt:serverTimestamp()});
+try{
+  let me=u.data();
+  let curId=me.invite||me.inviteCode;
+  for(let i=0;i<4;i++){
+    if(!curId) break;
+    let perc=i===0?0.12:i===1?0.04:i===2?0.02:0.01;
+    let bonus=Math.floor(p*perc);
+    if(bonus>0){
+      let ref=doc(db,"users",curId);
+      let s=await getDoc(ref);
+      if(s.exists()){
+        await updateDoc(ref,{balance:increment(bonus),teamIncome:increment(bonus)});
+        await addDoc(collection(db,"bonuses"),{userId:curId,from:uid,product:n,amount:bonus,level:i+1,createdAt:serverTimestamp()});
+        curId=s.data().invite||s.data().inviteCode||null;
+      }else break;
+    }
+  }
+}catch(e){console.log(e);}
 await window.load(); showPage('revenue');
 };
 window.submitDep=async()=>{
@@ -266,10 +304,12 @@ window.doRegister=async()=>{
 let phone=document.getElementById('rPhone').value.trim();
 let pass=document.getElementById('rPass').value.trim();
 let inv=document.getElementById('rInv').value.trim();
+let codeParam=new URLSearchParams(window.location.search).get('code');
+let finalInv=inv||codeParam||"";
 if(!phone||!pass){alert('Enter phone and password');return;}
 let id=phone.replace(/\D/g,'').slice(-9)||'U'+Date.now();
 uid=id; localStorage.setItem('k_uid',uid);
-await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:inv,inviteCode:inv,wallet:0,balance:0,createdAt:serverTimestamp()});
+await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:finalInv,inviteCode:finalInv,wallet:0,balance:0,teamIncome:0,createdAt:serverTimestamp()});
 showPage('home'); window.load();
 };
 window.doLogin=async()=>{
