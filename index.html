@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NOVALEND - SUPPORT ONLY IN MINE</title>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NOVALEND AUTO MANAGER</title>
 <style>
 :root{--navy:#0A1931;--card:#132040;--blue:#0F5FFF;--blue2:#1E40AF;--bg:#080E1F}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,sans-serif;background:var(--bg);padding-bottom:90px;color:#fff}
@@ -35,6 +35,7 @@
 .action-row{display:flex;gap:10px;margin:14px 12px}
 .btn-deposit{flex:1;padding:14px;border-radius:14px;border:0;background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;font-weight:800;cursor:pointer}
 .btn-withdraw{flex:1;padding:14px;border-radius:14px;border:0;background:#1E293B;color:#fff;font-weight:800;cursor:pointer;border:1px solid #2A3F6A}
+.message-section{background:#0F172A;margin:12px;border-radius:16px;border:1px solid #1E293B}
 .mine-top{background:linear-gradient(180deg,#0A1931 0%,#080E1F 100%);padding:16px}
 .mine-header-row{display:flex;justify-content:space-between;align-items:center}
 .mine-logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:18px}
@@ -45,14 +46,20 @@
 .action-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin:16px 12px}
 .action-item{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
 .action-icon{width:56px;height:56px;background:linear-gradient(135deg,#0F5FFF,#1E40AF);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.chat-tabs{display:flex;gap:6px;padding:12px;background:#0A1931;border-bottom:1px solid #1E293B}
+.chat-tab{flex:1;padding:10px;border-radius:20px;border:1px solid #2A3F6A;text-align:center;font-size:12px;font-weight:800;cursor:pointer;background:#132040;color:#8892A6}
+.chat-tab.a{background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;border-color:#0F5FFF}
 .chat-box{height:320px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:#080E1F}
 .chat-msg{background:#111C33;border:1px solid #1E293B;border-radius:12px;padding:10px 12px;max-width:85%;font-size:13px}
 .chat-msg.me{background:linear-gradient(135deg,#0F5FFF,#1E40AF);border-color:#0F5FFF;align-self:flex-end}
-.chat-msg.auto{background:linear-gradient(135deg,#10B981,#059669);border-color:#10B981;color:#fff;align-self:flex-start}
+.chat-msg.auto{background:linear-gradient(135deg,#10B981,#059669);border-color:#10B981;color:#fff}
 .chat-msg small{font-size:9px;color:#64748B;display:block;margin-bottom:2px}
+.chat-msg.me small{color:#BFDBFE}
+.chat-msg.auto small{color:#D1FAE5}
 .chat-input-row{display:flex;gap:8px;padding:12px;background:#0A1931;border-top:1px solid #1E293B}
 .chat-input{flex:1;padding:12px;border-radius:12px;border:1px solid #2A3F6A;background:#132040;color:#fff;outline:none}
 .manager-user-item{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.manager-user-item:hover{background:#EEF2FF;border-color:#0F5FFF}
 .big-purchase-alert{position:fixed;bottom:100px;left:12px;right:12px;background:linear-gradient(135deg,#E50914,#7F1D1D);color:#fff;padding:20px;border-radius:20px;font-weight:900;text-align:center;font-size:19px;z-index:9999;box-shadow:0 12px 40px rgba(229,9,20,0.7);border:3px solid #FFD700;animation:popAlert 0.5s ease}
 @keyframes popAlert{0%{transform:scale(0.5) translateY(60px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}
 .typing-indicator{background:#111C33;border:1px solid #1E293B;border-radius:12px;padding:10px 12px;max-width:55%;font-size:12px;color:#8892A6;display:flex;align-items:center;gap:4px}
@@ -64,61 +71,65 @@
 <div id="bigPurchaseAlert" style="display:none"></div>
 <div id="p-register"><div class="c" style="margin-top:28px;text-align:center"><h2>Create Account</h2><div style="text-align:left;margin-top:18px"><div class="inp"><span style="padding:0 10px">📱</span><input id="rPhone" placeholder="078..."></div><div class="inp"><span style="padding:0 10px">🔒</span><input id="rPass" type="password" placeholder="Password"></div><div class="inp"><span style="padding:0 10px">🎟️</span><input id="rInv" placeholder="Optional Invite Code"></div><button class="btnG" style="margin-top:18px" onclick="doRegister()">Register</button><p style="font-size:12px">Have account? <span onclick="showPage('login')" style="color:#0F5FFF;font-weight:800">Login</span></p></div></div></div>
 <div id="p-login" class="hide"><div class="c" style="margin-top:28px;text-align:center"><h2>Welcome Back</h2><div style="text-align:left;margin-top:18px"><div class="inp"><span style="padding:0 10px">📱</span><input id="lPhone" placeholder="078..."></div><div class="inp"><span style="padding:0 10px">🔒</span><input id="lPass" type="password" placeholder="Password"></div><button class="btnN" style="margin-top:18px" onclick="doLogin()">Login</button></div></div></div>
-<div id="p-home" class="hide"><div class="home-header"><div style="font-weight:900;font-size:20px">≡ NOVALEND</div><div onclick="showPage('chats')" style="text-align:center;cursor:pointer;position:relative"><div>💬</div><small style="font-size:9px;color:#64748B">Community</small></div></div><div class="withdraw-ticker" onclick="showPage('revenue')"><div class="ticker-icon">↑</div><div class="ticker-content"><div class="ticker-list"><div class="ticker-item"><small>WITHDRAW</small><b>+3611 · 2731 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 5,200 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 12,000 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 8,450 UGX</b></div></div></div><div class="gift-box" onclick="showPage('invite')">🎁</div></div><div class="stats-grid"><div class="stat-card"><b id="depositDetails">0.00 UGX</b><small>DEPOSIT DETAILS</small></div><div class="stat-card"><b id="withdrawDetails">0.00 UGX</b><small>WITHDRAW DETAILS</small></div><div class="stat-card"><b id="aiIncome">0.00 UGX</b><small>AI INCOME</small></div><div class="stat-card"><b id="todayEarnings">0.00 UGX</b><small>TODAY'S EARNINGS</small></div></div><div class="stats-grid-3"><div class="stat-card"><b id="inviteCount">0</b><small>INVITE COUNT</small></div><div class="stat-card"><b id="teamCount">0</b><small>TEAM COUNT</small></div><div class="stat-card"><b id="teamIncome">0.00 UGX</b><small>TEAM INCOME</small></div></div><div class="action-row"><button class="btn-deposit" onclick="showPage('deposit')">Deposit</button><button class="btn-withdraw" onclick="showPage('withdraw')">Withdraw</button></div></div>
-<div id="p-chats" class="hide"><div style="background:#0A1931;padding:16px"><b>👥 Community Chat</b><br><small style="color:#8892A6">All users chat here. For private Support go to Mine → Support 💎</small></div><div id="globalChatList" class="chat-box" style="height:calc(100vh - 180px)"></div><div class="chat-input-row"><input id="globalChatInput" class="chat-input" placeholder="Type to all users..."><button onclick="sendGlobalMessage()" style="background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;border:0;border-radius:12px;padding:12px 18px;font-weight:800">Send</button></div></div>
-<div id="p-mine" class="hide"><div class="mine-top"><div class="mine-header-row"><div class="mine-logo"><div class="mine-logo-icon">💎</div><span>NOVALEND</span><small style="color:#D4AF37;margin-left:4px">GOLD</small></div><div style="display:flex;gap:12px"><div style="width:38px;height:38px;background:#132040;border:1px solid #1E3A5F;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="showPage('chats')">💬</div><div style="width:38px;height:38px;background:#132040;border:1px solid #1E3A5F;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="showPage('settings')">👤</div></div></div><div style="display:flex;justify-content:space-between;margin-top:16px"><div><small style="color:#64748B">Welcome back,</small><h2 id="mineUserName" style="margin:4px 0;font-size:26px">User</h2><div style="display:flex;gap:8px"><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(212,175,55,0.15);color:#D4AF37">👑 Member</div><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(15,95,255,0.15);color:#0F5FFF" id="mineUserShort">User</div></div></div><div style="text-align:right"><b>DRIVE<br>YOUR<br>FUTURE</b><div style="font-size:24px;margin-top:8px">💎</div></div></div></div><div class="wallet-cards"><div class="wallet-card"><div class="wallet-icon">💳</div><div><small style="color:#64748B;font-size:11px">Wallet</small><b id="mineWallet">0.00 UGX</b></div></div><div class="wallet-card"><div class="wallet-icon">💰</div><div><small style="color:#64748B;font-size:11px">Balance</small><b id="mineBalance">0.00 UGX</b></div></div></div>
-<div class="action-grid">
-<div class="action-item" onclick="showPage('deposit')"><div class="action-icon">💳</div><small>Cash In</small></div>
-<div class="action-item" onclick="showPage('withdraw')"><div class="action-icon">🏧</div><small>Cash Out</small></div>
-<div class="action-item" onclick="showPage('transactions')"><div class="action-icon">📄</div><small>Transactions</small></div>
-<div class="action-item" onclick="showPage('invite')"><div class="action-icon">🔗</div><small>Invite</small></div>
-<div class="action-item" onclick="showPage('referrals')"><div class="action-icon">👥</div><small>Referrals</small></div>
-<div class="action-item" onclick="showPage('manager')"><div class="action-icon" style="background:linear-gradient(135deg,#10B981,#059669)">🎧</div><small><b>Support</b></small></div>
-<div class="action-item" onclick="showPage('settings')"><div class="action-icon">⚙️</div><small>Settings</small></div>
-</div></div>
-<div id="p-deposit" class="hide"><div class="c"><h3>Recharge</h3><small>Min UGX 19,000</small><div class="inp"><b>UGX</b><input id="depAmt" type="number" value="19000"></div><div class="inp"><input value="+256785344451" readonly><button style="background:#0F5FFF;color:#fff;border:0;border-radius:8px;padding:8px 12px;margin-right:6px;font-weight:800" onclick="navigator.clipboard.writeText('+256785344451')">Copy</button></div><input id="depTid" placeholder="Transaction ID" style="width:100%;padding:14px;border-radius:12px;border:1px solid #CBD5E1;margin-top:12px"><button class="btnG" style="margin-top:12px" onclick="submitDep()">Submit</button><p id="depMsg" style="font-size:12px;color:#00B67A"></p></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
+<div id="p-home" class="hide"><div class="home-header"><div style="font-weight:900;font-size:20px">≡ NOVALEND</div><div onclick="showPage('chats')" style="text-align:center;cursor:pointer;position:relative"><div>💬</div><small style="font-size:9px;color:#64748B">Community</small></div></div><div class="withdraw-ticker" onclick="showPage('revenue')"><div class="ticker-icon">↑</div><div class="ticker-content"><div class="ticker-list"><div class="ticker-item"><small>WITHDRAW</small><b>+3611 · 2731 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 5,200 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 12,000 UGX</b></div><div class="ticker-item"><small>WITHDRAW</small><b>+2567 · 8,450 UGX</b></div></div></div><div class="gift-box" onclick="showPage('invite')">🎁</div></div><div class="stats-grid"><div class="stat-card"><b id="depositDetails">0.00 UGX</b><small>DEPOSIT DETAILS</small></div><div class="stat-card"><b id="withdrawDetails">0.00 UGX</b><small>WITHDRAW DETAILS</small></div><div class="stat-card"><b id="aiIncome">0.00 UGX</b><small>AI INCOME</small></div><div class="stat-card"><b id="todayEarnings">0.00 UGX</b><small>TODAY'S EARNINGS</small></div></div><div class="stats-grid-3"><div class="stat-card"><b id="inviteCount">0</b><small>INVITE COUNT</small></div><div class="stat-card"><b id="teamCount">0</b><small>TEAM COUNT</small></div><div class="stat-card"><b id="teamIncome">0.00 UGX</b><small>TEAM INCOME</small></div></div><div class="action-row"><button class="btn-deposit" onclick="showPage('deposit')">Deposit</button><button class="btn-withdraw" onclick="showPage('withdraw')">Withdraw</button></div><div class="message-section"><div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #1E293B"><b style="border-left:3px solid #0F5FFF;padding-left:8px">MESSAGE</b><small style="color:#64748B;cursor:pointer" onclick="showPage('invite')">More</small></div><div style="padding:14px"><div style="background:linear-gradient(135deg,#0F172A,#1E3A5F);border:1px solid #1E3A5F;border-radius:16px;padding:18px;color:#fff"><div style="display:flex;align-items:center;gap:10px"><div style="font-size:32px">💎</div><div><b style="font-size:18px">WELCOME TO NOVALEND GOLD</b><br><small style="color:#93C5FD;font-weight:700">DRIVE YOUR FUTURE • DS-2000</small></div></div><div style="margin-top:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px;font-size:12.5px;line-height:1.7">🚀 <b style="color:#FFD700">Dear Member,</b> Welcome!<br><br>✅ HOW TO EARN: Deposit → Rent Machine → Daily Income 10-40 Days<br>👥 INVITE: LV1 12% LV2 4% LV3 2% LV4 1% bonus to Balance!<br>🎁 START: K1 only 19,000 UGX = 2,000 daily!<br><div style="display:flex;gap:8px;margin-top:10px"><button onclick="showPage('products')" style="background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;border:0;padding:11px 18px;border-radius:10px;font-weight:800;font-size:12px">💰 Start Earning</button><button onclick="showPage('invite')" style="background:#1E293B;color:#fff;border:1px solid #2A3F6A;padding:11px 18px;border-radius:10px;font-weight:800;font-size:12px">👥 Invite</button></div></div></div></div></div><div style="display:none"><span id="wallet"></span><span id="balance"></span><span id="uShow"></span></div></div>
+<div id="p-chats" class="hide"><div style="background:#0A1931;padding:16px"><b>👥 Community Chat</b><br><small style="color:#8892A6">All users chat here. For private Support go to Mine → Support 💎</small></div><div id="globalChatList" class="chat-box" style="height:calc(100vh - 180px)"></div><div class="chat-input-row"><input id="globalChatInput" class="chat-input" placeholder="Type to all users..." maxlength="200"><button onclick="sendGlobalMessage()" style="background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer">Send</button></div></div>
+<div id="p-mine" class="hide"><div class="mine-top"><div class="mine-header-row"><div class="mine-logo"><div class="mine-logo-icon">💎</div><span>NOVALEND</span><small style="color:#D4AF37;margin-left:4px">GOLD</small></div><div style="display:flex;gap:12px"><div style="width:38px;height:38px;background:#132040;border:1px solid #1E3A5F;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative" onclick="showPage('chats')">💬</div><div style="width:38px;height:38px;background:#132040;border:1px solid #1E3A5F;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="showPage('settings')">👤</div></div></div><div style="display:flex;justify-content:space-between;margin-top:16px"><div><small style="color:#64748B">Welcome back,</small><h2 id="mineUserName" style="margin:4px 0;font-size:26px">Khalfa</h2><div style="display:flex;gap:8px"><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(212,175,55,0.15);color:#D4AF37">👑 Member</div><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(15,95,255,0.15);color:#0F5FFF" id="mineUserShort">Khalfa</div></div><div style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid #1E3A5F;background:rgba(15,95,255,0.15);color:#0F5FFF;margin-top:8px;cursor:pointer" onclick="showPage('manager')">💬 Support - Private Chat (Auto) 💎</div></div><div style="text-align:right"><b>DRIVE<br>YOUR<br>FUTURE</b><div style="font-size:24px;margin-top:8px">💎</div></div></div></div><div class="wallet-cards"><div class="wallet-card"><div class="wallet-icon">💳</div><div><small style="color:#64748B;font-size:11px">Wallet</small><b id="mineWallet">0.00 UGX</b></div></div><div class="wallet-card"><div class="wallet-icon">💰</div><div><small style="color:#64748B;font-size:11px">Balance</small><b id="mineBalance">0.00 UGX</b></div></div><div class="wallet-card"><div class="wallet-icon">💎</div><div><small style="color:#64748B;font-size:11px">Token</small><b>0.00</b></div><div style="position:absolute;right:8px;bottom:8px;background:#fff;color:#0A1931;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:800;cursor:pointer" onclick="showPage('products')">Buy</div></div></div><div style="text-align:center;color:#475569">▼</div><div class="action-grid"><div class="action-item" onclick="showPage('deposit')"><div class="action-icon">💳</div><small>Cash In</small></div><div class="action-item" onclick="showPage('withdraw')"><div class="action-icon">🏧</div><small>Cash Out</small></div><div class="action-item" onclick="showPage('transactions')"><div class="action-icon">📄</div><small>Transactions</small></div><div class="action-item" onclick="showPage('invite')"><div class="action-icon">🔗</div><small>Invite</small></div><div class="action-item" onclick="showPage('referrals')"><div class="action-icon">👥</div><small>Referrals</small></div><div class="action-item" onclick="showPage('vip')"><div class="action-icon">⭐</div><small>VIP Task</small></div><div class="action-item" onclick="showPage('reward')"><div class="action-icon">🎁</div><small>Reward</small></div><div class="action-item" onclick="showPage('manager')"><div class="action-icon" style="background:linear-gradient(135deg,#10B981,#059669)">🎧</div><small><b>Support</b></small></div><div class="action-item" onclick="downloadApp()"><div class="action-icon">⬇️</div><small>Download App</small></div><div class="action-item" onclick="showPage('settings')"><div class="action-icon">⚙️</div><small>Settings</small></div></div></div>
+<div id="p-deposit" class="hide"><div class="c"><h3>Recharge</h3><small>Min UGX 19,000</small><div class="inp"><b>UGX</b><input id="depAmt" type="number" value="19000"></div><div class="inp"><input id="payNum" value="+256785344451" readonly><button style="background:#0F5FFF;color:#fff;border:0;border-radius:8px;padding:8px 12px;margin-right:6px;font-weight:800" onclick="navigator.clipboard.writeText('+256785344451');this.innerText='✓'">Copy</button></div><div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px;margin-top:12px;font-size:12px"><b>MTN Mobile Money</b><br>1. Dial *165# - Send Money<br>2. Enter +256785344451<br>3. Enter Amount<br>4. Copy Transaction ID</div><input id="depTid" placeholder="Transaction ID" style="width:100%;padding:14px;border-radius:12px;border:1px solid #CBD5E1;margin-top:12px"><button class="btnG" style="margin-top:12px" onclick="submitDep()">Submit</button><p id="depMsg" style="font-size:12px;color:#00B67A"></p></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="p-withdraw" class="hide"><div class="c"><h3>Withdraw</h3><small>Min UGX 5,000</small><div class="inp"><b>UGX</b><input id="wdAmt" type="number" placeholder="5000"></div><div class="inp"><span style="padding:0 10px">📱</span><input id="wdPhone" placeholder="078..."></div><button class="btnG" style="margin-top:14px" onclick="submitWd()">Submit</button><p id="wdMsg" style="font-size:12px;color:#00B67A"></p></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="p-transactions" class="hide"><div class="c"><h3>Transactions</h3><div style="display:flex;gap:8px;margin:12px 0"><button class="tab a" id="tabDep" onclick="showTransTab('dep')">Deposits</button><button class="tab" id="tabWd" onclick="showTransTab('wd')">Withdraws</button><button class="tab" id="tabAll" onclick="showTransTab('all')">All</button></div><div id="transDepList">Loading...</div><div id="transWdList" class="hide">Loading...</div><div id="transAllList" class="hide">Loading...</div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="p-products" class="hide"><div style="padding:12px"><b>Investment Plans</b></div><div style="display:flex;gap:6px;padding:0 12px;flex-wrap:wrap"><div id="tK" class="tab a" onclick="showTab('K')">K SERIES</div><div id="tN" class="tab" onclick="showTab('N')">N SERIES</div><div id="tJ" class="tab" onclick="showTab('J')">J SERIES</div><div id="tY" class="tab" onclick="showTab('Y')">Y SERIES</div></div><div id="listK"></div><div id="listN" class="hide"></div><div id="listJ" class="hide"></div><div id="listY" class="hide"></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
 <div id="p-revenue" class="hide"><div style="background:#0A1931;color:#fff;margin:12px;border-radius:20px;display:flex"><div style="flex:1;padding:16px;text-align:center;border-right:1px solid #1A2A4A"><small style="color:#8892A6">My Products</small><br><b id="myCount">0</b></div><div style="flex:1;padding:16px;text-align:center"><small style="color:#8892A6">Total Revenue</small><br><b id="totRev">UGX 0</b></div></div><div id="activeWrap"></div><div id="empty" style="text-align:center;margin-top:40px"><h4 style="color:#fff">No Products</h4></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('home')">Back</button></div>
-<div id="p-invite" class="hide"><div class="c"><div style="background:#EEF2FF;padding:14px;border-radius:12px;border:1px dashed #0F5FFF"><small style="color:#64748B;font-weight:700">YOUR INVITE LINK</small><div id="invLink" style="font-size:12px;color:#0F5FFF;word-break:break-all;margin-top:6px;font-weight:700">Loading...</div></div><button class="btnG" id="copyBtn" style="margin-top:12px">Copy Link</button></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
+<div id="p-invite" class="hide"><div class="c"><div style="background:#EEF2FF;padding:14px;border-radius:12px;border:1px dashed #0F5FFF"><small style="color:#64748B;font-weight:700">YOUR INVITE LINK</small><div id="invLink" style="font-size:12px;color:#0F5FFF;word-break:break-all;margin-top:6px;font-weight:700">Loading...</div></div><button class="btnG" id="copyBtn" style="margin-top:12px">Copy Link</button><div style="margin-top:14px"><b>Levels</b></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV1 12%</span><span id="lv1Count">0</span></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV2 4%</span><span id="lv2Count">0</span></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV3 2%</span><span id="lv3Count">0</span></div><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>LV4 1%</span><span id="lv4Count">0</span></div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="p-referrals" class="hide"><div class="c"><h3>Referrals</h3><div id="referralsList" style="margin-top:12px">Loading...</div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
-<div id="p-manager" class="hide"><div class="c"><h3 id="managerTitle">Support 💎</h3><div id="managerUserView" class="hide"><div style="background:#0A1931;color:#fff;border-radius:12px;padding:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><div><b>👥 Users Who Messaged Support</b></div><div style="display:flex;gap:6px"><button id="autoToggleBtn" class="auto-toggle on" onclick="toggleAutoManager()">🟢 Auto ON</button><button class="btnG" style="width:auto;padding:8px 14px" onclick="refreshManagerUsers()">↻</button></div></div><div id="managerUsersList" style="max-height:400px;overflow-y:auto">Loading...</div></div><div id="managerChatView"><div id="managerSelectedUser" style="background:#EEF2FF;border:1px solid #0F5FFF;border-radius:12px;padding:10px;margin-bottom:12px;display:none"><b id="selectedUserName">User</b> <small id="selectedUserPhone"></small> <span onclick="backToManagerList()" style="float:right;color:#0F5FFF;cursor:pointer;font-weight:800">← Back</span></div><div id="managerPageList" style="height:320px;overflow-y:auto;background:#F8FAFC;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px">Loading Support chat...</div><div style="display:flex;gap:8px;margin-top:12px"><input id="managerPageInput" placeholder="Message Support..." style="flex:1;padding:12px;border-radius:12px;border:1px solid #CBD5E1"><button class="btnG" style="width:auto;padding:12px 20px;background:#10B981" onclick="sendManagerMessagePage()">Send</button></div></div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back to Mine</button></div>
-<div id="p-settings" class="hide"><div class="c"><h3>Settings</h3><div class="inp"><span style="padding:0 10px">📱</span><input id="setPhone" placeholder="078..."><button class="btnG" style="width:auto;margin-right:6px;padding:8px 12px" onclick="updatePhone()">Save</button></div><div class="inp"><span style="padding:0 10px">🔒</span><input id="setPass" type="password" placeholder="New password"></div><button class="btnG" style="margin-top:12px" onclick="updatePass()">Update</button><button class="btnN" style="margin-top:16px;background:#EF4444" onclick="logout()">Logout</button></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
+<div id="p-vip" class="hide"><div class="c"><h3>VIP Task</h3><div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-top:8px">Invite 5 → 5,000 UGX<br>Rent K1 → 2,000 UGX<br>Daily check → 500 UGX</div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
+<div id="p-reward" class="hide"><div class="c"><h3>Reward</h3><div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px;margin-top:12px">Invite 10 active → 10,000 UGX<br>Team 500K → 25,000 UGX<br>Top referrer → 100,000 UGX</div><button class="btnG" style="margin-top:12px" onclick="openWhatsApp()">Contact Manager</button></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
+<div id="p-manager" class="hide"><div class="c"><h3 id="managerTitle">Support 💎</h3>
+<div id="managerUserView" class="hide">
+<div style="background:#0A1931;color:#fff;border-radius:12px;padding:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><div><b>👥 Users Who Messaged Support</b><br><small style="color:#8892A6">Private chats - only you see</small></div><div style="display:flex;gap:6px"><button id="autoToggleBtn" class="auto-toggle on" onclick="toggleAutoManager()">🟢 Auto ON</button><button class="btnG" style="width:auto;padding:8px 14px;background:#10B981" onclick="refreshManagerUsers()">↻ Refresh</button></div></div>
+<div id="managerUsersList" style="max-height:400px;overflow-y:auto">Loading users...</div>
+</div>
+<div id="managerChatView">
+<div id="managerSelectedUser" style="background:#EEF2FF;border:1px solid #0F5FFF;border-radius:12px;padding:10px;margin-bottom:12px;display:none"><b id="selectedUserName">User</b> <small id="selectedUserPhone" style="color:#64748B"></small> <span onclick="backToManagerList()" style="float:right;color:#0F5FFF;cursor:pointer;font-weight:800">← Back to list</span></div>
+<div id="managerPageList" style="height:320px;overflow-y:auto;background:#F8FAFC;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px">Loading...</div><div style="display:flex;gap:8px;margin-top:12px"><input id="managerPageInput" placeholder="Message Support..." style="flex:1;padding:12px;border-radius:12px;border:1px solid #CBD5E1"><button class="btnG" style="width:auto;padding:12px 20px;background:#0F5FFF" onclick="sendManagerMessagePage()">Send</button></div>
+</div>
+</div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
+<div id="p-settings" class="hide"><div class="c"><h3>Settings</h3><label style="font-size:12px;font-weight:700;margin-top:12px;display:block">Phone Number</label><div class="inp"><span style="padding:0 10px">📱</span><input id="setPhone" placeholder="078..."><button class="btnG" style="width:auto;margin-right:6px;padding:8px 12px" onclick="updatePhone()">Save</button></div><label style="font-size:12px;font-weight:700;margin-top:12px;display:block">New Password</label><div class="inp"><span style="padding:0 10px">🔒</span><input id="setPass" type="password" placeholder="New password"></div><button class="btnG" style="margin-top:12px" onclick="updatePass()">Update</button><div style="margin-top:16px;border-top:1px solid #E2E8F0;padding-top:12px"><button class="btnN" style="background:#EF4444" onclick="logout()">Logout</button></div></div><button class="btnN" style="width:calc(100% - 24px);margin:12px" onclick="showPage('mine')">Back</button></div>
 <div id="bottomNav" class="nav hide"><button id="navHome" onclick="showPage('home')">🏠<br>Home</button><button id="navProducts" onclick="showPage('products')">📦<br>Products</button><button id="navChats" onclick="showPage('chats')">💬<br>Community</button><button id="navInvite" onclick="showPage('invite')">👥<br>Invite</button><button id="navRevenue" onclick="showPage('revenue')">📊<br>Revenue</button><button class="active" id="navMine" onclick="showPage('mine')">👤<br>Mine</button></div>
 <script>
-const IMG_ALL = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmIi8+PGNpcmNsZSBjeD0iMTUwIiBjeT0iODAiIHI9IjUwIiBmaWxsPSIjMEExOTMxIi8+PHRleHQgeD0iMTUwIiB5PSI4NSIgZm9udC1zaXplPSI0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI0Q0QUYzNyI+8J+SpjwvdGV4dD48L3N2Zz4=";
+const IMG_ALL = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRkZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzBBMTkzMSI+TWFjaGluZTwvdGV4dD48L3N2Zz4=";
 const productsData = {K: [{name:"K1", days:15, price:19000, total:30000, daily:2000, img:IMG_ALL},{name:"K2", days:20, price:50000, total:80000, daily:4000, img:IMG_ALL},{name:"K3", days:20, price:75000, total:110000, daily:5500, img:IMG_ALL},{name:"K4", days:25, price:95000, total:140000, daily:5600, img:IMG_ALL}],N: [{name:"N1", days:30, price:150000, total:210000, daily:7000, img:IMG_ALL},{name:"N2", days:30, price:250000, total:377000, daily:12566, img:IMG_ALL},{name:"N3", days:28, price:280000, total:420000, daily:15000, img:IMG_ALL}],J: [{name:"J1", days:40, price:70000, total:198000, daily:4950, img:IMG_ALL},{name:"J2", days:40, price:95000, total:220000, daily:5500, img:IMG_ALL},{name:"J3", days:40, price:150000, total:300000, daily:7500, img:IMG_ALL}],Y: [{name:"Y1", days:15, price:1000000, total:1500000, daily:100000, img:IMG_ALL},{name:"Y2", days:15, price:2000000, total:3000000, daily:200000, img:IMG_ALL},{name:"Y3", days:15, price:5000000, total:7000000, daily:466666, img:IMG_ALL},{name:"Y4", days:10, price:10000000, total:15000000, daily:1500000, img:IMG_ALL}]};
 function renderAll(){Object.keys(productsData).forEach(series=>{let div=document.getElementById('list'+series);if(!div) return;div.innerHTML=productsData[series].map(p=>`<div class="prod"><img src="${p.img}" class="machine-img"><div style="padding:14px"><h3 style="text-align:center;color:#0A1931">${p.name}</h3><div style="background:#F8FAFC;border-radius:14px;overflow:hidden"><div class="v-row"><span>Days</span><b>${p.days} Days</b></div><div class="v-row"><span>Price</span><b>UGX ${p.price.toLocaleString()}</b></div><div class="v-row"><span>Daily Income</span><b style="color:#00C896">UGX ${p.daily.toLocaleString()}</b></div><div class="v-row"><span>Total Return</span><b style="color:#D4AF37">UGX ${p.total.toLocaleString()}</b></div></div><button class="btnG" style="margin-top:12px" onclick="rent('${p.name}',${p.price},${p.days},${p.total})">Rent</button></div></div>`).join('');});}
 function showTab(s){['K','N','J','Y'].forEach(x=>{document.getElementById('list'+x).classList.add('hide');document.getElementById('t'+x).classList.remove('a');});document.getElementById('list'+s).classList.remove('hide');document.getElementById('t'+s).classList.add('a');}
 function showTransTab(t){document.getElementById('transDepList').classList.add('hide');document.getElementById('transWdList').classList.add('hide');document.getElementById('transAllList').classList.add('hide');document.getElementById('tabDep').classList.remove('a');document.getElementById('tabWd').classList.remove('a');document.getElementById('tabAll').classList.remove('a');if(t==='dep'){document.getElementById('transDepList').classList.remove('hide');document.getElementById('tabDep').classList.add('a');}if(t==='wd'){document.getElementById('transWdList').classList.remove('hide');document.getElementById('tabWd').classList.add('a');}if(t==='all'){document.getElementById('transAllList').classList.remove('hide');document.getElementById('tabAll').classList.add('a');}}
+function openWhatsApp(){window.open('https://wa.me/256755797207?text=Hello%20NOVALEND%20Support','_blank');}
+function downloadApp(){alert('Coming soon');}
 function updateInviteLink(){let u=localStorage.getItem('k_uid')||'';let l='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+u;let e=document.getElementById('invLink');if(e) e.innerText=l;}
 let lastAutoReplyTime={};let autoManagerEnabled=localStorage.getItem('autoManagerEnabled');if(autoManagerEnabled===null){localStorage.setItem('autoManagerEnabled','true');}
 function isNightTime(){let h=new Date().getHours();return h>=23||h<6;}
-function getSmartReply(txt,phone,uid){
- let lower=txt.toLowerCase();let link='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+uid;
- if(isNightTime()){return `🌙 Hello ${phone}! Support here 💎\nI'm offline night, saved ${phone}. Reply 8AM.`;}
- if(lower.includes('deposit')||lower.includes('mtn')){return `💳 DEPOSIT HELP - ${phone} 💎\n1. Mine → Cash In\n2. Copy: +256785344451 (MTN)\n3. *165# → Send Money\n4. Paste TID → Submit\nMin 19k, K1=2k/day×15=30k! Support 💎`;}
- if(lower.includes('withdraw')){return `🏧 WITHDRAW - ${phone}\nMine → Cash Out → Amount+Number\nMin 5k, 1-24h. Balance=withdraw, Wallet=buy machines. Support 💎`;}
- if(lower.includes('earn')||lower.includes('machine')){return `💰 HOW TO EARN - ${phone}\n1. Deposit Wallet MTN +256785344451\n2. Products → Rent\n3. Money to Balance AFTER days finish (original)\nK1 19k=2k/day×15=30k! Support 💎`;}
- if(lower.includes('invite')){return `👥 INVITE - ${phone}\nYour link: ${link}\nLV1 12% LV2 4% LV3 2% LV4 1% instant to Balance!\nFriend K1 19k → You 2,280 UGX now! Support 💎`;}
- return `Thanks ${phone}! 🙏 Support received "${txt.slice(0,30)}..."\n• Deposit MTN +256785344451 Min 19k\n• K1 19k=2k/d paid after days finish\n• Invite 12% instant\n• Reply 1-2h Support 💎`;
-}
-function canAutoReply(uid){if(localStorage.getItem('autoManagerEnabled')==='false') return false;let now=Date.now();let last=lastAutoReplyTime[uid]||0;if(now-last<90000) return false;lastAutoReplyTime[uid]=now;return true;}
-function showTypingThenReply(cb){let b=document.getElementById('managerPageList');let h='<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><span>Support is typing...</span></div>';if(b){b.innerHTML+=h;b.scrollTop=b.scrollHeight;}setTimeout(()=>{document.querySelectorAll('.typing-indicator').forEach(e=>e.remove());cb();},1800);}
-function showBigRedPurchase(n,p,phone){let a=document.getElementById('bigPurchaseAlert');if(!a) return;a.innerHTML=`🔴 LIVE PURCHASE 🔴<br>🎉 ${n} PURCHASED!<br>📱 ${phone} bought ${n} for UGX ${p.toLocaleString()}!<br>💰 EARNING STARTED!`;a.style.display='block';a.className='big-purchase-alert';if(navigator.vibrate) navigator.vibrate([300,100,300]);setTimeout(()=>{a.style.display='none';},9000);}
-function toggleAutoManager(){let cur=localStorage.getItem('autoManagerEnabled');localStorage.setItem('autoManagerEnabled',cur==='true'?'false':'true');updateAutoToggleUI();}
-function updateAutoToggleUI(){let b=document.getElementById('autoToggleBtn');let en=localStorage.getItem('autoManagerEnabled')==='true';if(b){b.innerText=en?'🟢 Auto ON':'🔴 Auto OFF';b.className='auto-toggle '+(en?'on':'off');}}
-function showPage(p){if(p==='register'||p==='login'){document.getElementById('p-register').classList.add('hide');document.getElementById('p-login').classList.add('hide');document.getElementById('p-'+p).classList.remove('hide');document.getElementById('bottomNav').classList.add('hide');return;}let uid=localStorage.getItem('k_uid');if(!uid){document.getElementById('p-register').classList.remove('hide');return;}['register','login','home','deposit','products','revenue','withdraw','invite','mine','transactions','referrals','manager','settings','chats'].forEach(x=>{let el=document.getElementById('p-'+x);if(el) el.classList.add('hide');});let t=document.getElementById('p-'+p);if(t) t.classList.remove('hide');document.getElementById('bottomNav').classList.remove('hide');document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.remove('active'));if(p==='home') document.getElementById('navHome')?.classList.add('active');if(p==='products') document.getElementById('navProducts')?.classList.add('active');if(p==='chats') document.getElementById('navChats')?.classList.add('active');if(p==='invite') document.getElementById('navInvite')?.classList.add('active');if(p==='revenue') document.getElementById('navRevenue')?.classList.add('active');if(p==='mine'||p==='deposit'||p==='withdraw'||p==='transactions'||p==='referrals'||p==='settings'||p==='manager') document.getElementById('navMine')?.classList.add('active');if(p==='invite') updateInviteLink();if(p==='manager'){checkIfManager();}if(window.load) window.load();}
-function updatePhone(){let ph=document.getElementById('setPhone').value.trim();if(!ph){alert('Enter phone');return;}alert('Saved');}
+function getSmartReply(txt,phone,uid){let lower=txt.toLowerCase();let link='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+uid;if(isNightTime()){return `🌙 Hello ${phone}! Support here 💎\nOffline night, saved ${phone}. Reply 8AM. Support 💎`;}if(lower.includes('deposit')||lower.includes('mtn')){return `💳 DEPOSIT HELP - ${phone} 💎\n1. Mine → Cash In\n2. Copy: +256785344451 (MTN)\n3. *165# → Send Money\n4. Paste TID → Submit\nMin 19k, K1=2k/day×15=30k! Support 💎`;}if(lower.includes('withdraw')){return `🏧 WITHDRAW - ${phone}\nMine → Cash Out → Amount+Number\nMin 5k, 1-24h. Support 💎`;}if(lower.includes('earn')||lower.includes('machine')){return `💰 HOW TO EARN - ${phone}\n1. Deposit Wallet MTN +256785344451\n2. Products → Rent\n3. Money to Balance AFTER days finish\nK1 19k=2k/day×15=30k! Support 💎`;}if(lower.includes('invite')){return `👥 INVITE - ${phone}\nYour link: ${link}\nLV1 12% LV2 4% LV3 2% LV4 1% instant! Friend K1 19k → You 2,280 UGX now! Support 💎`;}return `Thanks ${phone}! 🙏 Support received: "${txt.slice(0,30)}..."\n• Deposit MTN +256785344451 Min 19k\n• K1 19k=2k/d paid after days finish\n• Invite 12% instant\n• Reply 1-2h Support 💎`;}
+function canAutoReply(userId){if(localStorage.getItem('autoManagerEnabled')==='false') return false;let now=Date.now();let last=lastAutoReplyTime[userId]||0;if(now-last<90000){return false;}lastAutoReplyTime[userId]=now;return true;}
+function showTypingThenReply(cb){let b=document.getElementById('managerPageList');let h='<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><span style="margin-left:6px">Support is typing...</span></div>';if(b){b.innerHTML+=h;b.scrollTop=b.scrollHeight;}setTimeout(()=>{document.querySelectorAll('.typing-indicator').forEach(e=>e.remove());cb();},1800);}
+function showBigRedPurchase(name,price,phone){let a=document.getElementById('bigPurchaseAlert');if(!a) return;a.innerHTML=`<div style="font-size:16px">🔴 LIVE PURCHASE 🔴</div><div style="font-size:24px;margin:8px 0">🎉 ${name} PURCHASED!</div><div style="font-size:16px">📱 ${phone} bought ${name} for UGX ${price.toLocaleString()}!</div><div style="margin-top:10px;font-size:13px;background:rgba(255,255,255,0.25);padding:10px;border-radius:12px;border:2px solid #FFD700">💰 EARNING STARTED! Paid after days finish! 💎</div>`;a.style.display='block';a.className='big-purchase-alert';if(navigator.vibrate) navigator.vibrate([300,100,300,100,300]);setTimeout(()=>{a.style.display='none';},9000);}
+function toggleAutoManager(){let cur=localStorage.getItem('autoManagerEnabled');let nv=cur==='true'?'false':'true';localStorage.setItem('autoManagerEnabled',nv);updateAutoToggleUI();}
+function updateAutoToggleUI(){let btn=document.getElementById('autoToggleBtn');let en=localStorage.getItem('autoManagerEnabled')==='true';if(btn){btn.innerText=en?'🟢 Auto ON':'🔴 Auto OFF';btn.className='auto-toggle '+(en?'on':'off');}}
+function showPage(p){if(p==='register'||p==='login'){document.getElementById('p-register').classList.add('hide');document.getElementById('p-login').classList.add('hide');document.getElementById('p-'+p).classList.remove('hide');document.getElementById('bottomNav').classList.add('hide');return;}let uid=localStorage.getItem('k_uid');if(!uid){document.getElementById('p-register').classList.remove('hide');return;}['register','login','home','deposit','products','revenue','withdraw','invite','mine','transactions','referrals','vip','reward','manager','settings','chats'].forEach(x=>{let el=document.getElementById('p-'+x);if(el) el.classList.add('hide');});let target=document.getElementById('p-'+p);if(target) target.classList.remove('hide');document.getElementById('bottomNav').classList.remove('hide');document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.remove('active'));if(p==='home') document.getElementById('navHome')?.classList.add('active');if(p==='products') document.getElementById('navProducts')?.classList.add('active');if(p==='chats') {document.getElementById('navChats')?.classList.add('active');} if(p==='invite') document.getElementById('navInvite')?.classList.add('active');if(p==='revenue') document.getElementById('navRevenue')?.classList.add('active');if(p==='mine'||p==='deposit'||p==='withdraw'||p==='transactions'||p==='referrals'||p==='settings'||p==='manager'||p==='reward'||p==='vip') document.getElementById('navMine')?.classList.add('active');if(p==='invite') updateInviteLink();if(p==='manager'){checkIfManager();}if(window.load) window.load();}
+window.showPage=showPage; window.showTab=showTab; window.showTransTab=showTransTab; window.openWhatsApp=openWhatsApp; window.downloadApp=downloadApp;
+function updatePhone(){let ph=document.getElementById('setPhone').value.trim();if(!ph){alert('Enter phone');return;}alert('Saved');localStorage.setItem('k_phone',ph);}
 function updatePass(){let pw=document.getElementById('setPass').value.trim();if(!pw){alert('Enter password');return;}alert('Updated');}
 function logout(){if(confirm('Logout?')){localStorage.removeItem('k_uid');showPage('login');}}
 let managerSelectedUserId=null;
-function checkIfManager(){let uid=localStorage.getItem('k_uid');let isM = uid && (uid.includes('785344451')||uid.includes('755797207')||localStorage.getItem('isManager')==='true'); if(isM){document.getElementById('managerUserView').classList.remove('hide'); document.getElementById('managerTitle').innerHTML='Support Dashboard 💎 <button id="autoToggleBtn" class="auto-toggle on" onclick="toggleAutoManager()">🟢 Auto ON</button>'; refreshManagerUsers(); setTimeout(updateAutoToggleUI,500);} else {document.getElementById('managerUserView').classList.add('hide'); document.getElementById('managerTitle').innerText='Support 💎 - Private Chat';}}
+function checkIfManager(){let uid=localStorage.getItem('k_uid');let isManager = uid && (uid.includes('785344451')||uid.includes('755797207')||localStorage.getItem('isManager')==='true'); if(isManager){document.getElementById('managerUserView').classList.remove('hide'); document.getElementById('managerTitle').innerHTML='Support Dashboard 💎 <button id="autoToggleBtn" class="auto-toggle on" onclick="toggleAutoManager()">🟢 Auto ON</button>'; refreshManagerUsers(); setTimeout(updateAutoToggleUI,500);} else {document.getElementById('managerUserView').classList.add('hide'); document.getElementById('managerTitle').innerText='Support 💎 - Private Chat';}}
 function backToManagerList(){managerSelectedUserId=null; document.getElementById('managerSelectedUser').style.display='none'; document.getElementById('managerUserView').classList.remove('hide'); refreshManagerUsers();}
 function refreshManagerUsers(){ if(window.loadManagerUsers) window.loadManagerUsers(); }
-function selectManagerUser(uid, phone, name){managerSelectedUserId=uid; document.getElementById('selectedUserName').innerText=name; document.getElementById('selectedUserPhone').innerText=phone; document.getElementById('managerSelectedUser').style.display='block'; document.getElementById('managerUserView').classList.add('hide'); if(window.openPrivateChat) window.openPrivateChat(uid);}
-document.addEventListener('DOMContentLoaded', ()=>{renderAll();updateInviteLink();let btn=document.getElementById('copyBtn');if(btn){btn.addEventListener('click', ()=>{let uid=localStorage.getItem('k_uid')||'';let l='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+uid;navigator.clipboard.writeText(l).then(()=>{btn.innerText='✓ Copied';setTimeout(()=>btn.innerText='Copy Link',2000);});});}let uid=localStorage.getItem('k_uid');if(uid) showPage('home'); else showPage('register');});
+function selectManagerUser(userId, phone, name){managerSelectedUserId=userId; document.getElementById('selectedUserName').innerText=name; document.getElementById('selectedUserPhone').innerText=phone; document.getElementById('managerSelectedUser').style.display='block'; document.getElementById('managerUserView').classList.add('hide'); if(window.openPrivateChat) window.openPrivateChat(userId);}
+document.addEventListener('DOMContentLoaded', ()=>{
+  renderAll();
+  updateInviteLink();
+  let btn=document.getElementById('copyBtn');
+  if(btn){btn.addEventListener('click', ()=>{let uid=localStorage.getItem('k_uid')||'';let realLink='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+uid;navigator.clipboard.writeText(realLink).then(()=>{btn.innerText='✓ Copied';setTimeout(()=>btn.innerText='Copy Link',2000);});});}
+  let uid=localStorage.getItem('k_uid');
+  if(uid) showPage('home'); else showPage('register');
+});
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
@@ -133,8 +144,9 @@ try{
   let w=0,b=0,phone="",teamInc=0;
   if(u.exists()){w=u.data().wallet||0;b=u.data().balance||0;phone=u.data().phone||uid;teamInc=u.data().teamIncome||0;}
   const setEl=(id,txt)=>{let e=document.getElementById(id);if(e) e.innerText=txt;};
+  setEl('wallet',"UGX "+w.toLocaleString());setEl('balance',"UGX "+b.toLocaleString());
   setEl('mineWallet',w.toLocaleString()+" UGX");setEl('mineBalance',b.toLocaleString()+" UGX");
-  setEl('mineUserName',phone);setEl('mineUserShort',phone.slice(-4));
+  setEl('uShow',uid);setEl('mineUserName',phone);setEl('mineUserShort',phone.slice(-4));
   setEl('teamIncome',teamInc.toLocaleString()+" UGX");
 }catch(e){}
 updateInviteLink();
@@ -186,8 +198,8 @@ try{
         let left=mm.daysLeft!==undefined?mm.daysLeft:mm.days;
         let done=(mm.days||0)-left;
         let pct=Math.max(5,Math.min(95,Math.round((done/(mm.days||1))*100)));
-        return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${mm.name}</b><span style="background:#D1FAE5;color:#065F46;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800">ACTIVE - ${left}D left</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Progress</small><br><b>${done}/${mm.days}</b></div><div><small>Left</small><br><b>${left}D</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#0F5FFF;width:${pct}%"></div></div><div style="margin-top:8px;font-size:10px;color:#64748B">Money credited to Balance after ${left} days ✅</div></div>`;
-      }).join('') + my.filter(m=>m.status==="COMPLETED").map(mm=>`<div class="c"><b>${mm.name}</b> - COMPLETED ✓ PAID</div>`).join('');
+        return `<div class="c"><div style="display:flex;justify-content:space-between"><b>${mm.name}</b><span style="background:#D1FAE5;color:#065F46;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800">ACTIVE - ${left}D left</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px"><div><small>Daily</small><br><b>UGX ${daily.toLocaleString()}</b></div><div><small>Progress</small><br><b>${done}/${mm.days}</b></div><div><small>Left</small><br><b>${left}D</b></div></div><div style="height:6px;background:#E2E8F0;border-radius:10px;margin-top:8px"><div style="height:100%;background:#0F5FFF;width:${pct}%"></div></div><div style="margin-top:8px;font-size:10px;color:#64748B">Money credited to Balance after ${left} days</div></div>`;
+      }).join('') + my.filter(m=>m.status==="COMPLETED").map(mm=>`<div class="c"><b>${mm.name}</b> - COMPLETED ✓ PAID TO BALANCE</div>`).join('');
     }
   }
   let usersSnap=await getDocs(collection(db,"users"));
@@ -224,8 +236,8 @@ window.loadManagerUsers=async()=>{
     let listDiv=document.getElementById('managerUsersList');
     if(!listDiv) return;
     let arr=Object.values(usersMap).sort((a,b)=>b.lastTime-a.lastTime);
-    if(arr.length===0){ listDiv.innerHTML='<div style="text-align:center;color:#64748B;padding:20px">No messages yet<br>When users message Support via Mine → Support they appear here</div>'; return; }
-    listDiv.innerHTML=arr.map(u=>`<div class="manager-user-item" onclick="selectManagerUser('${u.userId}','${u.phone}','${u.phone}')"><div><b>📱 ${u.phone}</b><br><small style="color:#64748B">ID: ${u.userId.slice(-6)} • ${u.count} msgs</small><br><small style="color:#0A1931">${u.lastText.slice(0,40)}</small></div><div style="text-align:right"><span style="background:#E50914;color:#fff;padding:4px 8px;border-radius:12px;font-size:10px;font-weight:800">${u.count}</span></div></div>`).join('');
+    if(arr.length===0){ listDiv.innerHTML='<div style="text-align:center;color:#64748B;padding:20px">No private messages yet<br><small>When users message manager, they appear here with name & number</small></div>'; return; }
+    listDiv.innerHTML=arr.map(u=>`<div class="manager-user-item" onclick="selectManagerUser('${u.userId}','${u.phone}','${u.phone}')"><div><b>📱 ${u.phone}</b><br><small style="color:#64748B">ID: ${u.userId.slice(-6)} • ${u.count} msgs</small><br><small style="color:#0A1931">${u.lastText.slice(0,40)}</small></div><div style="text-align:right"><span style="background:#E50914;color:#fff;padding:4px 8px;border-radius:12px;font-size:10px;font-weight:800">${u.count}</span><br><small style="color:#64748B">${new Date(u.lastTime).toLocaleTimeString()}</small></div></div>`).join('');
   }catch(e){console.log(e);}
 };
 window.openPrivateChat=async(targetUid)=>{
@@ -241,7 +253,7 @@ window.openPrivateChat=async(targetUid)=>{
       html+=`<div class="chat-msg ${cls}"><small>${label} • ${m.phone||''}</small>${m.text}</div>`;
     });
     let box=document.getElementById('managerPageList');
-    if(box) { box.innerHTML=html||'<div style="text-align:center;color:#64748B">No messages yet</div>'; box.scrollTop=box.scrollHeight; }
+    if(box) { box.innerHTML=html||'<div style="text-align:center;color:#64748B">No messages with this user yet</div>'; box.scrollTop=box.scrollHeight; }
   }catch(e){console.log(e);}
 };
 try{
@@ -249,12 +261,13 @@ try{
   onSnapshot(qGlobal,(snap)=>{
     let box=document.getElementById('globalChatList');
     if(!box) return;
-    if(snap.empty){box.innerHTML='<div style="text-align:center;color:#64748B;font-size:11px;margin-top:80px">No community messages yet<br>Be first!</div>';return;}
+    if(snap.empty){box.innerHTML='<div style="text-align:center;color:#64748B;font-size:11px;margin-top:80px">No messages yet<br>Be first to chat! 💬</div>';return;}
     box.innerHTML='';
     snap.forEach(d=>{
       let m=d.data();
       let isMe=m.userId===uid;
-      box.innerHTML+=`<div class="chat-msg ${isMe?'me':''}"><small>${isMe?'You':m.phone+' • '+(m.phone||'').slice(-4)} • ${new Date(m.time?.toMillis?.()||Date.now()).toLocaleTimeString()}</small>${m.text}</div>`;
+      let name=(m.phone||'User').slice(-4);
+      box.innerHTML+=`<div class="chat-msg ${isMe?'me':''}"><small>${isMe?'You':m.phone+' • '+name} • ${new Date(m.time?.toMillis?.()||Date.now()).toLocaleTimeString()}</small>${m.text}</div>`;
     });
     box.scrollTop=box.scrollHeight;
   });
@@ -263,38 +276,51 @@ try{
     let box=document.getElementById('managerPageList');
     let isManagerView = document.getElementById('managerUserView') &&!document.getElementById('managerUserView').classList.contains('hide');
     if(isManagerView){ window.loadManagerUsers(); return; }
-    let html='';let hasNew=false;
+    let html='';
     snap.forEach(d=>{
       let m=d.data();
       let targetUid = window.managerSelectedUserId || uid;
-      if(window.managerSelectedUserId){if(m.userId!==targetUid && m.to!==targetUid) return;} else {if(m.userId!==uid && m.to!==uid && m.role!=='manager') return;}
-      if(m.userId!==uid && m.to===uid){ hasNew=true; }
-      let isMe=m.userId===uid;let isMgr=m.role==='manager';let cls=isMe?'me':(isMgr?'auto':'');let label=isMe?'You':(isMgr?'Support 💎':(m.phone||'User').slice(-4));
+      if(window.managerSelectedUserId){
+        if(m.userId!==targetUid && m.to!==targetUid) return;
+      } else {
+        if(m.userId!==uid && m.to!==uid && m.role!=='manager') return;
+      }
+      let isMe=m.userId===uid;
+      let isMgr=m.role==='manager';
+      let cls=isMe?'me':(isMgr?'auto':'');
+      let label=isMe?'You':(isMgr?'Support 💎':(m.phone||'User').slice(-4));
       html+=`<div class="chat-msg ${cls}"><small>${label} • ${m.phone||''}</small>${m.text}</div>`;
     });
-    if(box) {box.innerHTML=html||'<div style="text-align:center;color:#64748B;font-size:11px;margin-top:40px">🎧<br>Private Support chat<br>Only in Mine → Support 💎</div>'; box.scrollTop=box.scrollHeight;}
+    if(box) {box.innerHTML=html||'<div style="text-align:center;color:#64748B;font-size:11px;margin-top:40px">🎧<br>Support private chat<br>Only in Mine → Support 💎</div>'; box.scrollTop=box.scrollHeight;}
   });
 }catch(e){console.log("chat",e);}
 window.sendGlobalMessage=async()=>{
   let inp=document.getElementById('globalChatInput');
-  let txt=inp.value.trim();if(!txt) return;
-  let u=await getDoc(doc(db,"users",uid));let phone=u.exists()?u.data().phone:uid;
+  let txt=inp.value.trim();
+  if(!txt) return;
+  let u=await getDoc(doc(db,"users",uid));
+  let phone=u.exists()?u.data().phone:uid;
   await addDoc(collection(db,"global_chat"),{userId:uid,phone:phone,text:txt,time:serverTimestamp()});
   inp.value='';
 };
 window.sendManagerMessagePage=async()=>{
   let inp=document.getElementById('managerPageInput');
-  let txt=inp.value.trim();if(!txt) return;
-  let u=await getDoc(doc(db,"users",uid));let phone=u.exists()?u.data().phone:uid;
-  let targetUid=managerSelectedUserId || uid;let isM = managerSelectedUserId? true : false;
-  if(isM){await addDoc(collection(db,"support_chats"),{userId:'manager',to:targetUid,phone:'Support 💎',text:txt,role:'manager',time:serverTimestamp()});}
-  else{
+  let txt=inp.value.trim();
+  if(!txt) return;
+  let u=await getDoc(doc(db,"users",uid));
+  let phone=u.exists()?u.data().phone:uid;
+  let targetUid=window.managerSelectedUserId || uid;
+  let isManagerSending = window.managerSelectedUserId? true : false;
+  if(isManagerSending){
+    await addDoc(collection(db,"support_chats"),{userId:'manager',to:targetUid,phone:'Support 💎',text:txt,role:'manager',time:serverTimestamp()});
+  }else{
     await addDoc(collection(db,"support_chats"),{userId:uid,phone:phone,text:txt,role:'user',time:serverTimestamp()});
     if(!canAutoReply(uid)){ inp.value=''; return; }
-    let reply=getSmartReply(txt,phone,uid);
-    showTypingThenReply(async()=>{await addDoc(collection(db,"support_chats"),{userId:uid,phone:"Support 💎",text:reply,role:'manager',to:uid,time:serverTimestamp()});});
+    let replyText=getSmartReply(txt,phone,uid);
+    showTypingThenReply(async()=>{ await addDoc(collection(db,"support_chats"),{userId:uid,phone:"Support 💎",text:replyText,role:'manager',to:uid,time:serverTimestamp()}); });
   }
-  inp.value='';if(isM){ setTimeout(()=>window.openPrivateChat(targetUid), 500); }
+  inp.value='';
+  if(isManagerSending){ setTimeout(()=>window.openPrivateChat(targetUid), 500); }
 };
 window.rent=async(n,p,d,t)=>{
 let u=await getDoc(doc(db,"users",uid));
@@ -302,29 +328,69 @@ if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet UGX '+p.toLocaleString
 if(!confirm(n+' - UGX '+p.toLocaleString()+' - '+d+' Days')) return;
 await updateDoc(doc(db,"users",uid),{wallet:increment(-p)});
 await addDoc(collection(db,"active_machines"),{userId:uid,name:n,price:p,days:d,daysLeft:d,totalProfit:t,lastCount:Date.now(),status:"ACTIVE",createdAt:serverTimestamp()});
-try{let phone=u.data().phone||uid;try{showBigRedPurchase(n,p,phone);}catch(e){}await addDoc(collection(db,"support_chats"),{userId:uid,phone:phone,text:`🎉 Thank you ${phone}! You purchased ${n} for UGX ${p.toLocaleString()}! Daily UGX ${Math.round(t/d).toLocaleString()} for ${d} days. Total UGX ${t.toLocaleString()}. Money to Balance AFTER ${d} days! Machine ACTIVE! 💎`,role:'manager',to:uid,time:serverTimestamp()});}catch(e){console.log(e);}
-try{let me=u.data();let curId=me.invite||me.inviteCode;for(let i=0;i<4;i++){if(!curId) break;let perc=i===0?0.12:i===1?0.04:i===2?0.02:0.01;let bonus=Math.floor(p*perc);if(bonus>0){let ref=doc(db,"users",curId);let s=await getDoc(ref);if(s.exists()){await updateDoc(ref,{balance:increment(bonus),teamIncome:increment(bonus)});await addDoc(collection(db,"bonuses"),{userId:curId,from:uid,product:n,amount:bonus,level:i+1,createdAt:serverTimestamp()});curId=s.data().invite||s.data().inviteCode||null;}else break;}}}catch(e){console.log(e);}
+try{
+  let phone=u.data().phone||uid;
+  try{showBigRedPurchase(n,p,phone);}catch(e){}
+  await addDoc(collection(db,"support_chats"),{userId:uid,phone:phone,text:`🎉 Thank you ${phone}! You successfully purchased ${n} for UGX ${p.toLocaleString()}! Your daily income is UGX ${Math.round(t/d).toLocaleString()} for ${d} days. Total return UGX ${t.toLocaleString()}. Your machine is now ACTIVE! 💎 Drive Your Future!`,role:'manager',to:uid,time:serverTimestamp()});
+}catch(e){console.log('auto msg',e);}
+try{
+  let me=u.data();
+  let curId=me.invite||me.inviteCode;
+  for(let i=0;i<4;i++){
+    if(!curId) break;
+    let perc=i===0?0.12:i===1?0.04:i===2?0.02:0.01;
+    let bonus=Math.floor(p*perc);
+    if(bonus>0){
+      let ref=doc(db,"users",curId);
+      let s=await getDoc(ref);
+      if(s.exists()){
+        await updateDoc(ref,{balance:increment(bonus),teamIncome:increment(bonus)});
+        await addDoc(collection(db,"bonuses"),{userId:curId,from:uid,product:n,amount:bonus,level:i+1,createdAt:serverTimestamp()});
+        curId=s.data().invite||s.data().inviteCode||null;
+      }else break;
+    }
+  }
+}catch(e){console.log(e);}
 await window.load(); showPage('revenue');
 };
 window.submitDep=async()=>{
-let a=parseInt(document.getElementById('depAmt').value);if(a<19000){alert('Min 19000');return;}
-let tid=document.getElementById('depTid').value.trim();if(!tid){alert('Enter TID');return;}
+let a=parseInt(document.getElementById('depAmt').value);
+if(a<19000){alert('Min 19000');return;}
+let tid=document.getElementById('depTid').value.trim();
+if(!tid){alert('Enter Transaction ID');return;}
 await addDoc(collection(db,"deposits"),{userId:uid,amount:a,transId:tid,status:"PENDING",createdAt:serverTimestamp()});
 document.getElementById('depMsg').innerText='Submitted - PENDING'; window.load();
 };
 window.submitWd=async()=>{
-let a=parseInt(document.getElementById('wdAmt').value);if(a<5000){alert('Min 5000');return;}
-let ph=document.getElementById('wdPhone').value.trim();if(!ph){alert('Enter phone');return;}
-let u=await getDoc(doc(db,"users",uid));if(!u.exists()||(u.data().balance||0)<a){alert('Low balance');return;}
+let a=parseInt(document.getElementById('wdAmt').value);
+if(a<5000){alert('Min 5000');return;}
+let ph=document.getElementById('wdPhone').value.trim();
+if(!ph){alert('Enter phone');return;}
+let u=await getDoc(doc(db,"users",uid));
+if(!u.exists()||(u.data().balance||0)<a){alert('Insufficient balance');return;}
 await addDoc(collection(db,"withdraws"),{userId:uid,phone:ph,amount:a,status:"PENDING",createdAt:serverTimestamp()});
 await updateDoc(doc(db,"users",uid),{balance:increment(-a)});
 document.getElementById('wdMsg').innerText='Submitted - PENDING'; window.load();
 };
 window.doRegister=async()=>{
-let phone=document.getElementById('rPhone').value.trim();let pass=document.getElementById('rPass').value.trim();let inv=document.getElementById('rInv').value.trim();let codeParam=new URLSearchParams(window.location.search).get('code');let finalInv=inv||codeParam||"";if(!phone||!pass){alert('Enter phone and password');return;}let id=phone.replace(/\D/g,'').slice(-9)||'U'+Date.now();uid=id; localStorage.setItem('k_uid',uid);await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:finalInv,inviteCode:finalInv,wallet:0,balance:0,teamIncome:0,createdAt:serverTimestamp()});showPage('home'); window.load();
+let phone=document.getElementById('rPhone').value.trim();
+let pass=document.getElementById('rPass').value.trim();
+let inv=document.getElementById('rInv').value.trim();
+let codeParam=new URLSearchParams(window.location.search).get('code');
+let finalInv=inv||codeParam||"";
+if(!phone||!pass){alert('Enter phone and password');return;}
+let id=phone.replace(/\D/g,'').slice(-9)||'U'+Date.now();
+uid=id; localStorage.setItem('k_uid',uid);
+await setDoc(doc(db,"users",uid),{phone:phone,password:pass,invite:finalInv,inviteCode:finalInv,wallet:0,balance:0,teamIncome:0,createdAt:serverTimestamp()});
+showPage('home'); window.load();
 };
 window.doLogin=async()=>{
-let phone=document.getElementById('lPhone').value.trim();let pass=document.getElementById('lPass').value.trim();let snap=await getDocs(collection(db,"users"));let found=null;snap.forEach(d=>{if(d.data().phone===phone&&d.data().password===pass)found=d.id;});if(found){uid=found;localStorage.setItem('k_uid',uid);showPage('home');window.load();}else alert('Wrong phone or password');
+let phone=document.getElementById('lPhone').value.trim();
+let pass=document.getElementById('lPass').value.trim();
+let snap=await getDocs(collection(db,"users"));
+let found=null;
+snap.forEach(d=>{if(d.data().phone===phone&&d.data().password===pass)found=d.id;});
+if(found){uid=found;localStorage.setItem('k_uid',uid);showPage('home');window.load();}else alert('Wrong phone or password');
 };
 }catch(e){console.log(e)}
 </script></body></html>
