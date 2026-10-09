@@ -17,64 +17,29 @@
 .tab{padding:10px 18px;border-radius:20px;border:1px solid #2A3F6A;font-size:12px;font-weight:800;cursor:pointer;background:#132040;color:#8892A6}
 .tab.a{background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff}
 .prod{background:#fff;margin:12px;border-radius:20px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.18);border:1px solid #E2E8F0}
-.prod-top{display:flex}
-.prod-img-box{width:38%;background:#F8FAFC;display:flex;align-items:center;justify-content:center;padding:12px;min-height:132px}
-.prod-img-box img{width:100%;height:110px;object-fit:contain}
-.prod-info{flex:1;padding:14px}
-.prod-title{font-weight:900;font-size:16px;color:#0A1931;margin:0 0 10px}
-.prod-row{display:flex;justify-content:space-between;padding:5px 0;font-size:12.5px;color:#475569}
-.prod-row b{color:#0A1931}
-.prod-row.green{color:#059669;font-weight:800}
-.prod-row.gold{color:#D97706;font-weight:800}
-.prod-btn{margin:10px 12px 12px;background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:900;width:calc(100% - 24px);cursor:pointer}
+.prod-top{display:flex}.prod-img-box{width:38%;background:#F8FAFC;display:flex;align-items:center;justify-content:center;padding:12px;min-height:132px}.prod-img-box img{width:100%;height:110px;object-fit:contain}.prod-info{flex:1;padding:14px}.prod-title{font-weight:900;font-size:16px;color:#0A1931;margin:0 0 10px}.prod-row{display:flex;justify-content:space-between;padding:5px 0;font-size:12.5px;color:#475569}.prod-row b{color:#0A1931}.prod-row.green{color:#059669;font-weight:800}.prod-row.gold{color:#D97706;font-weight:800}.prod-btn{margin:10px 12px 12px;background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:900;width:calc(100% - 24px);cursor:pointer}
 .series-total{background:linear-gradient(135deg,#0F172A,#132040);margin:12px;border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border:1px solid #1E3A5F}
 .home-header{background:#0A1931;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
 .withdraw-ticker{background:linear-gradient(135deg,#0F172A,#132040);margin:12px;border-radius:16px;padding:12px 14px;display:flex;align-items:center;gap:12px;border:1px solid #1E3A5F;height:62px;overflow:hidden}
 .ticker-icon{background:rgba(15,95,255,0.2);width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#0F5FFF}
-.ticker-content{flex:1;overflow:hidden;height:38px;position:relative}
-.ticker-list{position:absolute;width:100%;animation:scrollUp 10s linear infinite}
-.ticker-item{height:38px;display:flex;flex-direction:column;justify-content:center}
+.ticker-content{flex:1;overflow:hidden;height:38px;position:relative}.ticker-list{position:absolute;width:100%;animation:scrollUp 10s linear infinite}.ticker-item{height:38px;display:flex;flex-direction:column;justify-content:center}
 @keyframes scrollUp{0%{transform:translateY(0)}25%{transform:translateY(-38px)}50%{transform:translateY(-76px)}75%{transform:translateY(-114px)}100%{transform:translateY(0)}}
 .gift-box{background:linear-gradient(135deg,#1E3A5F,#132040);width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;animation:floatGift 2s ease-in-out infinite}
 @keyframes floatGift{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 12px}
-.stat-card{background:linear-gradient(135deg,#111C33,#132040);border:1px solid #1E3A5F;border-radius:16px;padding:14px;text-align:center}
-.stat-card b{display:block;font-size:16px;color:#fff;margin-bottom:4px}
-.stat-card small{color:#64748B;font-size:10px;font-weight:700}
-.stats-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 12px}
-.action-row{display:flex;gap:10px;margin:14px 12px}
-.btn-deposit{flex:1;padding:14px;border-radius:14px;border:0;background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;font-weight:800;cursor:pointer}
-.btn-withdraw{flex:1;padding:14px;border-radius:14px;border:0;background:#1E293B;color:#fff;font-weight:800;cursor:pointer;border:1px solid #2A3F6A}
-.message-section{background:#0F172A;margin:12px;border-radius:16px;border:1px solid #1E293B}
-.mine-top{background:linear-gradient(180deg,#0A1931 0%,#080E1F 100%);padding:16px}
-.mine-header-row{display:flex;justify-content:space-between;align-items:center}
-.mine-logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:18px}
-.mine-logo-icon{width:28px;height:28px;background:linear-gradient(135deg,#D4AF37,#B8962E);border-radius:6px;display:flex;align-items:center;justify-content:center}
-.wallet-cards{display:flex;gap:10px;margin:16px 12px}
-.wallet-card{flex:1;background:linear-gradient(135deg,#111C33,#132040);border:1px solid #1E3A5F;border-radius:16px;padding:12px;display:flex;align-items:center;gap:10px}
-.wallet-icon{width:40px;height:40px;background:linear-gradient(135deg,#0F5FFF,#1E40AF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.action-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin:16px 12px}
-.action-item{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
-.action-icon{width:56px;height:56px;background:linear-gradient(135deg,#0F5FFF,#1E40AF);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 12px}.stat-card{background:linear-gradient(135deg,#111C33,#132040);border:1px solid #1E3A5F;border-radius:16px;padding:14px;text-align:center}.stat-card b{display:block;font-size:16px;color:#fff;margin-bottom:4px}.stat-card small{color:#64748B;font-size:10px;font-weight:700}
+.stats-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 12px}.action-row{display:flex;gap:10px;margin:14px 12px}.btn-deposit{flex:1;padding:14px;border-radius:14px;border:0;background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;font-weight:800;cursor:pointer}.btn-withdraw{flex:1;padding:14px;border-radius:14px;border:0;background:#1E293B;color:#fff;font-weight:800;cursor:pointer;border:1px solid #2A3F6A}
+.message-section{background:#0F172A;margin:12px;border-radius:16px;border:1px solid #1E293B}.mine-top{background:linear-gradient(180deg,#0A1931 0%,#080E1F 100%);padding:16px}.mine-header-row{display:flex;justify-content:space-between;align-items:center}.mine-logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:18px}.mine-logo-icon{width:28px;height:28px;background:linear-gradient(135deg,#D4AF37,#B8962E);border-radius:6px;display:flex;align-items:center;justify-content:center}
+.wallet-cards{display:flex;gap:10px;margin:16px 12px}.wallet-card{flex:1;background:linear-gradient(135deg,#111C33,#132040);border:1px solid #1E3A5F;border-radius:16px;padding:12px;display:flex;align-items:center;gap:10px}.wallet-icon{width:40px;height:40px;background:linear-gradient(135deg,#0F5FFF,#1E40AF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.action-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin:16px 12px}.action-item{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}.action-icon{width:56px;height:56px;background:linear-gradient(135deg,#0F5FFF,#1E40AF);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px}
 .chat-box{height:320px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:#080E1F}
-.chat-msg{background:#111C33;border:1px solid #1E293B;border-radius:12px;padding:10px 12px;max-width:85%;font-size:13px}
-.chat-msg.me{background:linear-gradient(135deg,#0F5FFF,#1E40AF);border-color:#0F5FFF;align-self:flex-end}
-.chat-msg.auto{background:linear-gradient(135deg,#10B981,#059669);border-color:#10B981;color:#fff}
-.chat-msg small{font-size:9px;color:#64748B;display:block;margin-bottom:2px}
-.chat-input-row{display:flex;gap:8px;padding:12px;background:#0A1931;border-top:1px solid #1E293B}
-.chat-input{flex:1;padding:12px;border-radius:12px;border:1px solid #2A3F6A;background:#132040;color:#fff;outline:none}
-.manager-user-item{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:12px;margin-bottom:10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.manager-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#0F5FFF,#1E40AF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
-.support-bubble{max-width:80%;border-radius:18px;padding:12px 14px;font-size:13px;line-height:1.5;word-break:break-word}
-.support-bubble.user{background:#fff;color:#0A1931;border:1px solid #E2E8F0;border-bottom-right-radius:4px;align-self:flex-end}
-.support-bubble.manager{background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;border-bottom-left-radius:4px;align-self:flex-start}
-.support-meta{font-size:10px;color:#64748B;margin-bottom:4px;font-weight:700;display:flex;gap:6px}
+.chat-msg{background:#111C33;border:1px solid #1E293B;border-radius:12px;padding:10px 12px;max-width:85%;font-size:13px}.chat-msg.me{background:linear-gradient(135deg,#0F5FFF,#1E40AF);border-color:#0F5FFF;align-self:flex-end}.chat-msg.auto{background:linear-gradient(135deg,#10B981,#059669);border-color:#10B981;color:#fff}.chat-msg small{font-size:9px;color:#64748B;display:block;margin-bottom:2px}
+.chat-input-row{display:flex;gap:8px;padding:12px;background:#0A1931;border-top:1px solid #1E293B}.chat-input{flex:1;padding:12px;border-radius:12px;border:1px solid #2A3F6A;background:#132040;color:#fff;outline:none}
+.manager-user-item{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:12px;margin-bottom:10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}.manager-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#0F5FFF,#1E40AF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
+.support-bubble{max-width:80%;border-radius:18px;padding:12px 14px;font-size:13px;line-height:1.5;word-break:break-word}.support-bubble.user{background:#fff;color:#0A1931;border:1px solid #E2E8F0;border-bottom-right-radius:4px;align-self:flex-end}.support-bubble.manager{background:linear-gradient(135deg,#0F5FFF,#1E40AF);color:#fff;border-bottom-left-radius:4px;align-self:flex-start}.support-meta{font-size:10px;color:#64748B;margin-bottom:4px;font-weight:700;display:flex;gap:6px}
 .big-purchase-alert{position:fixed;bottom:90px;left:12px;right:12px;background:linear-gradient(135deg,#E50914,#7F1D1D);color:#fff;padding:14px 18px;border-radius:16px;font-weight:800;text-align:left;font-size:13px;z-index:9999;box-shadow:0 12px 40px rgba(229,9,20,0.7);border:2px solid #FFD700;display:none;align-items:center;gap:10px;animation:popAlert 0.5s ease}
 @keyframes popAlert{0%{transform:scale(0.5) translateY(60px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}
-.auto-toggle{padding:8px 14px;border-radius:20px;border:0;font-weight:800;cursor:pointer;font-size:12px}
-.auto-toggle.on{background:#10B981;color:#fff}.auto-toggle.off{background:#EF4444;color:#fff}
-.name-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px}
-.name-card{background:#fff;border-radius:20px;padding:24px;width:100%;max-width:380px;color:#0A1931}
+.auto-toggle{padding:8px 14px;border-radius:20px;border:0;font-weight:800;cursor:pointer;font-size:12px;display:none}.auto-toggle.on{background:#10B981;color:#fff;display:flex}.auto-toggle.off{background:#EF4444;color:#fff;display:flex}
+.name-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px}.name-card{background:#fff;border-radius:20px;padding:24px;width:100%;max-width:380px;color:#0A1931}
 </style></head><body>
 <div id="bigPurchaseAlert" style="display:none"></div>
 <div id="nameModal" class="name-modal" style="display:none"><div class="name-card"><h3>👋 Enter Your Name</h3><p id="nameModalText" style="font-size:13px;color:#64748B">Once only for Community, Support, Deposit, Withdraw.</p><div class="inp"><span style="padding:0 10px">👤</span><input id="userFullNameInput" placeholder="Full Name e.g. John Kato"></div><button class="btnG" style="margin-top:16px" onclick="saveUserFullName()">Save Name</button></div></div>
@@ -108,62 +73,25 @@ function showTransTab(t){document.getElementById('transDepList').classList.add('
 function openWhatsApp(){window.open('https://wa.me/256755797207?text=Hello%20NOVALEND%20Support','_blank');}
 function downloadApp(){alert('Coming soon');}
 function updateInviteLink(){let u=localStorage.getItem('k_uid')||'';let l='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+u;let e=document.getElementById('invLink');if(e)e.innerText=l;}
-function escapeHtml(t){let d=document.createElement('div');d.innerText=t;return d.innerHTML;}
-function showBottomRedAlert(text){
- let el=document.getElementById("bigPurchaseAlert");
- el.innerHTML=`<span style="background:#fff;color:#E50914;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:900">!</span><span>${escapeHtml(text)}</span>`;
- el.style.display="flex";
- setTimeout(()=>{el.style.display="none";},5000);
-}
-let lastAutoReplyTime={};
-function getSatisfiedReply(txt,name){
- let lower=(txt||"").toLowerCase();
- if(lower.includes("deposit")||lower.includes("mtn")||lower.includes("pay")||lower.includes("cash in")||lower.includes("recharge")||lower.includes("tid")){
-  return `Hello ${name} 💎 For deposit: Go to Mine → Cash In → Enter amount (min 19k) → Send via MTN *165# to +256785344451 → Paste TID → Submit. After approved, go to Products page → K SERIES → Click Rent K1. Your daily income starts immediately. I will check your payment now.`;
- }
- if(lower.includes("withdraw")||lower.includes("cash out")){
-  return `Hi ${name} 🙏 Withdraw: Go to Mine → Cash Out → Enter amount min 5,000 and your MTN number → Submit. Important: First rent from Products page. Daily profit goes to Balance then you can withdraw. Withdraw processed within 2 hours.`;
- }
- if(lower.includes("rent")||lower.includes("product")||lower.includes("k1")||lower.includes("machine")||lower.includes("buy")||lower.includes("earn")||lower.includes("how")||lower.includes("work")){
-  return `Hello ${name} 💎 To rent and earn: 1. Deposit via Cash In 2. Go to Home → Products → You will see K, N, J, Y SERIES 3. Tap K SERIES → Choose K1 (19,000 = 2,000 daily x15 = 30,000) → Click Rent → Confirm 4. Go to Revenue to see machine working 5. After days, money goes to Balance → Withdraw. Need step by step?`;
- }
- if(lower.includes("invite")||lower.includes("link")||lower.includes("refer")||lower.includes("team")){
-  return `Hi ${name} 👥 Invite: Go to Mine → Invite → Copy your link → Share. When friend deposits and rents, you get LV1 12% instantly. LV2 4% LV3 2% LV4 1%. Daily team income. Use this to earn more.`;
- }
- return `Hello ${name} 💎 Thanks for your message. I understand you. In Novalend: 1. Deposit via Cash In (MTN +256785344451 min 19k) 2. Go to Products → Rent machine (K1 best 19k = 2k daily) 3. Check Revenue daily 4. Withdraw from Cash Out. Tell me exactly what you need now and I will guide you step by step 🙏`;
-}
-function showBigRedPurchase(name,price,phone,uname){let a=document.getElementById('bigPurchaseAlert');if(!a)return;a.innerHTML=`<div>🔴 LIVE PURCHASE 🔴</div><div style="font-size:24px;margin:8px 0">🎉 ${name} PURCHASED!</div><div>👤 ${uname} 📱 ${phone} bought ${name} for UGX ${price.toLocaleString()}!</div>`;a.style.display='flex';if(navigator.vibrate)navigator.vibrate([300,100,300]);setTimeout(()=>a.style.display='none',9000);}
-function toggleAutoManager(){let cur=localStorage.getItem('autoManagerEnabled');let nv=cur==='true'?'false':'true';localStorage.setItem('autoManagerEnabled',nv);updateAutoToggleUI();}
-function updateAutoToggleUI(){
- let uid=localStorage.getItem('k_uid')||"";
- let isMgr=uid.includes("785344451")||uid.includes("755797207");
- let btn=document.getElementById('autoToggleBtn');
- if(!btn) return;
- if(!isMgr){btn.style.display="none";return;}
- btn.style.display="flex";
- let en=localStorage.getItem('autoManagerEnabled'); if(en===null){localStorage.setItem('autoManagerEnabled','true'); en='true';}
- let on=en==='true';
- btn.innerText=on?'🟢 Auto ON':'🔴 Auto OFF';
- btn.className='auto-toggle '+(on?'on':'off');
-}
+function escapeHtml(t){let d=document.createElement('div');d.textContent=t;return d.innerHTML;}
 function clearBadge(id){let b=document.getElementById(id);if(b){b.innerText='0';b.classList.remove('show');}localStorage.setItem(id+'_count','0');}
 function setBadge(id,c){let b=document.getElementById(id);if(!b)return;if(c>0){b.innerText=c>99?'99+':c;b.classList.add('show');}else b.classList.remove('show');localStorage.setItem(id+'_count',c);}
 function incBadge(id){let cur=parseInt(localStorage.getItem(id+'_count')||'0')+1;setBadge(id,cur);}
-function checkUserName(action){let n=localStorage.getItem('k_name');if(!n){let txt=document.getElementById('nameModalText');if(action==='community')txt.innerText='Enter name to chat Community - visible to admin';else if(action==='support')txt.innerText='Enter name for Support';else if(action==='deposit')txt.innerText='Enter name before Deposit';else if(action==='withdraw')txt.innerText='Enter name before Withdraw';document.getElementById('nameModal').style.display='flex';return false;}return true;}
+function checkUserName(action){let n=localStorage.getItem('k_name');if(!n){let txt=document.getElementById('nameModalText');if(action==='community')txt.innerText='Enter name to chat Community';else if(action==='support')txt.innerText='Enter name for Support';else if(action==='deposit')txt.innerText='Enter name before Deposit';else if(action==='withdraw')txt.innerText='Enter name before Withdraw';document.getElementById('nameModal').style.display='flex';return false;}return true;}
 function saveUserFullName(){let i=document.getElementById('userFullNameInput');let n=i.value.trim();if(!n||n.length<2){alert('Enter name');return;}localStorage.setItem('k_name',n);document.getElementById('nameModal').style.display='none';if(window.saveNameToDb)window.saveNameToDb(n);updateAllNameShows();}
 function updateAllNameShows(){let n=localStorage.getItem('k_name')||'';['depNameShow','wdNameShow','settingsName'].forEach(id=>{let e=document.getElementById(id);if(e)e.innerText=n;});let s=document.getElementById('setName');if(s)s.value=n;}
-function showPage(p){if((p==='chats'||p==='manager'||p==='deposit'||p==='withdraw')&&!checkUserName(p==='chats'?'community':p==='manager'?'support':p)){if(p!=='chats'&&p!=='manager')return;}if(p==='chats')clearBadge('navChatBadge');if(p==='manager'){clearBadge('navSupportBadge');let mb=document.getElementById('mineSupportBadge');if(mb)mb.style.display='none';clearBadge('mineSupportBadge');}if(p==='register'||p==='login'){document.getElementById('p-register').classList.add('hide');document.getElementById('p-login').classList.add('hide');document.getElementById('p-'+p).classList.remove('hide');document.getElementById('bottomNav').classList.add('hide');return;}let uid=localStorage.getItem('k_uid');if(!uid){document.getElementById('p-register').classList.remove('hide');return;}['register','login','home','deposit','products','revenue','withdraw','invite','mine','transactions','referrals','vip','reward','manager','settings','chats'].forEach(x=>{let el=document.getElementById('p-'+x);if(el)el.classList.add('hide');});let target=document.getElementById('p-'+p);if(target)target.classList.remove('hide');document.getElementById('bottomNav').classList.remove('hide');document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.remove('active'));if(p==='home')document.getElementById('navHome')?.classList.add('active');if(p==='products')document.getElementById('navProducts')?.classList.add('active');if(p==='chats')document.getElementById('navChats')?.classList.add('active');if(p==='invite')document.getElementById('navInvite')?.classList.add('active');if(p==='revenue')document.getElementById('navRevenue')?.classList.add('active');if(p==='mine'||p==='deposit'||p==='withdraw'||p==='transactions'||p==='referrals'||p==='settings'||p==='manager'||p==='reward'||p==='vip')document.getElementById('navMine')?.classList.add('active');if(p==='invite')updateInviteLink();if(p==='manager')checkIfManager();if(window.load)window.load();updateAllNameShows();updateAutoToggleUI();}
+function showPage(p){if((p==='chats'||p==='manager'||p==='deposit'||p==='withdraw')&&!checkUserName(p==='chats'?'community':p==='manager'?'support':p)){if(p!=='chats'&&p!=='manager')return;}if(p==='chats')clearBadge('navChatBadge');if(p==='manager'){clearBadge('navSupportBadge');let mb=document.getElementById('mineSupportBadge');if(mb)mb.style.display='none';clearBadge('mineSupportBadge');}if(p==='register'||p==='login'){document.getElementById('p-register').classList.add('hide');document.getElementById('p-login').classList.add('hide');document.getElementById('p-'+p).classList.remove('hide');document.getElementById('bottomNav').classList.add('hide');return;}let uid=localStorage.getItem('k_uid');if(!uid){document.getElementById('p-register').classList.remove('hide');return;}['register','login','home','deposit','products','revenue','withdraw','invite','mine','transactions','referrals','vip','reward','manager','settings','chats'].forEach(x=>{let el=document.getElementById('p-'+x);if(el)el.classList.add('hide');});let target=document.getElementById('p-'+p);if(target)target.classList.remove('hide');document.getElementById('bottomNav').classList.remove('hide');document.querySelectorAll('#bottomNav button').forEach(b=>b.classList.remove('active'));if(p==='home')document.getElementById('navHome')?.classList.add('active');if(p==='products')document.getElementById('navProducts')?.classList.add('active');if(p==='chats')document.getElementById('navChats')?.classList.add('active');if(p==='invite')document.getElementById('navInvite')?.classList.add('active');if(p==='revenue')document.getElementById('navRevenue')?.classList.add('active');if(p==='mine'||p==='deposit'||p==='withdraw'||p==='transactions'||p==='referrals'||p==='settings'||p==='manager'||p==='reward'||p==='vip')document.getElementById('navMine')?.classList.add('active');if(p==='invite')updateInviteLink();if(p==='manager')checkIfManager();if(window.load)window.load();updateAllNameShows();}
 window.showPage=showPage;window.showTab=showTab;window.showTransTab=showTransTab;window.openWhatsApp=openWhatsApp;window.downloadApp=downloadApp;
 function updatePhone(){let ph=document.getElementById('setPhone').value.trim();if(!ph){alert('Enter phone');return;}alert('Saved');localStorage.setItem('k_phone',ph);if(window.savePhoneToDb)window.savePhoneToDb(ph);}
 function updateName(){let nm=document.getElementById('setName').value.trim();if(!nm){alert('Enter name');return;}localStorage.setItem('k_name',nm);alert('Saved');updateAllNameShows();if(window.saveNameToDb)window.saveNameToDb(nm);}
 function updatePass(){let pw=document.getElementById('setPass').value.trim();if(!pw){alert('Enter password');return;}alert('Updated');}
 function logout(){if(confirm('Logout?')){localStorage.removeItem('k_uid');showPage('login');}}
 let managerSelectedUserId=null;
-function checkIfManager(){let uid=localStorage.getItem('k_uid')||"";let isM=uid&&(uid.includes('785344451')||uid.includes('755797207')||localStorage.getItem('isManager')==='true');if(isM){document.getElementById('managerUserView').classList.remove('hide');document.getElementById('managerTitle').innerHTML='Support Dashboard';refreshManagerUsers();}else{document.getElementById('managerUserView').classList.add('hide');document.getElementById('managerTitle').innerText='Support';}updateAutoToggleUI();}
-function backToManagerList(){managerSelectedUserId=null;window.managerSelectedUserId=null;document.getElementById('managerSelectedUser').style.display='none';document.getElementById('managerUserView').classList.remove('hide');refreshManagerUsers();}
+function checkIfManager(){let ph=localStorage.getItem('k_phone')||localStorage.getItem('k_uid')||'';let isM=ph.includes('785344451')||ph.includes('0785344451')||localStorage.getItem('isManager')==='true';let btn=document.getElementById('autoToggleBtn');if(btn){btn.style.display=isM?'flex':'none'; if(localStorage.getItem('autoManagerOn')!==null){btn.className=localStorage.getItem('autoManagerOn')==='true'?'auto-toggle on':'auto-toggle off'; btn.innerText=localStorage.getItem('autoManagerOn')==='true'?'🟢 Auto ON':'🔴 Auto OFF';}}if(isM){document.getElementById('managerUserView').classList.remove('hide');document.getElementById('managerTitle').innerHTML='Support Dashboard';if(window.loadManagerUsers)window.loadManagerUsers();}else{document.getElementById('managerUserView').classList.add('hide');document.getElementById('managerTitle').innerText='Support';}}
+function backToManagerList(){managerSelectedUserId=null;window.managerSelectedUserId=null;document.getElementById('managerSelectedUser').style.display='none';document.getElementById('managerUserView').classList.remove('hide');if(window.loadManagerUsers)window.loadManagerUsers();}
 function refreshManagerUsers(){if(window.loadManagerUsers)window.loadManagerUsers();}
 function selectManagerUser(uid,phone,name){managerSelectedUserId=uid;window.managerSelectedUserId=uid;document.getElementById('selectedUserName').innerText=name||phone;document.getElementById('selectedUserPhone').innerText='📱 '+phone;document.getElementById('selectedUserFullName').innerText='👤 '+(name||'No name');document.getElementById('selectedAvatar').innerText=(name||phone).charAt(0).toUpperCase();document.getElementById('managerSelectedUser').style.display='block';document.getElementById('managerUserView').classList.add('hide');if(window.openPrivateChat)window.openPrivateChat(uid);}
-document.addEventListener('DOMContentLoaded',()=>{renderAll();updateInviteLink();updateAllNameShows();let btn=document.getElementById('copyBtn');if(btn){btn.addEventListener('click',()=>{let uid=localStorage.getItem('k_uid')||'';let l='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+uid;navigator.clipboard.writeText(l).then(()=>{btn.innerText='✓ Copied';setTimeout(()=>btn.innerText='Copy Link',2000);});});}let uid=localStorage.getItem('k_uid');if(uid)showPage('home');else showPage('register');let cc=parseInt(localStorage.getItem('navChatBadge_count')||'0');if(cc>0)setBadge('navChatBadge',cc);let sc=parseInt(localStorage.getItem('navSupportBadge_count')||'0');if(sc>0)setBadge('navSupportBadge',sc);let mc=parseInt(localStorage.getItem('mineSupportBadge_count')||'0');if(mc>0){let b=document.getElementById('mineSupportBadge');if(b){b.innerText=mc>99?'99+':mc;b.style.display='inline-block';}}if(localStorage.getItem('autoManagerEnabled')===null)localStorage.setItem('autoManagerEnabled','true');});
+document.addEventListener('DOMContentLoaded',()=>{renderAll();updateInviteLink();updateAllNameShows();let btn=document.getElementById('copyBtn');if(btn){btn.addEventListener('click',()=>{let uid=localStorage.getItem('k_uid')||'';let l='https://kiirjohn317-byte.github.io/khalfa-smart-loans/?code='+uid;navigator.clipboard.writeText(l).then(()=>{btn.innerText='✓ Copied';setTimeout(()=>btn.innerText='Copy Link',2000);});});}let uid=localStorage.getItem('k_uid');if(uid)showPage('home');else showPage('register');});
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
@@ -171,6 +99,14 @@ import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, updateD
 const firebaseConfig={apiKey:"AIzaSyB5x4i5y3z-REPLACE_WITH_REAL_KEY",authDomain:"khalfa-smart-loans.firebaseapp.com",projectId:"khalfa-smart-loans",appId:"1:123456789:web:abc"};
 try{
 const app=initializeApp(firebaseConfig);const db=getFirestore(app);let uid=localStorage.getItem('k_uid');
+let autoManagerOn = localStorage.getItem("autoManagerOn")!=="false";
+let managerMessagesUnsubscribe=null;
+let lastMsgCount=0;
+function checkIsManagerNow(){ let ph=localStorage.getItem('k_phone')||localStorage.getItem('k_uid')||''; return ph.includes('785344451')||ph.includes('0785344451'); }
+window.toggleAutoManager=function(){ autoManagerOn=!autoManagerOn; localStorage.setItem("autoManagerOn",autoManagerOn); let btn=document.getElementById("autoToggleBtn"); if(btn){btn.className=autoManagerOn?"auto-toggle on":"auto-toggle off"; btn.innerText=autoManagerOn?"🟢 Auto ON":"🔴 Auto OFF";} };
+function getSatisfiedReply(msg,name){ msg=(msg||"").toLowerCase(); name=name||"Boss"; if(msg.includes("deposit")||msg.includes("pay")||msg.includes("tid")||msg.includes("cash in")) return `Hello ${name} 💎 Deposit: Mine → Cash In → Enter amount → Send via MTN *165# to +256785344451 → Paste TID → Submit. After approved, go to Products → K SERIES → Click Rent. Daily income starts. I will check your payment now.`; if(msg.includes("withdraw")||msg.includes("cash out")) return `Hi ${name} 🙏 Withdraw: Mine → Cash Out → Enter amount min 5,000 and MTN number → Submit. After you rent from Products, daily profit goes to Balance then you can withdraw. Processed within 2 hours.`; if(msg.includes("rent")||msg.includes("product")||msg.includes("k1")||msg.includes("buy")||msg.includes("earn")||msg.includes("how")) return `Hello ${name} 💎 To rent: Go to Home → Products → You will see K,N,J,Y SERIES. Tap K SERIES → Choose K1 (19,000 = 2,000 daily) → Click Rent → Confirm. Then go to Revenue to see machine working.`; if(msg.includes("invite")||msg.includes("link")||msg.includes("refer")) return `Hi ${name} 👥 Invite: Mine → Invite → Copy link → Share. When friend rents, you get LV1 12% instantly.`; return `Hello ${name} 💎 Thanks. In Novalend: 1. Deposit via Cash In 2. Go to Products page → Rent machine K1 best 19k = 2k daily 3. Check Revenue daily 4. Withdraw from Cash Out. Tell me exactly what you need, I will guide you now 🙏`; }
+function showBottomRedAlert(text){ let el=document.getElementById("bigPurchaseAlert"); el.innerHTML=`<span style="background:#fff;color:#E50914;border-radius:50%;min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:900">!</span><span>${escapeHtml(text)}</span>`; el.style.display="flex"; setTimeout(()=>{el.style.display="none";},5000); }
+
 window.saveNameToDb=async(n)=>{try{if(!uid)uid=localStorage.getItem('k_uid');if(!uid)return;await updateDoc(doc(db,"users",uid),{fullName:n,name:n});}catch(e){}};
 window.savePhoneToDb=async(p)=>{try{await updateDoc(doc(db,"users",uid),{phone:p});}catch(e){}};
 window.load=async()=>{
@@ -252,18 +188,20 @@ if(document.getElementById('lv4Count'))document.getElementById('lv4Count').inner
 let depSnap=await getDocs(collection(db,"deposits"));let myDep=[];let totalDep=0;depSnap.forEach(d=>{let x=d.data();if(x.userId===uid){myDep.push(x);totalDep+=(x.amount||0);}});
 let wdSnap=await getDocs(collection(db,"withdraws"));let myWd=[];let totalWd=0;wdSnap.forEach(d=>{let x=d.data();if(x.userId===uid){myWd.push(x);totalWd+=(x.amount||0);}});
 setEl('depositDetails',totalDep.toLocaleString()+" UGX");setEl('withdrawDetails',totalWd.toLocaleString()+" UGX");
-let depList=document.getElementById('transDepList');if(depList){if(myDep.length===0)depList.innerHTML="No deposits";else depList.innerHTML=myDep.map(d=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><span>💳 ${d.fullName||d.name||''} UGX ${d.amount} - ${d.transId||''}</span><span style="color:${d.status==='APPROVED'?'#00B67A':'#F59E0B'};font-weight:700">${d.status||'PENDING'}</span></div>`).join('');}
-let wdList=document.getElementById('transWdList');if(wdList){if(myWd.length===0)wdList.innerHTML="No withdraws";else wdList.innerHTML=myWd.map(w=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><span>🏧 ${w.fullName||w.name||''} UGX ${w.amount} - ${w.phone||''}</span><span style="color:${w.status==='APPROVED'?'#00B67A':'#F59E0B'};font-weight:700">${w.status||'PENDING'}</span></div>`).join('');}
-let allList=document.getElementById('transAllList');if(allList){let all=[...myDep.map(d=>({type:'Deposit',...d})),...myWd.map(w=>({type:'Withdraw',...w}))];if(all.length===0)allList.innerHTML="No transactions";else allList.innerHTML=all.map(a=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><span>${a.type} ${a.fullName||a.name||''} UGX ${a.amount}</span><span style="color:${a.status==='APPROVED'?'#00B67A':'#F59E0B'}}">${a.status||'PENDING'}</span></div>`).join('');}
-let refList=document.getElementById('referralsList');if(refList){if(lv1.length===0)refList.innerHTML="No referrals";else{let h="";for(let inv of lv1){let c=0;snap.forEach(d=>{if(d.data().userId===inv.id)c++;});h+=`<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-bottom:8px;display:flex;justify-content:space-between"><div><b>👤 ${inv.fullName||inv.name||inv.phone||inv.id}</b><br><small style="color:#64748B">📱 ${inv.phone||''} • Machines: ${c}</small></div><span style="background:#EEF2FF;color:#0F5FFF;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700">${c} Machines</span></div>`;}refList.innerHTML=h;}}
+let depList=document.getElementById('transDepList');if(depList){if(myDep.length===0)depList.innerHTML="No deposits";else depList.innerHTML=myDep.map(d=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><span>💳 ${escapeHtml(d.fullName||d.name||'')} UGX ${d.amount} - ${escapeHtml(d.transId||'')}</span><span style="color:${d.status==='APPROVED'?'#00B67A':'#F59E0B'};font-weight:700">${d.status||'PENDING'}</span></div>`).join('');}
+let wdList=document.getElementById('transWdList');if(wdList){if(myWd.length===0)wdList.innerHTML="No withdraws";else wdList.innerHTML=myWd.map(w=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><span>🏧 ${escapeHtml(w.fullName||w.name||'')} UGX ${w.amount} - ${escapeHtml(w.phone||'')}</span><span style="color:${w.status==='APPROVED'?'#00B67A':'#F59E0B'};font-weight:700">${w.status||'PENDING'}</span></div>`).join('');}
+let allList=document.getElementById('transAllList');if(allList){let all=[...myDep.map(d=>({type:'Deposit',...d})),...myWd.map(w=>({type:'Withdraw',...w}))];if(all.length===0)allList.innerHTML="No transactions";else allList.innerHTML=all.map(a=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><span>${a.type} ${escapeHtml(a.fullName||a.name||'')} UGX ${a.amount}</span><span style="color:${a.status==='APPROVED'?'#00B67A':'#F59E0B'}}">${a.status||'PENDING'}</span></div>`).join('');}
+let refList=document.getElementById('referralsList');if(refList){if(lv1.length===0)refList.innerHTML="No referrals";else{let h="";for(let inv of lv1){let c=0;snap.forEach(d=>{if(d.data().userId===inv.id)c++;});h+=`<div style="background:#F8FAFC;padding:12px;border-radius:12px;margin-bottom:8px;display:flex;justify-content:space-between"><div><b>👤 ${escapeHtml(inv.fullName||inv.name||inv.phone||inv.id)}</b><br><small style="color:#64748B">📱 ${escapeHtml(inv.phone||'')} • Machines: ${c}</small></div><span style="background:#EEF2FF;color:#0F5FFF;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700">${c} Machines</span></div>`;}refList.innerHTML=h;}}
 }catch(e){console.log(e);}
 };
+
 window.loadManagerUsers=async()=>{
 try{
-let snap=await getDocs(collection(db,"support_chats"));
+let snap=await getDocs(collection(db,"support_private_v2"));
 let usersMap={};
 snap.forEach(d=>{
 let m=d.data();
+if(m.text && m.text.includes("Manager received")) return;
 let id=m.userId;
 if(!id||id==='manager')return;
 if(!usersMap[id])usersMap[id]={userId:id,phone:m.phone||id,name:m.fullName||m.name||m.phone||id,lastText:m.text||'',lastTime:m.time?.toMillis?.()||0,count:0,lastRole:m.role};
@@ -276,29 +214,33 @@ let arr=Object.values(usersMap).sort((a,b)=>b.lastTime-a.lastTime);
 if(arr.length===0){listDiv.innerHTML='<div style="text-align:center;color:#8892A6;padding:20px">No private messages yet</div>';return;}
 listDiv.innerHTML=arr.map(u=>{
 let initial=(u.name||u.phone||'U').charAt(0).toUpperCase();
-return `<div class="manager-user-item" onclick="selectManagerUser('${u.userId}','${u.phone}','${u.name.replace(/'/g,"")}')"><div style="display:flex;gap:12px;align-items:center"><div class="manager-avatar">${initial}</div><div><b>👤 ${u.name}</b><br><small style="color:#0F5FFF;font-weight:700">📱 ${u.phone}</small><br><small style="color:#64748B">ID: ${u.userId.slice(-6)} • ${u.count} msgs • ${new Date(u.lastTime).toLocaleString()}</small><br><small style="color:#0A1931;background:#F8FAFC;padding:2px 6px;border-radius:8px">${u.lastText.slice(0,50)}</small></div></div><div style="text-align:right"><span style="background:#E50914;color:#fff;padding:6px 10px;border-radius:14px;font-size:11px;font-weight:800">${u.count}</span><br><small style="color:${u.lastRole==='user'?'#E50914':'#10B981'};font-weight:800">${u.lastRole==='user'?'NEW':'REPLIED'}</small></div></div>`;
+return `<div class="manager-user-item" onclick="selectManagerUser('${u.userId}','${escapeHtml(u.phone)}','${escapeHtml(u.name).replace(/'/g,"")}')"><div style="display:flex;gap:12px;align-items:center"><div class="manager-avatar">${initial}</div><div><b>👤 ${escapeHtml(u.name)}</b><br><small style="color:#0F5FFF;font-weight:700">📱 ${escapeHtml(u.phone)}</small><br><small style="color:#64748B">ID: ${u.userId.slice(-6)} • ${u.count} msgs • ${new Date(u.lastTime).toLocaleString()}</small><br><small style="color:#0A1931;background:#F8FAFC;padding:2px 6px;border-radius:8px">${escapeHtml(u.lastText).slice(0,50)}</small></div></div><div style="text-align:right"><span style="background:#E50914;color:#fff;padding:6px 10px;border-radius:14px;font-size:11px;font-weight:800">${u.count}</span><br><small style="color:${u.lastRole==='user'?'#E50914':'#10B981'};font-weight:800">${u.lastRole==='user'?'NEW':'REPLIED'}</small></div></div>`;
 }).join('');
 }catch(e){console.log(e);}
 };
+
 window.openPrivateChat=async(targetUid)=>{
 try{
-let qy=query(collection(db,"support_chats"),orderBy("time","asc"),limit(500));
+let qy=query(collection(db,"support_private_v2"),orderBy("time","asc"),limit(500));
 let snap=await getDocs(qy);
 let html='';let msgs=[];
-snap.forEach(d=>{let m=d.data();if(m.userId===targetUid||m.to===targetUid){msgs.push(m);}});
+snap.forEach(d=>{let m=d.data();if((m.userId===targetUid&&m.to==="manager")||(m.userId==="manager"&&m.to===targetUid))msgs.push(m);});
 msgs.sort((a,b)=>(a.time?.toMillis?.()||0)-(b.time?.toMillis?.()||0));
 msgs.forEach(m=>{
 let isMgr=m.role==='manager';
-let name=m.fullName||m.name||m.phone||'User';
 let timeStr=m.time?.toMillis? new Date(m.time.toMillis()).toLocaleString():'now';
-let bubbleClass=isMgr?'manager':'user';
-let align=isMgr?'flex-start':'flex-end';
-html+=`<div style="display:flex;flex-direction:column;align-items:${align};gap:4px"><div class="support-meta">${isMgr?'💎 Support':'👤 '+name} • 📱 ${m.phone||''} • ${timeStr}</div><div class="support-bubble ${bubbleClass}">${escapeHtml(m.text||'')}</div></div>`;
+let safe=escapeHtml(m.text||'');
+if(isMgr){
+ html+=`<div style="display:flex;flex-direction:column;align-items:flex-start;gap:4px"><div class="support-meta" style="background:#E50914;color:#fff;padding:2px 8px;border-radius:10px">NEW • Support • ${timeStr}</div><div class="support-bubble manager" style="border:2px solid #E50914">${safe}</div></div>`;
+}else{
+ html+=`<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><div class="support-meta">${escapeHtml(m.fullName||m.name||'User')} • ${timeStr}</div><div class="support-bubble user">${safe}</div></div>`;
+}
 });
 let box=document.getElementById('managerPageList');
-if(box){box.innerHTML=html||'<div style="text-align:center;color:#64748B;padding:40px">No messages yet<br>Messages stay forever organized</div>';box.scrollTop=box.scrollHeight;}
+if(box){box.innerHTML=html||'<div style="text-align:center;color:#64748B;padding:40px">No messages yet</div>';box.scrollTop=box.scrollHeight;}
 }catch(e){console.log(e);}
 };
+
 try{
 const qGlobal=query(collection(db,"global_chat"),orderBy("time","asc"),limit(200));
 onSnapshot(qGlobal,(snap)=>{
@@ -306,7 +248,7 @@ let box=document.getElementById('globalChatList');
 if(!box)return;
 let prevCount=parseInt(localStorage.getItem('lastGlobalCount')||'0');
 let isInChats=!document.getElementById('p-chats').classList.contains('hide');
-if(!isInChats&&snap.size>prevCount&&prevCount>0){let diff=snap.size-prevCount;for(let i=0;i<diff;i++){incBadge('navChatBadge');}if(navigator.vibrate)navigator.vibrate(200);}
+if(!isInChats&&snap.size>prevCount&&prevCount>0){let diff=snap.size-prevCount;for(let i=0;i<diff;i++){incBadge('navChatBadge');}}
 localStorage.setItem('lastGlobalCount',snap.size);
 document.getElementById('communityCount').innerText=snap.size+' msgs';
 if(snap.empty){box.innerHTML='<div style="text-align:center;color:#64748B;font-size:11px;margin-top:80px">No messages yet<br>Be first! 💬</div>';return;}
@@ -315,45 +257,50 @@ snap.forEach(d=>{
 let m=d.data();
 let isMe=m.userId===uid;
 let displayName=m.fullName||m.name||m.phone||'User';
-box.innerHTML+=`<div class="chat-msg ${isMe?'me':''}" style="border-left:3px solid ${isMe?'#fff':'#0F5FFF'}"><small>👤 ${isMe?'You ('+displayName+')':displayName} • 📱 ${m.phone} • ${new Date(m.time?.toMillis?.()||Date.now()).toLocaleTimeString()}</small><b style="display:block;margin-top:2px;color:${isMe?'#fff':'#D4AF37'}">${displayName}</b>${escapeHtml(m.text||'')}</div>`;
+box.innerHTML+=`<div class="chat-msg ${isMe?'me':''}" style="border-left:3px solid ${isMe?'#fff':'#0F5FFF'}"><small>👤 ${isMe?'You ('+escapeHtml(displayName)+')':escapeHtml(displayName)} • 📱 ${escapeHtml(m.phone)} • ${new Date(m.time?.toMillis?.()||Date.now()).toLocaleTimeString()}</small><b style="display:block;margin-top:2px;color:${isMe?'#fff':'#D4AF37'}">${escapeHtml(displayName)}</b>${escapeHtml(m.text)}</div>`;
 });
 box.scrollTop=box.scrollHeight;
 });
-// ===== FINAL PRIVATE SUPPORT LISTENER - NO LEAK =====
-const qManager=query(collection(db,"support_chats"),orderBy("time","asc"),limit(500));
+
+const qManager=query(collection(db,"support_private_v2"),orderBy("time","asc"),limit(500));
 onSnapshot(qManager,(snap)=>{
 let box=document.getElementById('managerPageList');
 let isManagerView=document.getElementById('managerUserView')&&!document.getElementById('managerUserView').classList.contains('hide');
-if(isManagerView){window.loadManagerUsers();return;}
-let allMsgs=[]; snap.forEach(d=>allMsgs.push(d.data()));
-allMsgs.sort((a,b)=>(a.time?.toMillis?.()||0)-(b.time?.toMillis?.()||0));
-
-// Private filter
-let html='';let filtered=[];
-let isManager = uid && (uid.includes("785344451")||uid.includes("755797207"));
-let targetUid = window.managerSelectedUserId || managerSelectedUserId;
-
-if(!isManager){
-  // NORMAL USER: only own messages, block leaking "Manager received"
-  filtered = allMsgs.filter(m => (m.userId===uid || m.to===uid) && m.text &&!m.text.includes("Manager received") &&!m.text.includes("from 07"));
-} else {
-  if(!targetUid){ box.innerHTML='<div style="text-align:center;color:#64748B;padding:20px">Select a user</div>'; window.loadManagerUsers(); return; }
-  filtered = allMsgs.filter(m => (m.userId===targetUid && m.to!=="manager") || (m.userId===targetUid) || (m.to===targetUid) || (m.userId==="manager" && m.to===targetUid));
-  filtered = allMsgs.filter(m => (m.userId===targetUid || m.to===targetUid));
+let isManager = checkIsManagerNow();
+let all=[]; snap.forEach(d=>all.push(d.data()));
+all=all.filter(m=>!m.text||!m.text.includes("Manager received"));
+if(isManagerView && isManager){window.loadManagerUsers(); return;}
+let targetUid=window.managerSelectedUserId||managerSelectedUserId||uid;
+let filtered=[];
+if(isManager){
+ if(!targetUid){ if(box) box.innerHTML='<div style="text-align:center;color:#64748B;padding:20px">Select a user</div>'; return; }
+ filtered=all.filter(m=>(m.userId===targetUid&&m.to==="manager")||(m.userId==="manager"&&m.to===targetUid));
+}else{
+ filtered=all.filter(m=>m.userId===uid||m.to===uid);
 }
-
+if(filtered.length>lastMsgCount && lastMsgCount>0){
+ let last=filtered[filtered.length-1];
+ if(!isManager && last.role==="manager") showBottomRedAlert("💬 Support: "+last.text.slice(0,40));
+ if(isManager && last.role==="user") showBottomRedAlert("💬 "+(last.fullName||"User")+": "+last.text.slice(0,35));
+}
+lastMsgCount=filtered.length;
+let html='';
 filtered.forEach(m=>{
-let isMgr=m.role==='manager';
-let timeStr=m.time?.toMillis? new Date(m.time.toMillis()).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}):'now';
-let bubbleClass=isMgr?'manager':'user';
-let align=isMgr?'flex-start':'flex-end';
-let meta = isMgr? `<div class="support-meta" style="background:#E50914;color:#fff;padding:2px 8px;border-radius:10px">Support • ${timeStr}</div>` : `<div class="support-meta">You • ${timeStr}</div>`;
-let borderStyle = isMgr? `style="border:2px solid #E50914"` : ``;
-html+=`<div style="display:flex;flex-direction:column;align-items:${align};gap:4px">${meta}<div class="support-bubble ${bubbleClass}" ${borderStyle}>${escapeHtml(m.text||'')}</div></div>`;
+ let isMgr=m.role==='manager';
+ let timeStr=m.time?.toMillis? new Date(m.time.toMillis()).toLocaleString():'now';
+ let safe=escapeHtml(m.text||'');
+ if(isManager){
+   if(isMgr){ html+=`<div style="display:flex;flex-direction:column;align-items:flex-start;gap:4px"><div class="support-meta" style="background:#E50914;color:#fff;padding:2px 8px;border-radius:10px">NEW • Support • ${timeStr}</div><div class="support-bubble manager" style="border:2px solid #E50914">${safe}</div></div>`; }
+   else{ html+=`<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><div class="support-meta">${escapeHtml(m.fullName||'User')} • ${timeStr}</div><div class="support-bubble user">${safe}</div></div>`; }
+ }else{
+   if(isMgr){ html+=`<div style="display:flex;flex-direction:column;align-items:flex-start;gap:4px"><div class="support-meta" style="background:#E50914;color:#fff;padding:2px 8px;border-radius:10px">NEW • Support • ${timeStr}</div><div class="support-bubble manager" style="border:2px solid #E50914">${safe}</div></div>`; }
+   else{ html+=`<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><div class="support-meta" style="justify-content:flex-end">${timeStr}</div><div class="support-bubble user">${safe}</div></div>`; }
+ }
 });
-if(box){box.innerHTML=html||'<div style="text-align:center;color:#64748B;font-size:11px;margin-top:40px">🎧 Support chat<br>Private - stays forever 💎</div>';box.scrollTop=box.scrollHeight;}
+if(box){box.innerHTML=html||'<div style="text-align:center;color:#64748B;font-size:11px;margin-top:40px">🎧<br>Support chat - Private<br>Stays forever</div>';box.scrollTop=box.scrollHeight;}
 });
 }catch(e){console.log("chat",e);}
+
 window.sendGlobalMessage=async()=>{
 let inp=document.getElementById('globalChatInput');
 let txt=inp.value.trim();
@@ -365,7 +312,7 @@ let name=localStorage.getItem('k_name')||u.data()?.fullName||u.data()?.name||pho
 await addDoc(collection(db,"global_chat"),{userId:uid,phone:phone,name:name,fullName:name,text:txt,time:serverTimestamp()});
 inp.value='';
 };
-// ===== FINAL FIXED SEND - 3 MINUTES SILENT + RED BOTTOM =====
+
 window.sendManagerMessagePage=async()=>{
 let inp=document.getElementById('managerPageInput');
 let txt=inp.value.trim();
@@ -376,32 +323,20 @@ let phone=u.exists()?u.data().phone:uid;
 let name=localStorage.getItem('k_name')||u.data()?.fullName||u.data()?.name||phone;
 let targetUid=window.managerSelectedUserId||managerSelectedUserId||uid;
 let isManagerSending=window.managerSelectedUserId?true:false;
-let isManager = uid && (uid.includes("785344451")||uid.includes("755797207"));
-
-showBottomRedAlert(isManagerSending? "You: "+txt : txt);
-
+showBottomRedAlert(txt.slice(0,40));
 if(isManagerSending){
-await addDoc(collection(db,"support_chats"),{userId:'manager',to:targetUid,phone:'Support',name:'Support',fullName:'Support',text:txt,role:'manager',time:serverTimestamp()});
+await addDoc(collection(db,"support_private_v2"),{userId:'manager',to:targetUid,phone:'Support',name:'Support',fullName:'Support Team',text:txt,role:'manager',time:serverTimestamp()});
 }else{
-await addDoc(collection(db,"support_chats"),{userId:uid,to:"manager",phone:phone,name:name,fullName:name,text:txt,role:'user',time:serverTimestamp()});
-// AUTO REPLY SILENT AFTER 3 MINUTES - NO LEAK
-let autoOn = localStorage.getItem('autoManagerEnabled');
-if(autoOn===null) autoOn='true';
-if(autoOn==='true'){
- let last=lastAutoReplyTime[uid]||0;
- if(Date.now()-last>60000){
-  lastAutoReplyTime[uid]=Date.now();
-  let replyText=getSatisfiedReply(txt,name);
-  setTimeout(async()=>{
-   await addDoc(collection(db,"support_chats"),{userId:'manager',to:uid,phone:"Support",name:"Support",fullName:"Support",text:replyText,role:'manager',time:serverTimestamp()});
-   showBottomRedAlert("💬 Support: "+replyText.slice(0,40));
-  }, 180000); // 3 MINUTES = 180000ms
- }
+await addDoc(collection(db,"support_private_v2"),{userId:uid,phone:phone,name:name,fullName:name,text:txt,to:"manager",role:'user',time:serverTimestamp()});
+if(autoManagerOn){
+ let replyText=getSatisfiedReply(txt,name);
+ setTimeout(async()=>{ await addDoc(collection(db,"support_private_v2"),{userId:'manager',to:uid,phone:"Support",name:"Support",fullName:"Support Team",text:replyText,role:'manager',time:serverTimestamp()}); },180000);
 }
 }
 inp.value='';
 if(isManagerSending){setTimeout(()=>window.openPrivateChat(targetUid),500);}
 };
+
 window.rent=async(n,p,d,t)=>{
 let u=await getDoc(doc(db,"users",uid));
 if(!u.exists()||(u.data().wallet||0)<p){alert('Low wallet UGX '+p.toLocaleString());showPage('deposit');return;}
@@ -411,8 +346,7 @@ await addDoc(collection(db,"active_machines"),{userId:uid,name:n,price:p,days:d,
 try{
 let phone=u.data().phone||uid;
 let name=u.data().fullName||u.data().name||localStorage.getItem('k_name')||phone;
-try{showBigRedPurchase(n,p,phone,name);}catch(e){}
-await addDoc(collection(db,"support_chats"),{userId:uid,to:"manager",phone:phone,name:name,fullName:name,text:`🎉 Hello ${name}! You purchased ${n} for UGX ${p.toLocaleString()}! Daily UGX ${Math.round(t/d).toLocaleString()} for ${d} days. ACTIVE now. Check Revenue! 💎`,role:'manager',time:serverTimestamp()});
+await addDoc(collection(db,"support_private_v2"),{userId:'manager',to:uid,phone:'Support',name:'Support',fullName:'Support Team',text:`Hello ${name} 💎 Your ${n} purchase UGX ${p.toLocaleString()} is ACTIVE! Daily UGX ${Math.round(t/d).toLocaleString()} for ${d} days. Total UGX ${t.toLocaleString()}. Check Revenue!`,role:'manager',time:serverTimestamp()});
 }catch(e){console.log('auto msg',e);}
 try{
 let me=u.data();
@@ -434,6 +368,7 @@ curId=s.data().invite||s.data().inviteCode||null;
 }catch(e){console.log(e);}
 await window.load();showPage('revenue');
 };
+
 window.submitDep=async()=>{
 if(!checkUserName('deposit'))return;
 let a=parseInt(document.getElementById('depAmt').value);
